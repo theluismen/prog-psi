@@ -1,7 +1,6 @@
-package llistes;
+package Llistes;
 
-import dades.*;
-import dades.Activitat; // Suposant que existeix la classe Activitat
+import Activitats.*;
 
 public class LlistaActivitats {
     // Classe interna per guardar cada element
