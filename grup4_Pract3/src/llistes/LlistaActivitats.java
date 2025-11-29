@@ -1,4 +1,4 @@
-package Llistes;
+package llistes;
 
 import Activitats.*;
 
