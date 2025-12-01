@@ -7,13 +7,13 @@ package activitats;
 
 import java.time.LocalDate;
 import enumeraciones.*;
+import extras.*;
 
 
 public class ActivitatPeriodica extends Activitat {
     private DiaSetmana dia;
-    private double horaIni;
     private double durada;
-    private LocalDate dataIni;
+    private Data dataHoraIni;
     private int setmanes;
     private int places;
     private double preu;
@@ -24,8 +24,8 @@ public class ActivitatPeriodica extends Activitat {
 
 
     public ActivitatPeriodica (String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio,
-                                DiaSetmana dia, double horaIni, double durada, LocalDate dataIni,
-                                int setmanes, int places, double preu, String centre, String ciutat){
+                                DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
+                                int places, double preu, String centre, String ciutat){
        
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
@@ -33,29 +33,21 @@ public class ActivitatPeriodica extends Activitat {
         this.centre = centre;
         this.ciutat = ciutat;
         this.preu = preu;
-        this.dataIni = dataIni;
+        this.dataHoraIni = diaYHoraInicio;
 
-
-        this.places = 0;
         if (places > 0)
             this.places = places;
-        else System.out.println("Las plazas no pueden ser 0, usa otro valor");  
-       
-        if (horaExisteix(horaIni))
-            this.horaIni = horaIni;
-        else this.horaIni = 0;
-
+        else{
+            throw new exception; //crear excepcion correspondiente
+        }
 
         if (durada > 0)
             this.durada = durada;
         else{
-            this.durada = 0;
-            System.out.println("La duración de la actividad no puede ser de "+durada+", cambialo");
+            throw new exception; //crear excepcion correspondiente
         }
        
     }
-
-
 
 
 //toString
@@ -76,23 +68,18 @@ public class ActivitatPeriodica extends Activitat {
     public String getDia()  {   return this.dia.toString();     }
 
 
-    public double getHoraIni(){     return this.horaIni;        }
-
-
     public double getDurada(){      return this.durada;     }
 
 
     public int getPlaces(){     return this.places;     }
 
 
-    public LocalDate getDataFinal(){    return this.dataIni.plusDays(this.setmanes*7);      }
-
-
-    public LocalDate getDataIni(){      return this.dataIni;     }
+    public Data getDataFinal(){    return this.dataHoraIni.dataPlusDies(this.setmanes*7);      }
 
 
     public int getSetmanes(){     return this.setmanes;    }
    
+
     public double getPreu(){    return this.preu;    }
 
 
@@ -102,15 +89,17 @@ public class ActivitatPeriodica extends Activitat {
     public String getCiutat(){      return this.ciutat;     }
 
 
+    public Data getDataHoraIni(){       return this.dataHoraIni;      }
+
+
 
 
     public String getHorari(){
-        String aux = "El horario es: "+this.dia+" de";
+        String aux = "El horario es: "+this.dia+" de"+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
+        " a "+;
        
-        int hora = (int)this.horaIni;
-        int minutos = (int)((this.horaIni - hora) * 60);
-        aux = aux+" "+hora+":"+minutos+" a ";
-
+        Data horaFin = this.dataHoraIni.copia();
+        
 
         double horaFin = this.horaIni + this.durada;
         hora = (int)(horaFin);

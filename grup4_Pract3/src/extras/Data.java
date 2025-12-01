@@ -15,8 +15,6 @@ public class Data {
     private int minutos;
 
 
-
-
     /**
      * Constructor que rep la data per paràmetre
      * Ha de validar que la data és correcta. Si rep una data incorrecta inicialitza la instància
@@ -30,15 +28,14 @@ public class Data {
             this.dia = dia;
             this.mes = mes;
             this.any = any;
-        } else { // posem la data de referència com a senyal d'error
-            this.dia = 1;
-            this.mes = 1;
-            this.any = 2000;
-            //cambiar por lanzar error
+        } else {
+            //lanzar excepcion
         }
 
-
-        if (horaExisteix(hora))
+        if (horaExisteix(hora, minutos)){
+			this.hora = hora;
+			this.minutos = minutos;
+		}
     }
 
 
@@ -68,10 +65,26 @@ public class Data {
         return any;
     }
 
+    /**
+     * Getter
+     * @return hora de la data
+     */
+    public int getHora() {
+        return hora;
+    }
+
+    /**
+     * Getter
+     * @return minutos de la hora de la data
+     */
+    public int getMinutos() {
+        return minutos;
+    }
+
 
     /**
      * Setter conjunt per a poder validar la correctesa de la data rebuda.
-     * Només es fa la modificació de la data si que es rep per paràmetre és correcte.
+     * Només es fa la modificació de la data si el que es rep per paràmetre és correcte.
      * @param dia
      * @param mes
      * @param any
@@ -82,6 +95,26 @@ public class Data {
             this.mes = mes;
             this.any = any;
         }
+		else{
+			//lanzar excepcion
+		}
+    }
+
+
+	/**
+     * Setter conjunt per a poder validar la correctesa de la hora rebuda.
+     * Només es fa la modificació de l'hora si el que es rep per paràmetre és correcte.
+     * @param hora
+     * @param minutos
+     */
+    public void setHora(int hora, int minutos) {
+        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una data vàlida
+            this.hora = hora;
+			this.minutos = minutos;
+        }
+		else{
+			//lanzar excepcion
+		}
     }
 
 
@@ -103,7 +136,7 @@ public class Data {
      * * @return la data del dia seguent
      */
     public Data diaSeguent() {
-        Data novaData=new Data(dia, mes, any);
+        Data novaData=new Data(dia, mes, any, hora, minutos);
 
 
         // també podria haver-se fet de la següent forma:
@@ -147,7 +180,7 @@ public class Data {
    
     /**
      * Mètode que calcula quants dies falten per arribar des de la data actual a la
-     * que rebem per paràmetre
+     * que rebem per paràmetre. No considera la hora, solo el dia
      *
      * @param data - valor de data a la que calcular el número de dies que falten
      * @return si la data que es rep per paràmetre és superior o igual a la data de
@@ -158,7 +191,7 @@ public class Data {
         Data dataTemp;
         int contador;
         // és necessari una nova instancia per no modificar la data actual
-        dataTemp = new Data(dia, mes, any);
+        dataTemp = new Data(dia, mes, any, hora, minutos);
         if (dataTemp.esDataInferiorOigual(data)) {
             contador = 0;
             // la data rebuda és major que l'actual
@@ -224,8 +257,25 @@ public class Data {
      * @return un nou objecte amb el mateix contingut
      */
     public Data copia() {
-        return new Data(dia, mes, any);
+        return new Data(dia, mes, any, hora, minutos);
     }
+
+
+	/**
+	 * metodo que suma la cantidad de dias pasados por parametro a la fecha actual
+	 * 
+	 * @param dias
+	 * @return nueva instancia con la fecha actual mas los dias pasados
+	 */
+	public Data dataPlusDies(int dias){
+		Data res = this.copia();
+		
+		for (int i = 0; i < dias; i++){
+			res = res.diaSeguent();
+		}
+
+		return res;
+	}
 
 
     // Mètodes de classe (STATIC).
@@ -278,12 +328,17 @@ public class Data {
 
 
     private static boolean horaExisteix (int hora, int minutos){
-        if ((hora >= 24) || (hora < 0)){
-            System.out.println("Esta hora no existe, usa una distinta");
-            return false;
+        boolean res = true;
+		if ((hora >= 24) || (hora < 0)){
+            //lanzar una excepcion cuando este creada
+            res = false;
         }
-        else
-        return true;
+
+		if ((minutos > 59) || (minutos < 0)){
+			//lanzar excepcion cuando este creada
+			res = false;
+		}
+        return res;
     }
 
 
