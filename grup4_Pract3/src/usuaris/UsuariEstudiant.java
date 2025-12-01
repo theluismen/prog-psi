@@ -1,4 +1,4 @@
-package usuaris; // O el package que estiguis fent servir
+package usuaris;
 
 public class UsuariEstudiant extends Usuari {
 

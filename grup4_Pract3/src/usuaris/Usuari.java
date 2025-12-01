@@ -1,3 +1,5 @@
+package usuaris;
+
 public abstract class Usuari {
     
     protected String alies;           //Identificador del usuari
