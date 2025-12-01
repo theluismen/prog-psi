@@ -1,6 +1,5 @@
 package usuaris;
 
-import java.time.LocalDate;
 
 public class UsuariPDI extends Usuari{
 
@@ -48,7 +47,7 @@ public class UsuariPDI extends Usuari{
      */
     @Override
     public String dadesExtra(){
-        return departament + campus;
+        return departament + " " + campus;
     }
 
     /**
@@ -64,9 +63,10 @@ public class UsuariPDI extends Usuari{
 
     @Override
     public String toString() {
-        return "Àlies: " + alies + 
+        return "Àlies: " + getAlies() + 
                 "\nCorreu: " + getEmailComplet() + 
-                "\nCol·lectiu: " + collectiu +
-                "\n" + dadesExtra() + "\n";
+                "\nCollectiu: " + tipusUsuari() +
+                "\nDepartament: " + departament +
+                "\nCampus: " + campus;
     }
 }
