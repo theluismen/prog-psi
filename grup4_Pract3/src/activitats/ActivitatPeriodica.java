@@ -1,7 +1,13 @@
+//cambiar todos los print por excepciones
+//es posible que se cambien los localDate por la clase propia Data en un futuro
+
+
 package activitats;
+
 
 import java.time.LocalDate;
 import enumeraciones.*;
+
 
 public class ActivitatPeriodica extends Activitat {
     private DiaSetmana dia;
@@ -15,25 +21,30 @@ public class ActivitatPeriodica extends Activitat {
     private String ciutat;
 
 
-    public ActivitatPeriodica (String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio, 
-                                DiaSetmana dia, double horaIni, double durada, LocalDate dataIni, LocalDate avui,
+
+
+    public ActivitatPeriodica (String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio,
+                                DiaSetmana dia, double horaIni, double durada, LocalDate dataIni,
                                 int setmanes, int places, double preu, String centre, String ciutat){
-        
+       
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
         this.setmanes = setmanes;
         this.centre = centre;
         this.ciutat = ciutat;
         this.preu = preu;
+        this.dataIni = dataIni;
+
 
         this.places = 0;
         if (places > 0)
             this.places = places;
         else System.out.println("Las plazas no pueden ser 0, usa otro valor");  
-        
+       
         if (horaExisteix(horaIni))
             this.horaIni = horaIni;
         else this.horaIni = 0;
+
 
         if (durada > 0)
             this.durada = durada;
@@ -41,55 +52,91 @@ public class ActivitatPeriodica extends Activitat {
             this.durada = 0;
             System.out.println("La duración de la actividad no puede ser de "+durada+", cambialo");
         }
-
-        this.dataIni = dataIni;
-        dataExisteix(dataIni, avui);
-        
+       
     }
+
+
 
 
 //toString
     public String toString(){
-        String aux = "Actividad: "+super.nom+"\nCentro: "+this.centre+"\nCiudad: "+this.ciutat+
-                    "\nPrecio: "+this.preu+"\nPlazas totales: "+this.places+"\nTotal de semanas: "+
-                    this.setmanes+"\n"+getHorari()+"\nCollectivos destinados: "+super.collectius+"Fecha inicio"+
-                    "inscripcion: "+super.dataIniInscripcio+"\nFecha fin insccripcion"+super.dataFiInscripcio;
+        //aprovechando el toString del padre
+        String aux = super.toString()+
+                    "\nCentre: "+this.centre+
+                    "\nCiutat: "+this.ciutat+
+                    "\nPreu: "+this.preu+
+                    "\nPlaçes: "+this.places+
+                    "\nTotal de setmanes: "+this.setmanes+
+                    "\n"+getHorari();
         return aux;
     }
+
 
 //getters
     public String getDia()  {   return this.dia.toString();     }
 
+
     public double getHoraIni(){     return this.horaIni;        }
+
 
     public double getDurada(){      return this.durada;     }
 
+
     public int getPlaces(){     return this.places;     }
+
 
     public LocalDate getDataFinal(){    return this.dataIni.plusDays(this.setmanes*7);      }
 
+
+    public LocalDate getDataIni(){      return this.dataIni;     }
+
+
+    public int getSetmanes(){     return this.setmanes;    }
+   
+    public double getPreu(){    return this.preu;    }
+
+
+    public String getCentre(){      return this.centre;     }
+
+
+    public String getCiutat(){      return this.ciutat;     }
+
+
+
+
     public String getHorari(){
-        String aux = "El horario es los "+this.dia+" de";
-        
+        String aux = "El horario es: "+this.dia+" de";
+       
         int hora = (int)this.horaIni;
         int minutos = (int)((this.horaIni - hora) * 60);
         aux = aux+" "+hora+":"+minutos+" a ";
+
 
         double horaFin = this.horaIni + this.durada;
         hora = (int)(horaFin);
         minutos = (int)((horaFin - hora) * 60);
         aux = aux + hora+":"+minutos;
 
+
         return aux;
     }
 
 
 
-//metodos para usar en el main
-    public boolean avuiHiHaClase(LocalDate hoy){
+
+
+
+//metodos propios
+    /**
+     * Metodo que comprueba si hay clase en la fecha indicada
+     *
+     * @param hoy
+     * @return true si hay clase en esa fecha, false en caso contrario
+     */
+    public boolean estaActiva(LocalDate hoy){
         int totalDiesDurada = this.setmanes * 7;
         LocalDate diaComparar = this.dataIni.plusDays(totalDiesDurada);
-        
+       
         while (totalDiesDurada > 0){
             if (hoy.isEqual(diaComparar))
             {
@@ -101,6 +148,18 @@ public class ActivitatPeriodica extends Activitat {
         return false;
     }
 
+
+
+
+
+
+//metodos del padre
+    /**
+     * Metodo que comprueba si una actividad esta activa en la fecha indicada
+     *
+     * @param hoy
+     * @return false si no esta activa, true en caso contrario
+     */
     public boolean activesAvui(LocalDate hoy){
         LocalDate dataFi = getDataFinal();
         if (hoy.isBefore(dataFi) && hoy.isAfter(this.dataIni)){
@@ -113,23 +172,23 @@ public class ActivitatPeriodica extends Activitat {
     }
 
 
+    /**
+     * Metode que retorna el tipus d'activitat
+     *
+     * @return una cadena que indica el tipus d'activitat
+     */
+    public String tipusActivitat(){
+        return "Activitat periodica";
+    }
+
+
 
 
 
 
 //metodos privados
-    private boolean horaExisteix (double hora){
-        if ((hora >= 24) || (hora < 0)){
-            System.out.println("Esta hora no existe, usa una distinta");
-            return false;
-        }
-        return true;
-    }
 
-    private boolean dataExisteix (LocalDate data, LocalDate fechaActual){
-        if (fechaActual.isBefore(data))
-            return true;
-        System.out.println("La fecha "+data+" es anterior a la actual, modificalo si se trata de un error");
-        return false;
-    }
+
+
+
 }
