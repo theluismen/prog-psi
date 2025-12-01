@@ -1,9 +1,10 @@
 package activitats;
 
-import java.time.LocalDate;
+import extras.Data;
+
 
 public class ActivitatUnDia extends Activitat{
-    private LocalDate dataActivitat;    
+    private Data dataActivitat;    
     private int minuto;
     private int hora;              
     private int places;                
@@ -24,8 +25,8 @@ public class ActivitatUnDia extends Activitat{
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
      */
-    public ActivitatUnDia(String nom, String[] collectius, LocalDate dataIniciInscripcio, 
-                            LocalDate dataFiInscripcio, LocalDate dataActivitat, int minuto, int hora, 
+    public ActivitatUnDia(String nom, String[] collectius, Data dataIniciInscripcio, 
+                            Data dataFiInscripcio, Data dataActivitat, int minuto, int hora, 
                             int places, double preu, String ciutat){
         super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
@@ -43,7 +44,7 @@ public class ActivitatUnDia extends Activitat{
      * Getter de fecha de la actividad.
      * @return fecha de tipo LocalDate.
      */
-    public LocalDate getData(){
+    public Data getData(){
         return dataActivitat;
     }
 
@@ -51,7 +52,7 @@ public class ActivitatUnDia extends Activitat{
      * Getter de minuto de la actividad.
      * @return minuto de la actividad.
      */
-    public double getMinuto(){
+    public int getMinuto(){
         return minuto;
     }
 
@@ -59,7 +60,7 @@ public class ActivitatUnDia extends Activitat{
      * Getter de hora de la actividad.
      * @return hora de la actividad.
      */
-    public double getHora(){
+    public int getHora(){
         return hora;
     }
 
@@ -95,10 +96,9 @@ public class ActivitatUnDia extends Activitat{
      * @return true si la fecha está dentro del período de inscripción, false en caso contrario.
      */
     @Override
-    public boolean estaActiva(LocalDate avui) {
+    public boolean estaActiva(Data avui) {
     return (avui != null &&
-            (avui.isEqual(dataIniciInscripcio) || avui.isAfter(dataIniciInscripcio)) &&
-            (avui.isEqual(dataFiInscripcio) || avui.isBefore(dataFiInscripcio)));
+            (avui.esIgual(dataIniciInscripcio)) && (avui.esDataInferiorOigual(dataFiInscripcio)));
     }
 
     /**
@@ -120,7 +120,7 @@ public class ActivitatUnDia extends Activitat{
             "\tData: " + dataActivitat + " a les " + hora + ":" + minuto + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
-            "\tPreu: " + preu + "€";
+            "\tPreu: " + preu + " euros";
     }
 }
 
