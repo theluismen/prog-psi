@@ -4,7 +4,8 @@ import java.time.LocalDate;
 
 public class ActivitatUnDia extends Activitat{
     private LocalDate dataActivitat;    
-    private double hora;              
+    private int minuto;
+    private int hora;              
     private int places;                
     private double preu;               
     private String ciutat;            
@@ -17,16 +18,18 @@ public class ActivitatUnDia extends Activitat{
      * @param dataIniInscripcio Fecha de inicio de inscripción.
      * @param dataFiInscripcio Fecha de fin de inscripción.
      * @param dataActivitat Fecha de la actividad.
+     * @param minuto Minuto para la hora de la actividad.
      * @param hora Hora de la actividad.
      * @param places Número de plazas disponibles.
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
      */
     public ActivitatUnDia(String nom, String[] collectius, LocalDate dataIniciInscripcio, 
-                            LocalDate dataFiInscripcio, LocalDate dataActivitat, double hora, 
+                            LocalDate dataFiInscripcio, LocalDate dataActivitat, int minuto, int hora, 
                             int places, double preu, String ciutat){
         super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
+        this.minuto = minuto;
         this.hora = hora;
         this.places = places;
         this.preu = preu;
@@ -42,6 +45,14 @@ public class ActivitatUnDia extends Activitat{
      */
     public LocalDate getData(){
         return dataActivitat;
+    }
+
+    /**
+     * Getter de minuto de la actividad.
+     * @return minuto de la actividad.
+     */
+    public double getMinuto(){
+        return minuto;
     }
 
     /**
@@ -106,7 +117,7 @@ public class ActivitatUnDia extends Activitat{
             "\tNom: " + nom + "\n" +
             "\tCollectius: "  + String.join(", ", collectius) + "\n" +
             "\tPeríode d'inscripció: del " + dataIniciInscripcio + " al " + dataFiInscripcio + "\n" +
-            "\tData: " + dataActivitat + " a les " + hora + "\n" +
+            "\tData: " + dataActivitat + " a les " + hora + ":" + minuto + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
             "\tPreu: " + preu + "€";
