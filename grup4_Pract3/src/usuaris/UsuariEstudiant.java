@@ -2,7 +2,6 @@ package usuaris;
 
 public class UsuariEstudiant extends Usuari {
 
-    // Atributs propis segons l'enunciat (PDF pàg 2)
     private String ensenyament; // Ex: GEI, GESST, etc.
     private int anyInici;       // Any d'inici dels estudis
 
