@@ -1,6 +1,5 @@
 package activitats;
-package extras;
-import java.time.LocalDate;
+import extras.Data;
 
 public abstract class Activitat {
 
@@ -20,7 +19,7 @@ public abstract class Activitat {
      * @param dataFiInscripcio data límit fins a la qual es permet fer inscripcions
      */
 
-    public Activitat (String nom, String[] collectius, Data dataIniciInscripcio, DataDate dataFiInscripcio) {
+    public Activitat (String nom, String[] collectius, Data dataIniciInscripcio, Data dataFiInscripcio) {
         this.nom = nom;
         this.collectius = collectius;
         this.dataIniciInscripcio = dataIniciInscripcio;
@@ -33,9 +32,9 @@ public abstract class Activitat {
 
     public String[] getcollectius() {   return collectius;  }
 
-    public LocalDate getDataIniInscripcio()  {  return dataIniciInscripcio;  }
+    public Data getDataIniInscripcio()  {  return dataIniciInscripcio;  }
 
-    public LocalDate getDataFiInscripcio()  {  return dataFiInscripcio;  }
+    public Data getDataFiInscripcio()  {  return dataFiInscripcio;  }
 
 
     // Funcions base
@@ -46,7 +45,7 @@ public abstract class Activitat {
      * @param avui la data d'aquell dia
      * @return true si es pot fer la inscripcio, sinó false
      */
-    public boolean esEnPeriodeInscripcio(LocalDate avui) {
+    public boolean esEnPeriodeInscripcio(Data avui) {
     return dataIniciInscripcio.esDataInferiorOigual(avui) &&
             avui.esDataInferiorOigual(dataFiInscripcio);
     }
