@@ -1,4 +1,6 @@
-package usuaris;
+package tests;
+
+import usuaris.UsuariPDI;
 
 public class UsaUsuariPDI {
 
