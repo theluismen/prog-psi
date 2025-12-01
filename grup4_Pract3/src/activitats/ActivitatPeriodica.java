@@ -1,3 +1,4 @@
+//Alexandra Núñez
 //falta añadir todas las excepciones y cambiar los print por excepciones
 
 package activitats;

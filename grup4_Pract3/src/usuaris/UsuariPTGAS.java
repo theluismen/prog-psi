@@ -1,3 +1,5 @@
+//Alexandra Núñez
+
 package usuaris;
 
 import enumeraciones.*;
