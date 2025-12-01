@@ -1,12 +1,13 @@
 package activitats;
+package extras;
 import java.time.LocalDate;
 
 public abstract class Activitat {
 
     protected String nom;
     protected String[] collectius;
-    protected LocalDate dataIniciInscripcio;
-    protected LocalDate dataFiInscripcio;
+    protected Data dataIniciInscripcio;
+    protected Data dataFiInscripcio;
 
 
     /**
@@ -19,7 +20,7 @@ public abstract class Activitat {
      * @param dataFiInscripcio data límit fins a la qual es permet fer inscripcions
      */
 
-    public Activitat (String nom, String[] collectius, LocalDate dataIniciInscripcio, LocalDate dataFiInscripcio) {
+    public Activitat (String nom, String[] collectius, Data dataIniciInscripcio, DataDate dataFiInscripcio) {
         this.nom = nom;
         this.collectius = collectius;
         this.dataIniciInscripcio = dataIniciInscripcio;
@@ -46,7 +47,8 @@ public abstract class Activitat {
      * @return true si es pot fer la inscripcio, sinó false
      */
     public boolean esEnPeriodeInscripcio(LocalDate avui) {
-    return !avui.isBefore(dataIniciInscripcio) && !avui.isAfter(dataFiInscripcio);
+    return dataIniciInscripcio.esDataInferiorOigual(avui) &&
+            avui.esDataInferiorOigual(dataFiInscripcio);
     }
 
     
@@ -57,7 +59,7 @@ public abstract class Activitat {
      * @param avui data a comprovar
      * @return true si l'activitat esta activa en la data indicada, sino false
      */
-    public abstract boolean estaActiva (LocalDate avui);
+    public abstract boolean estaActiva (Data avui);
 
     /**
      * Metode que retorna el tipus d'activitat
