@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class ActivitatUnDia extends Activitat{
     private LocalDate dataActivitat;    
-    private String hora;              
+    private double hora;              
     private int places;                
     private double preu;               
     private String ciutat;            
@@ -17,13 +17,15 @@ public class ActivitatUnDia extends Activitat{
      * @param dataIniInscripcio Fecha de inicio de inscripción.
      * @param dataFiInscripcio Fecha de fin de inscripción.
      * @param dataActivitat Fecha de la actividad.
-     * @param hora Hora de la actividad (String tipo XX:XX).
+     * @param hora Hora de la actividad.
      * @param places Número de plazas disponibles.
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
      */
-    public ActivitatUnDia(String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio, LocalDate dataActivitat, String hora, int places, double preu, String ciutat){
-        super(nom, collectius, dataIniInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
+    public ActivitatUnDia(String nom, String[] collectius, LocalDate dataIniciInscripcio, 
+                            LocalDate dataFiInscripcio, LocalDate dataActivitat, double hora, 
+                            int places, double preu, String ciutat){
+        super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
         this.hora = hora;
         this.places = places;
@@ -44,9 +46,9 @@ public class ActivitatUnDia extends Activitat{
 
     /**
      * Getter de hora de la actividad.
-     * @return hora de tipo String (XX:XX).
+     * @return hora de la actividad.
      */
-    public String getHora(){
+    public double getHora(){
         return hora;
     }
 
@@ -84,7 +86,7 @@ public class ActivitatUnDia extends Activitat{
     @Override
     public boolean estaActiva(LocalDate avui) {
     return (avui != null &&
-            (avui.isEqual(dataIniInscripcio) || avui.isAfter(dataIniInscripcio)) &&
+            (avui.isEqual(dataIniciInscripcio) || avui.isAfter(dataIniciInscripcio)) &&
             (avui.isEqual(dataFiInscripcio) || avui.isBefore(dataFiInscripcio)));
     }
 
@@ -103,7 +105,7 @@ public class ActivitatUnDia extends Activitat{
         return"--- ACTIVITAT D'UN DIA ---\n" + 
             "\tNom: " + nom + "\n" +
             "\tCollectius: "  + String.join(", ", collectius) + "\n" +
-            "\tPeríode d'inscripció: del " + dataIniInscripcio + " al " + dataFiInscripcio + "\n" +
+            "\tPeríode d'inscripció: del " + dataIniciInscripcio + " al " + dataFiInscripcio + "\n" +
             "\tData: " + dataActivitat + " a les " + hora + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
