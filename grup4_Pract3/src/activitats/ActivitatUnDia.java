@@ -51,7 +51,7 @@ public class ActivitatUnDia extends Activitat{
      * Getter de minuto de la actividad.
      * @return minuto de la actividad.
      */
-    public double getMinuto(){
+    public int getMinuto(){
         return minuto;
     }
 
@@ -59,7 +59,7 @@ public class ActivitatUnDia extends Activitat{
      * Getter de hora de la actividad.
      * @return hora de la actividad.
      */
-    public double getHora(){
+    public int getHora(){
         return hora;
     }
 
@@ -120,7 +120,7 @@ public class ActivitatUnDia extends Activitat{
             "\tData: " + dataActivitat + " a les " + hora + ":" + minuto + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
-            "\tPreu: " + preu + "€";
+            "\tPreu: " + preu + " euros";
     }
 }
 

@@ -30,7 +30,7 @@ public abstract class Activitat {
 
     public String getNom() {    return nom;  }
 
-    public String[] getcollectius() {   return collectius;  }
+    public String[] getCollectius() {   return collectius;  }
 
     public LocalDate getDataIniInscripcio()  {  return dataIniciInscripcio;  }
 
