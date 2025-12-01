@@ -19,19 +19,16 @@ public class ActivitatUnDia extends Activitat{
      * @param dataIniInscripcio Fecha de inicio de inscripción.
      * @param dataFiInscripcio Fecha de fin de inscripción.
      * @param dataActivitat Fecha de la actividad.
-     * @param minuto Minuto para la hora de la actividad.
-     * @param hora Hora de la actividad.
+
      * @param places Número de plazas disponibles.
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
      */
     public ActivitatUnDia(String nom, String[] collectius, Data dataIniciInscripcio, 
-                            Data dataFiInscripcio, Data dataActivitat, int minuto, int hora, 
+                            Data dataFiInscripcio, Data dataActivitat, 
                             int places, double preu, String ciutat){
         super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
-        this.minuto = minuto;
-        this.hora = hora;
         this.places = places;
         this.preu = preu;
         this.ciutat = ciutat;
@@ -53,7 +50,7 @@ public class ActivitatUnDia extends Activitat{
      * @return minuto de la actividad.
      */
     public int getMinuto(){
-        return minuto;
+        return dataActivitat.getMinutos();
     }
 
     /**
@@ -61,7 +58,7 @@ public class ActivitatUnDia extends Activitat{
      * @return hora de la actividad.
      */
     public int getHora(){
-        return hora;
+        return dataActivitat.getHora();
     }
 
     /**
