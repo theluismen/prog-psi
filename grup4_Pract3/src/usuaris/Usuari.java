@@ -1,20 +1,26 @@
 public abstract class Usuari {
     
     protected String alies;           //Identificador del usuari
-    protected String collectiu;      // Part principal del correu (sense @)
-    protected String email;           // PDI / PTGAS / Estudiant
+    protected String collectiu;      // PDI / PTGAS / Estudiant
+    protected String email;           // Part principal del correu (sense @)
 
 
 
-    //Constructor
-    public Usuari (String alies; String email, String collectiu) {
+    /**
+     * Constructor de la classe Usuari
+     * @param alies àlies de l'usuari (únic)
+     * @param email part inicial del correu institucional (sense @)
+     * @param colectiu col·lectiu al qual pertany (PDI, PTGAS o Estudiant)
+     */
+    public Usuari (String alies, String email, String collectiu) {
         this.alies = alies;
-        this.email; email;
+        this.email = email;
         this.collectiu = collectiu;
     }
 
 
     //Getters
+    
     public String getAlies() {  return alies;  }
 
     public String getEmailComplet() {
@@ -50,8 +56,8 @@ public abstract class Usuari {
     @Override
     public String toString() {
         return "Àlies: " + alies + 
-                "\nCorreu: " + getEmailComplet(); + 
-                "\nCol·lectiu: " + colectiu +
+                "\nCorreu: " + getEmailComplet() + 
+                "\nCol·lectiu: " + collectiu +
                 "\n" + dadesExtra() + "\n";
     }
 
