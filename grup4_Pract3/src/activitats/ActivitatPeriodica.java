@@ -1,6 +1,7 @@
 package activitats;
 
 import java.time.LocalDate;
+import enumeraciones.*;
 
 public class ActivitatPeriodica extends Activitat {
     private DiaSetmana dia;
@@ -14,17 +15,11 @@ public class ActivitatPeriodica extends Activitat {
     private String ciutat;
 
 
-    private static String[] mesos31 = {"Enero", "Marzo", "Mayo", "Julio", "Agosto", "Octubre", "Diciembre"};
-    private static String[] mesos30 = {"Abril", "Junio", "Setiembre", "Noviembre"};
-
-    public enum DiaSetmana{
-        LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO
-    }
-
-
-    public ActivitatPeriodica (DiaSetmana dia, double horaIni, double durada, LocalDate dataIni, LocalDate avui,
+    public ActivitatPeriodica (String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio, 
+                                DiaSetmana dia, double horaIni, double durada, LocalDate dataIni, LocalDate avui,
                                 int setmanes, int places, double preu, String centre, String ciutat){
         
+        super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
         this.setmanes = setmanes;
         this.centre = centre;
@@ -55,24 +50,23 @@ public class ActivitatPeriodica extends Activitat {
 
 //toString
     public String toString(){
-        String aux = "Actividad: "+/*nom*/+"\nCentro: "+this.centre+"\nCiudad: "+this.ciutat+
+        String aux = "Actividad: "+super.nom+"\nCentro: "+this.centre+"\nCiudad: "+this.ciutat+
                     "\nPrecio: "+this.preu+"\nPlazas totales: "+this.places+"\nTotal de semanas: "+
-                    this.setmanes+"\n"+getHorari();
+                    this.setmanes+"\n"+getHorari()+"\nCollectivos destinados: "+super.collectius+"Fecha inicio"+
+                    "inscripcion: "+super.dataIniInscripcio+"\nFecha fin insccripcion"+super.dataFiInscripcio;
         return aux;
     }
 
 //getters
-    public String getDia(){
-        return this.dia.toString();
-    }
+    public String getDia()  {   return this.dia.toString();     }
 
-    public double getHoraIni(){
-        return this.horaIni;
-    }
+    public double getHoraIni(){     return this.horaIni;        }
 
-    public double getDurada(){
-        return this.durada;
-    }
+    public double getDurada(){      return this.durada;     }
+
+    public int getPlaces(){     return this.places;     }
+
+    public LocalDate getDataFinal(){    return this.dataIni.plusDays(this.setmanes*7);      }
 
     public String getHorari(){
         String aux = "El horario es los "+this.dia+" de";
@@ -85,14 +79,8 @@ public class ActivitatPeriodica extends Activitat {
         hora = (int)(horaFin);
         minutos = (int)((horaFin - hora) * 60);
         aux = aux + hora+":"+minutos;
-    }
 
-    public int getPlaces(){
-        return this.places;
-    }
-
-    public LocalDate getDataFinal(){
-        return this.dataIni.plusDays(this.setmanes*7);
+        return aux;
     }
 
 
