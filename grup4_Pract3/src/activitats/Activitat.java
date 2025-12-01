@@ -7,7 +7,7 @@ public abstract class Activitat {
     protected LocalDate dataIniInscripcio;
     protected LocalDate dataFiInscripcio;
 
-    public Activitat (String nom; String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio) {
+    public Activitat (String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio) {
         this.nom = nom;
         this.collectius = collectius;
         this.dataIniInscripcio = dataIniInscripcio;
@@ -47,12 +47,12 @@ public abstract class Activitat {
     public String toString() {
         String info = "Nom: " + nom + "\nCol·lectius: ";
 
-        for (int i = 0; i < colectius.length; i++) {
-            info += colectius[i];
-            if (i < colectius.length - 1) info += ", ";
+        for (int i = 0; i < collectius.length; i++) {
+            info += collectius[i];
+            if (i < collectius.length - 1) info += ", ";
         }
 
-        info += "\nPeríode inscripció: " + dataIniciInscripcio +
+        info += "\nPeríode inscripció: " + dataIniInscripcio +
                 " fins " + dataFiInscripcio + "\n";
 
         return info;
