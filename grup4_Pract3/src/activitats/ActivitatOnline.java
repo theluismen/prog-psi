@@ -1,10 +1,11 @@
 package activitats;
 
+import extras;
 import java.time.LocalDate;
 
 public class ActivitatOnline extends Activitat {
 
-    private LocalDate dataInici;
+    private Data dataInici;
     private int periodeVisualitzacio; // Dies que està disponible
     private String enllac;
 
@@ -22,7 +23,7 @@ public class ActivitatOnline extends Activitat {
                            LocalDate dataFiInscripcio, LocalDate dataInici, 
                            int periodeVisualitzacio, String enllac) {
         
-        // Cridem al pare. NOTA: No passem preu ni places perquè Activitat no en té.
+        // Cridem al pare. No passem preu ni places perquè Activitat no en té.
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         
         this.dataInici = dataInici;
@@ -31,8 +32,8 @@ public class ActivitatOnline extends Activitat {
     }
 
     // --- Getters i Setters propis ---
-    public LocalDate getDataInici() { return dataInici; }
-    public void setDataInici(LocalDate dataInici) { this.dataInici = dataInici; }
+    public Data getDataInici() { return dataInici; }
+    public void setDataInici(Data dataInici) { this.dataInici = dataInici; }
 
     public int getPeriodeVisualitzacio() { return periodeVisualitzacio; }
     public void setPeriodeVisualitzacio(int periode) { this.periodeVisualitzacio = periode; }
@@ -53,12 +54,13 @@ public class ActivitatOnline extends Activitat {
      * Per online: data >= dataInici i data <= dataInici + periode
      */
     @Override
-    public boolean estaActiva(LocalDate avui) {
-        LocalDate dataFi = this.dataInici.plusDays(this.periodeVisualitzacio);
+    public boolean estaActiva(Data avui) {
+        // Calculem la data final sumant els dies a la data d'inici
+        Data dataFi = this.dataInici.dataPlusDies(this.periodeVisualitzacio);
         
-        // Retorna true si avui és igual o posterior a l'inici I avui és anterior o igual al final
-        return (avui.isEqual(dataInici) || avui.isAfter(dataInici)) && 
-               (avui.isEqual(dataFi) || avui.isBefore(dataFi));
+        // Està activa si: dataInici <= avui  I  avui <= dataFi
+        return this.dataInici.esDataInferiorOigual(avui) && 
+               avui.esDataInferiorOigual(dataFi);
     }
 
     // --- ToString ---
