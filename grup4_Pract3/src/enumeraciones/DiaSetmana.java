@@ -1,6 +1,6 @@
 package enumeraciones;
 
 public enum DiaSetmana {
-    LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO
+    DILLUNS, DIMARTS, DIMECRES, DIJOUS, DIVENDRES, DISABTE, DIUMENGE
     
 }

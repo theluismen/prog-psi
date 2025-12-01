@@ -59,8 +59,7 @@ public abstract class Usuari {
     public String toString() {
         return "Àlies: " + alies + 
                 "\nCorreu: " + getEmailComplet() + 
-                "\nCol·lectiu: " + collectiu +
-                "\n" + dadesExtra() + "\n";
+                "\nCol·lectiu: " + collectiu;
     }
 
     

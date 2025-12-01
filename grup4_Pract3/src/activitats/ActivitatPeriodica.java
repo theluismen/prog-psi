@@ -1,11 +1,7 @@
-//cambiar todos los print por excepciones
-//es posible que se cambien los localDate por la clase propia Data en un futuro
-
+//falta añadir todas las excepciones y cambiar los print por excepciones
 
 package activitats;
 
-
-import java.time.LocalDate;
 import enumeraciones.*;
 import extras.*;
 
@@ -22,29 +18,45 @@ public class ActivitatPeriodica extends Activitat {
 
 
 
-
-    public ActivitatPeriodica (String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio,
+    /**
+     * Metodo constructor. Devolvera errores si un valor no es posible
+     * @param nom
+     * @param collectius
+     * @param dataIniInscripcio
+     * @param dataFiInscripcio
+     * @param dia
+     * @param durada
+     * @param diaYHoraInicio
+     * @param setmanes
+     * @param places
+     * @param preu
+     * @param centre
+     * @param ciutat
+     */
+    public ActivitatPeriodica (String nom, String[] collectius, Data dataIniInscripcio, Data dataFiInscripcio,
                                 DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
                                 int places, double preu, String centre, String ciutat){
        
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
-        this.setmanes = setmanes;
         this.centre = centre;
         this.ciutat = ciutat;
-        this.preu = preu;
         this.dataHoraIni = diaYHoraInicio;
+        
+        this.setmanes = setmanes;       //controlar excepciones
+
+        this.preu = preu;       //controlar excepciones
 
         if (places > 0)
             this.places = places;
         else{
-            throw new exception; //crear excepcion correspondiente
+            //crear excepcion correspondiente
         }
 
         if (durada > 0)
             this.durada = durada;
         else{
-            throw new exception; //crear excepcion correspondiente
+            //crear excepcion correspondiente
         }
        
     }
@@ -64,54 +76,52 @@ public class ActivitatPeriodica extends Activitat {
     }
 
 
-//getters
-    public String getDia()  {   return this.dia.toString();     }
+//getters y setters
+    public String getDia(){   return this.dia.toString();     }
+    public void setDia(DiaSetmana nouDia){  this.dia = nouDia;  }
 
 
     public double getDurada(){      return this.durada;     }
+    public void setDurada(double novaDurada){   this.durada = novaDurada;   }   //controlar excepciones
 
 
     public int getPlaces(){     return this.places;     }
+    public void setPlaces(int nouPlaces){   this.places = nouPlaces;    }   //controlar excepciones
 
 
     public Data getDataFinal(){    return this.dataHoraIni.dataPlusDies(this.setmanes*7);      }
 
 
     public int getSetmanes(){     return this.setmanes;    }
+    public void setSetmanes(int nouSetmanes){   this.setmanes = nouSetmanes;    }   //controlar excepciones
    
 
     public double getPreu(){    return this.preu;    }
+    public void setPreu(double nouPreu){    this.preu = nouPreu;    }   //controlar excepciones
 
 
     public String getCentre(){      return this.centre;     }
+    public void setCentre(String nouCentre){    this.centre = nouCentre;    }
 
 
     public String getCiutat(){      return this.ciutat;     }
+    public void setCiutat(String novaCiutat){   this.ciutat = novaCiutat;   }
 
 
     public Data getDataHoraIni(){       return this.dataHoraIni;      }
-
-
+    public void setDataHoraIni(Data nouDataHoraIni){    this.dataHoraIni = nouDataHoraIni;    }
 
 
     public String getHorari(){
         String aux = "El horario es: "+this.dia+" de"+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
-        " a "+;
-       
-        Data horaFin = this.dataHoraIni.copia();
-        
+        " a ";
 
-        double horaFin = this.horaIni + this.durada;
-        hora = (int)(horaFin);
-        minutos = (int)((horaFin - hora) * 60);
+        int hora = (int)(this.durada);
+        int minutos = (int)((this.durada - hora) * 60);
         aux = aux + hora+":"+minutos;
-
 
         return aux;
     }
-
-
-
 
 
 
@@ -122,23 +132,21 @@ public class ActivitatPeriodica extends Activitat {
      * @param hoy
      * @return true si hay clase en esa fecha, false en caso contrario
      */
-    public boolean estaActiva(LocalDate hoy){
+    public boolean avuiHiHaClase(Data hoy){
+        boolean res = false;
         int totalDiesDurada = this.setmanes * 7;
-        LocalDate diaComparar = this.dataIni.plusDays(totalDiesDurada);
+        Data diaComparar = this.dataHoraIni.dataPlusDies(totalDiesDurada);
        
         while (totalDiesDurada > 0){
-            if (hoy.isEqual(diaComparar))
+            if (hoy.esIgual(diaComparar))
             {
-                return true;
+                res = true;
             }
             totalDiesDurada -= 7;
-            diaComparar = this.dataIni.plusDays(totalDiesDurada);
+            diaComparar = this.dataHoraIni.dataPlusDies(totalDiesDurada);
         }
-        return false;
+        return res;
     }
-
-
-
 
 
 
@@ -149,15 +157,11 @@ public class ActivitatPeriodica extends Activitat {
      * @param hoy
      * @return false si no esta activa, true en caso contrario
      */
-    public boolean activesAvui(LocalDate hoy){
-        LocalDate dataFi = getDataFinal();
-        if (hoy.isBefore(dataFi) && hoy.isAfter(this.dataIni)){
-            return true;
-        }
-        else if (hoy.isEqual(dataFi) || hoy.isEqual(this.dataIni)){
-            return true;
-        }
-        return false;
+    @Override
+     public boolean estaActiva(Data hoy){
+        Data dataFi = getDataFinal();
+    
+        return hoy.esDataInferiorOigual(dataFi) && dataHoraIni.esDataInferiorOigual(hoy);
     }
 
 
@@ -166,17 +170,10 @@ public class ActivitatPeriodica extends Activitat {
      *
      * @return una cadena que indica el tipus d'activitat
      */
-    public String tipusActivitat(){
+    @Override
+     public String tipusActivitat(){
         return "Activitat periodica";
     }
-
-
-
-
-
-
-//metodos privados
-
 
 
 

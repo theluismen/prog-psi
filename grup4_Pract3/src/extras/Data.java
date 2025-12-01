@@ -15,6 +15,24 @@ public class Data {
     private int minutos;
 
 
+	/**
+	 * Constructor sin hora, solo con el dia. La hora se guardara como 0 horas, 0 minutos
+	 * @param dia
+	 * @param mes
+	 * @param any
+	 */
+	public Data(int dia, int mes, int any){
+		if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
+            this.dia = dia;
+            this.mes = mes;
+            this.any = any;
+			hora = 0;
+			minutos = 0;
+        } else {
+            //lanzar excepcion
+        }
+	}
+
     /**
      * Constructor que rep la data per paràmetre
      * Ha de validar que la data és correcta. Si rep una data incorrecta inicialitza la instància
