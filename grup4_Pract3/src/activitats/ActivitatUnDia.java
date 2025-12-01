@@ -4,9 +4,7 @@ import extras.Data;
 
 
 public class ActivitatUnDia extends Activitat{
-    private Data dataActivitat;    
-    private int minuto;
-    private int hora;              
+    private Data dataActivitat;               
     private int places;                
     private double preu;               
     private String ciutat;            
@@ -19,7 +17,6 @@ public class ActivitatUnDia extends Activitat{
      * @param dataIniInscripcio Fecha de inicio de inscripción.
      * @param dataFiInscripcio Fecha de fin de inscripción.
      * @param dataActivitat Fecha de la actividad.
-
      * @param places Número de plazas disponibles.
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
@@ -113,8 +110,8 @@ public class ActivitatUnDia extends Activitat{
         return"--- ACTIVITAT D'UN DIA ---\n" + 
             "\tNom: " + nom + "\n" +
             "\tCollectius: "  + String.join(", ", collectius) + "\n" +
-            "\tPeríode d'inscripció: del " + dataIniciInscripcio + " al " + dataFiInscripcio + "\n" +
-            "\tData: " + dataActivitat + " a les " + hora + ":" + minuto + "\n" +
+            "\tPeríode d'inscripció: del " + dataIniciInscripcio.getDia() + "/" +dataIniciInscripcio.getMes() + "/" + dataIniciInscripcio.getAny() + " al " + dataFiInscripcio.getDia() + "/" +dataFiInscripcio.getMes() + "/" + dataFiInscripcio.getAny() + "\n" +
+            "\tData: " + dataActivitat.getDia() + "/" + dataActivitat.getMes() + "/" + dataActivitat.getAny() + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
             "\tPreu: " + preu + " euros";
