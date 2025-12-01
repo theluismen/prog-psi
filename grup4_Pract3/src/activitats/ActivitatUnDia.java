@@ -3,13 +3,25 @@ package activitats;
 import java.time.LocalDate;
 
 public class ActivitatUnDia extends Activitat{
-    private LocalDate dataActivitat;    //Fecha de la actividad
-    private String hora;                //Hora de la actividad
-    private int places;                 //Núero de plazas de la actividad
-    private double preu;                //Precio de la actividad
-    private String ciutat;              //Ciudad de la actividad
+    private LocalDate dataActivitat;    
+    private String hora;              
+    private int places;                
+    private double preu;               
+    private String ciutat;            
 
-    //Constructor
+
+    /**
+     * Constructor de ActivitatUnDia.
+     * @param nom Nombre de la actividad.
+     * @param collectius Colectivo al que pertenece la persona.
+     * @param dataIniInscripcio Fecha de inicio de inscripción.
+     * @param dataFiInscripcio Fecha de fin de inscripción.
+     * @param dataActivitat Fecha de la actividad.
+     * @param hora Hora de la actividad (String tipo XX:XX).
+     * @param places Número de plazas disponibles.
+     * @param preu Precio de la actividad.
+     * @param ciutat Ciudad de la actividad.
+     */
     public ActivitatUnDia(String nom, String[] collectius, LocalDate dataIniInscripcio, LocalDate dataFiInscripcio, LocalDate dataActivitat, String hora, int places, double preu, String ciutat){
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
@@ -62,6 +74,29 @@ public class ActivitatUnDia extends Activitat{
         return ciutat;
     }
 
+    /**
+     * Método que determina si la actividad está activa en la fecha dada.
+     * Está activa si se encuentra entre la fecha inicio y final, ambas incluidas.
+     * 
+     * @param avui Fecha a comprovar.
+     * @return true si la fecha está dentro del período de inscripción, false en caso contrario.
+     */
+    @Override
+    public boolean estaActiva(LocalDate avui) {
+    return (avui != null &&
+            (avui.isEqual(dataIniInscripcio) || avui.isAfter(dataIniInscripcio)) &&
+            (avui.isEqual(dataFiInscripcio) || avui.isBefore(dataFiInscripcio)));
+    }
+
+    /**
+     * Método que devuelve el tipo de actividad como String.
+     *
+     * @return Tipo de actividad como String.
+     */
+    @Override
+    public String tipusActivitat() {
+        return "Activitat d'un dia";
+    }
 
     //Método para pasar toda la clase por string.
     public String toString(){
