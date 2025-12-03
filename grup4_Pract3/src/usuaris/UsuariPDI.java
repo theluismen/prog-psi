@@ -2,34 +2,41 @@
 
 package usuaris;
 
+import enumeraciones.*;
 
 public class UsuariPDI extends Usuari{
 
-    private String departament;
-    private String campus;
+    private DepartamentURV departament;
+    private CampusURV campus;
 
     /**
      * Constructor UsuariPDI.
      * @param alies Alias de la persona.
      * @param email Correo electrónico.
-     * @param collectiu Colectivo que es PDI para esta clase.
+     * @param collectiu Colectivo.
      * @param department Departamento.
      * @param campus Campus de la persona.
      */
-    public UsuariPDI(String alies, String email, String collectiu, String departament, String campus){
-        super(alies, email, "PDI");
+    public UsuariPDI(String alies, 
+                     String email, 
+                     String collectiu, 
+                     DepartamentURV departament, 
+                     CampusURV campus){
+
+        super(alies, email, collectiu);
         this.departament = departament;
         this.campus = campus;
     }
 
-    //Getters...
+
+    //Getters 
 
     /**
      * Getter de departamento.
      * @return nombre del departammento.
      */
     public String getdepartament(){
-        return departament;
+        return departament.getNomDepartament();
     }
 
     /**
@@ -37,38 +44,50 @@ public class UsuariPDI extends Usuari{
      * @return nombre del campus.
      */
     public String getCampus(){
-        return campus;
+        return campus.getNomCampus();
     }
     
 
+    //Setters
+
+    public void setCampus(CampusURV noCampusURV){
+        this.campus = noCampusURV;
+    }
+
+    public void setDepartament(DepartamentURV nouDepartamentURV){
+        this.departament = nouDepartamentURV;
+    }
+
+
+    //Métodos abstractos del padre.
+    
     /**
-     * Mètode que retorna la información extra del usuario PDI.
+     * Mètode que retorna informació extra de cada tipus d'usuari
+     * 
+     * Estudiant -> ensenyament + any inici
      * PDI -> departament + campus
+     * PTGAS -> campus
      * 
-     * @return informació específica del usuario PDI.
+     * @return informació específica de la subclasse
      */
-    @Override
     public String dadesExtra(){
-        return departament + " " + campus;
+        return "\nDepartament: " + departament.getNomDepartament() + 
+               "\nCampus: " + campus.getNomCampus();
     }
 
     /**
-     * Mètode que retorna el tipo de usuario.
+     * Mètode que retorna el tipus d'usuari (Estudiant, PDI, PTGAS)
      * 
-     * @return String del tipo de usuario.
+     * @return String del tipus d'Usuari
      */
-    @Override
     public String tipusUsuari(){
-        return "PDI";
+        return "Usuari PDI";
     }
 
-
-    @Override
+    /**
+     * Método toString
+     */
     public String toString() {
-        return "Àlies: " + getAlies() + 
-                "\nCorreu: " + getEmailComplet() + 
-                "\nCollectiu: " + tipusUsuari() +
-                "\nDepartament: " + departament +
-                "\nCampus: " + campus;
+        return super.toString() + this.dadesExtra();
     }
 }
