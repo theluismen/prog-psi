@@ -2,7 +2,7 @@
 
 package activitats;
 
-import extras.Data;
+import extras.*;
 
 
 public class ActivitatUnDia extends Activitat{
@@ -84,17 +84,18 @@ public class ActivitatUnDia extends Activitat{
         return ciutat;
     }
 
+
+    //Métodos de la clase padre.
+
     /**
      * Método que determina si la actividad está activa en la fecha dada.
-     * Está activa si se encuentra entre la fecha inicio y final, ambas incluidas.
      * 
      * @param avui Fecha a comprovar.
-     * @return true si la fecha está dentro del período de inscripción, false en caso contrario.
+     * @return true si la fecha coincide con el día de la actividad, false en caso contrario.
      */
     @Override
-    public boolean estaActiva(Data avui) {
-    return (avui != null &&
-            (avui.esIgual(dataIniciInscripcio)) && (avui.esDataInferiorOigual(dataFiInscripcio)));
+    public boolean estaActiva(Data hoy) {
+    return hoy != null && hoy.equals(dataActivitat);
     }
 
     /**
@@ -110,9 +111,7 @@ public class ActivitatUnDia extends Activitat{
     //Método para pasar toda la clase por string.
     public String toString(){
         return"--- ACTIVITAT D'UN DIA ---\n" + 
-            "\tNom: " + nom + "\n" +
-            "\tCollectius: "  + String.join(", ", collectius) + "\n" +
-            "\tPeríode d'inscripció: del " + dataIniciInscripcio.getDia() + "/" +dataIniciInscripcio.getMes() + "/" + dataIniciInscripcio.getAny() + " al " + dataFiInscripcio.getDia() + "/" +dataFiInscripcio.getMes() + "/" + dataFiInscripcio.getAny() + "\n" +
+            super.toString()+
             "\tData: " + dataActivitat.getDia() + "/" + dataActivitat.getMes() + "/" + dataActivitat.getAny() + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
