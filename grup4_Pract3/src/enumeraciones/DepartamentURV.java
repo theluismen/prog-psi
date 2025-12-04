@@ -26,11 +26,12 @@ public enum DepartamentURV {
     DQAQO("Departament de Química Analítica i Química Orgànica");
 
     private String nomDepartament;
+
     DepartamentURV(String nomDepartament){
         this.nomDepartament = nomDepartament;
     }
 
-    public String getNomCampus(){
+    public String getNomDepartament(){
         return nomDepartament;
     }
 }
