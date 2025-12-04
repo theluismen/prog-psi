@@ -8,20 +8,20 @@ import enumeraciones.*;
 public class UsaActivitatPeriodica {
 
     public static void main(String[] args) {
-        // --- Datos base reutilizables ---
-    Data dataIni = new Data(10, 1, 2025, 10, 0);
-    Data dataIniIns = new Data(1, 1, 2025);
-    Data dataFiIns = new Data(20, 1, 2025);
+            // --- Datos base reutilizables ---
+        Data dataIni = new Data(10, 1, 2025, 10, 0);
+        Data dataIniIns = new Data(1, 1, 2025);
+        Data dataFiIns = new Data(20, 1, 2025);
 
-    testConstructor(dataIniIns, dataFiIns, dataIni);
+        testConstructor(dataIniIns, dataFiIns, dataIni);
 
-    ActivitatPeriodica activitat = new ActivitatPeriodica("Ioga", new String[]{"PDI"}, dataIniIns, dataFiIns,
-                                DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
-                                "Centre Blau", "Barcelona");
-    testHorariYDataFinal(activitat);
-    testAvuiHiHaClasse(activitat);
-    testEstaActiva(activitat);
-    testTipusActivitat(activitat);
+        ActivitatPeriodica activitat = new ActivitatPeriodica("Ioga", new String[]{"PDI"}, dataIniIns, dataFiIns,
+                                    DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
+                                    "Centre Blau", "Barcelona");
+        testHorariYDataFinal(activitat);
+        testAvuiHiHaClasse(activitat);
+        testEstaActiva(activitat);
+        testTipusActivitat(activitat);
 
     }
 

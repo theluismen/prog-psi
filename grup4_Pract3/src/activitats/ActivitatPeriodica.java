@@ -78,39 +78,143 @@ public class ActivitatPeriodica extends Activitat {
 
 
 //getters y setters
-    public String getDia(){   return this.dia.toString();     }
-    public void setDia(DiaSetmana nouDia){  this.dia = nouDia;  }
+    /**
+     * getter del dia de la semana de la actividad
+     * @return dia de la semana
+     */
+    public String getDia(){   
+        return this.dia.toString();     
+    }
 
+    /**
+     * setter para cambiar el dia de la actividad
+     * @param nouDia
+     */
+    public void setDia(DiaSetmana nouDia){  
+        this.dia = nouDia;  
+    }
 
-    public double getDurada(){      return this.durada;     }
-    public void setDurada(double novaDurada){   this.durada = novaDurada;   }   //controlar excepciones
+    /**
+     * getter de la duracion de la actividad (horas)
+     * @return duracion
+     */
+    public double getDurada(){      
+        return this.durada;     
+    }
 
+    /**
+     * setter para cambiar la duracion de la actividad (horas)
+     * @param novaDurada
+     */
+    public void setDurada(double novaDurada){   
+        this.durada = novaDurada;   
+    }   //controlar excepciones
 
-    public int getPlaces(){     return this.places;     }
-    public void setPlaces(int nouPlaces){   this.places = nouPlaces;    }   //controlar excepciones
+    /**
+     * getter de la cantidad de plazas de la actividad
+     * @return plazas
+     */
+    public int getPlaces(){     
+        return this.places;     
+    }
 
+    /**
+     * setter para cambiar las plazas de una actividad
+     * @param nouPlaces
+     */
+    public void setPlaces(int nouPlaces){   
+        this.places = nouPlaces;    
+    }   //controlar excepciones
 
-    public Data getDataFinal(){    return this.dataHoraIni.dataPlusDies(this.setmanes*7);      }
+    /**
+     * getter para saber la fecha del final de la actividad
+     * @return fecha final
+     */
+    public Data getDataFinal(){    
+        return this.dataHoraIni.dataPlusDies(this.setmanes*7);      
+    }
 
+    /**
+     * getter de la cantidad de semanas que dura la actividad
+     * @return semanas
+     */
+    public int getSetmanes(){     
+        return this.setmanes;    
+    }
 
-    public int getSetmanes(){     return this.setmanes;    }
-    public void setSetmanes(int nouSetmanes){   this.setmanes = nouSetmanes;    }   //controlar excepciones
+    /**
+     * setter para cambiar la cantidad de semanas que dura la actividad
+     * @param nouSetmanes
+     */
+    public void setSetmanes(int nouSetmanes){   
+        this.setmanes = nouSetmanes;    
+    }   //controlar excepciones
    
+    /**
+     * getter del precio de la actividad
+     * @return precio
+     */
+    public double getPreu(){    
+        return this.preu;    
+    }
 
-    public double getPreu(){    return this.preu;    }
-    public void setPreu(double nouPreu){    this.preu = nouPreu;    }   //controlar excepciones
+    /**
+     * setter para cambiar el precio de la actividad
+     * @param nouPreu
+     */
+    public void setPreu(double nouPreu){    
+        this.preu = nouPreu;    
+    }   //controlar excepciones
 
+    /**
+     * getter del centro donde se imparte la actividad
+     * @return centro
+     */
+    public String getCentre(){      
+        return this.centre;     
+    }
 
-    public String getCentre(){      return this.centre;     }
-    public void setCentre(String nouCentre){    this.centre = nouCentre;    }
+    /**
+     * setter para cambiar el centro donde se imparte la actividad
+     * @param nouCentre
+     */
+    public void setCentre(String nouCentre){    
+        this.centre = nouCentre;    
+    }
 
+    /**
+     * getter de la ciudad donde se imparte la actividad
+     * @return ciudad
+     */
+    public String getCiutat(){      
+        return this.ciutat;     
+    }
 
-    public String getCiutat(){      return this.ciutat;     }
-    public void setCiutat(String novaCiutat){   this.ciutat = novaCiutat;   }
+    /**
+     * setter para cambiar la ciudad
+     * @param novaCiutat
+     */
+    public void setCiutat(String novaCiutat){   
+        this.ciutat = novaCiutat;   
+    }
 
+    /**
+     * setter de la fecha y la hora de inicio de la actividad
+     * la hora sera la misma cada semana
+     * la fecha se refiere al primer dia de imparticion de la actividad
+     * @return fecha y hora de inicio
+     */
+    public Data getDataHoraIni(){       
+        return this.dataHoraIni;      
+    }
 
-    public Data getDataHoraIni(){       return this.dataHoraIni;      }
-    public void setDataHoraIni(Data nouDataHoraIni){    this.dataHoraIni = nouDataHoraIni;    }
+    /**
+     * setter para cambiar la fecha de inicio de la actividad o la hora a la que empieza
+     * @param nouDataHoraIni
+     */
+    public void setDataHoraIni(Data nouDataHoraIni){    
+        this.dataHoraIni = nouDataHoraIni;    
+    }
 
 
     public String getHorari(){
@@ -122,6 +226,17 @@ public class ActivitatPeriodica extends Activitat {
         aux = aux + hora+":"+minutos;
 
         return aux;
+    }
+
+
+//Metodo copia
+    /**
+     * Metodo que devuelve un duplicado de la instancia
+     * @return duplicado
+     */
+    public ActivitatPeriodica copia(){
+        return new ActivitatPeriodica(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
+        this.dia, this.durada, this.dataHoraIni, this.setmanes, this.places, this.preu, this.centre, this.ciutat);
     }
 
 

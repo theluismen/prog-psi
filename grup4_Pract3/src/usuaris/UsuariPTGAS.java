@@ -29,8 +29,7 @@ public class UsuariPTGAS extends Usuari{
      * @return informació específica de la subclasse
      */
     public String dadesExtra(){
-        String aux = "\nCampus: "+campus.getNomCampus();
-        return aux;
+        return "\nCampus: "+campus.getNomCampus();
     }
 
     /**
@@ -42,10 +41,17 @@ public class UsuariPTGAS extends Usuari{
         return "Usuari PTGAS";
     }
 
+    /**
+     * Mètode que retorna un duplicat de la instancia
+     * @return duplicado
+     */
+    public UsuariPTGAS copia(){
+        return new UsuariPTGAS(super.alies, super.collectiu, super.email, this.campus);
+    }
+
 //toString
     public String toString(){
-        String aux = super.toString() + this.dadesExtra();
-        return aux;
+        return super.toString() + this.dadesExtra();
     }
 
 
