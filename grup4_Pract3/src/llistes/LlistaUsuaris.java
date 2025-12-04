@@ -1,9 +1,9 @@
 package llistes;
-import usuaris.*;
-
+import enumeraciones.CampusURV;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import usuaris.*;
 
 
 
@@ -136,13 +136,14 @@ public class LlistaUsuaris {
 
             switch (col) {
                 case "Estudiant":
-                    u = new Estudiant(alies, email, dades[3], Integer.parseInt(dades[4]));
+                    u = new UsuariEstudiant(alies, email, dades[3], Integer.parseInt(dades[4]));
                     break;
                 case "PDI":
-                    u = new PDI(alies, email, dades[3], dades[4]);
+                    u = new UsuariPDI(alies, email, dades[3], dades[4]);
                     break;
                 case "PTGAS":
-                    u = new PTGAS(alies, email, dades[3]);
+                    CampusURV campus = CampusURV.fromString(dades[3]);
+                    u = new UsuariPTGAS(alies, email, campus);
                     break;
                 default:
                     throw new IllegalArgumentException("Col·lectiu desconegur: " + col);
