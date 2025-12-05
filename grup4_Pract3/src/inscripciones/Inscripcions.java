@@ -1,6 +1,6 @@
 //Ikram Hallouz
 
-package extras;
+package inscripciones;
 
 import java.io.Serializable;
 
@@ -39,7 +39,7 @@ public class Inscripcions implements Serializable {
     }
 
     /**
-     * Retorna la valoració. 
+     * Retorna la valoració.
      * @return nota (0-10) o null si encara no s'ha valorat.
      */
     public Integer getValoracio() {
