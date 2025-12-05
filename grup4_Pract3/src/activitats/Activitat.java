@@ -10,7 +10,6 @@ public abstract class Activitat {
     protected Data dataIniciInscripcio;
     protected Data dataFiInscripcio;
 
-
     /**
      * Constructor de la classe Activitat
      *
@@ -28,18 +27,41 @@ public abstract class Activitat {
         this.dataFiInscripcio = dataFiInscripcio;
     }
 
-    //Getters
+    /**
+     * Metode que retorna el nom de l'usuari
+     * 
+     * @return un String que representa el nom de l'usuari
+     */
+    public String getNom() {    
+        return nom;  
+    }
 
-    public String getNom() {    return nom;  }
+    /**
+     * Metode que retorna la llista de col·lectius als que pot pertanyer l'usuari
+     * 
+     * @return un array de cadenes amb els col·lectius
+     */
+    public String[] getCollectius() {   
+        return collectius;  
+        }
 
-    public String[] getCollectius() {   return collectius;  }
+    /**
+     * Metode que retorna la data d'inici del període d'inscripció
+     * 
+     * @return un objecte {@code Data} que representa la data inicial d'inscripció
+     */
+    public Data getDataIniInscripcio()  {  
+        return dataIniciInscripcio;  
+    }
 
-    public Data getDataIniInscripcio()  {  return dataIniciInscripcio;  }
-
-    public Data getDataFiInscripcio()  {  return dataFiInscripcio;  }
-
-
-    // Funcions base
+    /**
+     * Mètode que retorna la data de finalització del període d'inscripció
+     * 
+     * @return un objecte {@code Data} que representa la data final d'inscripció
+     */
+    public Data getDataFiInscripcio()  {  
+        return dataFiInscripcio;  
+    }
 
     /**
      * Mètode que determina si avui es pot fer una inscripcio
@@ -51,8 +73,6 @@ public abstract class Activitat {
     return dataIniciInscripcio.esDataInferiorOigual(avui) &&
             avui.esDataInferiorOigual(dataFiInscripcio);
     }
-
-    
     
     /**
      * Determina si l'activitat esta activa en la data indicada
@@ -69,7 +89,19 @@ public abstract class Activitat {
      */
     public abstract String tipusActivitat();
 
+    /**
+     * Metode que retorna una còpia de l'activitat
+     * 
+     * @return una nova instància d'activitat
+     */
+    public abstract Activitat copia();
 
+    /**
+     * Retorna una representació textual de l'activitat, incloent
+     * totes les seves dades (nom, col·lectius i període d'inscripció)
+     * 
+     * @return una cadena de text amb el nom, els col·lectius i el període d'inscripció
+     */
     @Override
     public String toString() {
         String info = "Nom: " + nom + "\nCol·lectius: ";
@@ -84,4 +116,5 @@ public abstract class Activitat {
 
         return info;
     }
+
 }
