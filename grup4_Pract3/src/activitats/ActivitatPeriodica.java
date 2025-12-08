@@ -63,20 +63,6 @@ public class ActivitatPeriodica extends Activitat {
     }
 
 
-//toString
-    public String toString(){
-        //aprovechando el toString del padre
-        String aux = super.toString()+
-                    "\nCentre: "+this.centre+
-                    "\nCiutat: "+this.ciutat+
-                    "\nPreu: "+this.preu+
-                    "\nPlaçes: "+this.places+
-                    "\nTotal de setmanes: "+this.setmanes+
-                    "\n"+getHorari();
-        return aux;
-    }
-
-
 //getters y setters
     /**
      * getter del dia de la semana de la actividad
@@ -239,6 +225,70 @@ public class ActivitatPeriodica extends Activitat {
         this.dia, this.durada, this.dataHoraIni, this.setmanes, this.places, this.preu, this.centre, this.ciutat);
     }
 
+
+//toString
+    public String toString(){
+        //aprovechando el toString del padre
+        String aux = super.toString()+
+                    "\nCentre: "+this.centre+
+                    "\nCiutat: "+this.ciutat+
+                    "\nPreu: "+this.preu+
+                    "\nPlaçes: "+this.places+
+                    "\nTotal de setmanes: "+this.setmanes+
+                    "\n"+getHorari();
+        return aux;
+    }
+
+
+//toCSV
+    /**
+     * Metodo que transforma todos los atributos de la clase en un String en formato CSV de la siguiente forma:
+     * nom;colectiu;DiaIniInsc;MesIniInsc;AnyIniInsc;DiaFiInsc;MesFiInsc;AnyFiInsc;Dia;Durada;DiaIni;MesIni;AnyIni;Hora;Minut;Setmanes;Places;Preu;Centre;Ciutat
+     * siendo:
+     * Nom = nombre de la actividad
+     * Colectius = la tabla se transcribe separando cada colectivo por comas (...;colectiuA,colectiuB,colectiuC;...)
+     * DiaIniInsc, MesIniInsc, AnyIniInsc = fecha de inicio del plazo de inscripcion (dia, mes y año)
+     * DiaFiInsc, MesFiInsc, AnyFiInsc = fecha de fin del plazo de iscripcion (dia, mes y año)
+     * Dia = dia de la semana en que se realiza la actividad (lunes, martes, miercoles, etc)
+     * Durada = duración de la actividad (2.5 = 2 horas y 30 minutos)
+     * DiaIni, MesIni, AnyIni = primer dia en que se lleva a cabo la actividad (fecha inicial de la actividad)
+     * Hora, Minut = horario de la actividad (hora de inicio, cada semana la misma)
+     * Setmanes = cantidad de semanas en que se lleva a cabo la actividad
+     * Places = cantidad de plazas de la actividad
+     * Preu = precio de la actividad
+     * Centre = lugar en el que se llevara a cabo la actividad
+     * Ciutat = ciudad donde se hara la actividad
+     * @return
+     */
+    public String toCSV(){
+        String aux = super.getNom()+";";
+
+        for (int i = 0; i < (super.collectius.length - 1); i++){    //-1 para evitar que al poner el ultimo colectivo quede una coma al final
+            aux += super.collectius[i]+",";
+        }
+        aux += super.collectius[super.collectius.length-1]+";"+
+        super.dataIniciInscripcio.getDia()+";"+
+        super.dataIniciInscripcio.getMes()+";"+
+        super.dataIniciInscripcio.getAny()+";"+
+        super.dataFiInscripcio.getDia()+";"+
+        super.dataFiInscripcio.getMes()+";"+
+        super.dataFiInscripcio.getAny()+";"+
+        this.dia+";"+
+        this.durada+";"+
+        this.dataHoraIni.getDia()+";"+
+        this.dataHoraIni.getMes()+";"+
+        this.dataHoraIni.getAny()+";"+
+        this.dataHoraIni.getHora()+";"+
+        this.dataHoraIni.getMinutos()+";"+
+        this.setmanes+";"+
+        this.places+";"+
+        this.preu+";"+
+        this.centre+";"+
+        this.ciutat;
+
+        return aux;
+
+    }
 
 
 //metodos propios
