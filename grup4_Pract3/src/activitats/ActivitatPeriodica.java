@@ -243,8 +243,9 @@ public class ActivitatPeriodica extends Activitat {
 //toCSV
     /**
      * Metodo que transforma todos los atributos de la clase en un String en formato CSV de la siguiente forma:
-     * nom;colectiu;DiaIniInsc;MesIniInsc;AnyIniInsc;DiaFiInsc;MesFiInsc;AnyFiInsc;Dia;Durada;DiaIni;MesIni;AnyIni;Hora;Minut;Setmanes;Places;Preu;Centre;Ciutat
+     * tipusActivitat;nom;colectiu;DiaIniInsc;MesIniInsc;AnyIniInsc;DiaFiInsc;MesFiInsc;AnyFiInsc;Dia;Durada;DiaIni;MesIni;AnyIni;Hora;Minut;Setmanes;Places;Preu;Centre;Ciutat
      * siendo:
+     * tipusActivitat = Activitat Periodica
      * Nom = nombre de la actividad
      * Colectius = la tabla se transcribe separando cada colectivo por comas (...;colectiuA,colectiuB,colectiuC;...)
      * DiaIniInsc, MesIniInsc, AnyIniInsc = fecha de inicio del plazo de inscripcion (dia, mes y año)
@@ -261,7 +262,7 @@ public class ActivitatPeriodica extends Activitat {
      * @return
      */
     public String toCSV(){
-        String aux = super.getNom()+";";
+        String aux = this.tipusActivitat() +";"+ super.nom+";";
 
         for (int i = 0; i < (super.collectius.length - 1); i++){    //-1 para evitar que al poner el ultimo colectivo quede una coma al final
             aux += super.collectius[i]+",";

@@ -13,15 +13,16 @@ public class UsaActivitatPeriodica {
         Data dataIniIns = new Data(1, 1, 2025);
         Data dataFiIns = new Data(20, 1, 2025);
 
-        testConstructor(dataIniIns, dataFiIns, dataIni);
+        //testConstructor(dataIniIns, dataFiIns, dataIni);
 
-        ActivitatPeriodica activitat = new ActivitatPeriodica("Ioga", new String[]{"PDI"}, dataIniIns, dataFiIns,
+        ActivitatPeriodica activitat = new ActivitatPeriodica("Ioga", new String[]{"PDI", "PTGAS"}, dataIniIns, dataFiIns,
                                     DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
                                     "Centre Blau", "Barcelona");
-        testHorariYDataFinal(activitat);
-        testAvuiHiHaClasse(activitat);
-        testEstaActiva(activitat);
-        testTipusActivitat(activitat);
+        //testHorariYDataFinal(activitat);
+        //testAvuiHiHaClasse(activitat);
+        //testEstaActiva(activitat);
+        //testTipusActivitat(activitat);
+        testToCSV(activitat);
 
     }
 
@@ -76,5 +77,10 @@ public class UsaActivitatPeriodica {
     private static void testTipusActivitat(ActivitatPeriodica act) {
         System.out.println("\n\nTest para probar tipusActivitat");
         System.out.println(act.tipusActivitat());
+    }
+
+    private static void testToCSV(ActivitatPeriodica act){
+        String aux = act.toCSV();
+        System.out.println(aux);
     }
 }
