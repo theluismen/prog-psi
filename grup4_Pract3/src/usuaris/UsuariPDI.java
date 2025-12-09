@@ -85,6 +85,14 @@ public class UsuariPDI extends Usuari{
     }
 
     /**
+     * Mètode que retorna un duplicat de la instancia
+     * @return duplicado
+     */
+    public UsuariPDI copia(){
+        return new UsuariPDI(super.alies,super.email,super.collectiu,this.departament,this.campus);
+    }
+
+    /**
      * Método toString
      */
     public String toString() {

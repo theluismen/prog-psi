@@ -23,9 +23,15 @@ public class ActivitatUnDia extends Activitat{
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
      */
-    public ActivitatUnDia(String nom, String[] collectius, Data dataIniciInscripcio, 
-                            Data dataFiInscripcio, Data dataActivitat, 
-                            int places, double preu, String ciutat){
+    public ActivitatUnDia(String nom, 
+                          String[] collectius, 
+                          Data dataIniciInscripcio, 
+                          Data dataFiInscripcio, 
+                          Data dataActivitat, 
+                          int places, 
+                          double preu, 
+                          String ciutat){
+
         super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
         this.places = places;
@@ -95,7 +101,19 @@ public class ActivitatUnDia extends Activitat{
      */
     @Override
     public boolean estaActiva(Data hoy) {
-    return hoy != null && hoy.equals(dataActivitat);
+        boolean resultado = false;
+    
+        if(hoy != null ){
+            boolean mismoDia = hoy.getDia() == dataActivitat.getDia() &&
+                           hoy.getMes() == dataActivitat.getMes() &&
+                           hoy.getAny() == dataActivitat.getAny();
+            if(mismoDia){
+                if(hoy.getHora() > dataActivitat.getHora()){
+                    resultado = hoy.getMinutos() >= dataActivitat.getMinutos();
+                }
+            }
+        }
+    return resultado;
     }
 
     /**
@@ -108,11 +126,21 @@ public class ActivitatUnDia extends Activitat{
         return "Activitat d'un dia";
     }
 
+    /**
+     * Metodo que devuelve un duplicado de la instancia
+     * @return duplicado
+     */
+    public ActivitatUnDia copia(){
+        return new ActivitatUnDia(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
+                                  this.dataActivitat, this.places, this.preu, this.ciutat);
+    }
+
     //Método para pasar toda la clase por string.
     public String toString(){
         return"--- ACTIVITAT D'UN DIA ---\n" + 
             super.toString()+
-            "\tData: " + dataActivitat.getDia() + "/" + dataActivitat.getMes() + "/" + dataActivitat.getAny() + "\n" +
+            "\tData: " + dataActivitat.getDia() + "/" + dataActivitat.getMes() + "/" + dataActivitat.getAny() + 
+            " a les " + String.format("%02d", dataActivitat.getHora()) + ":" + String.format("%02d", dataActivitat.getMinutos()) + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
             "\tPreu: " + preu + " euros";
