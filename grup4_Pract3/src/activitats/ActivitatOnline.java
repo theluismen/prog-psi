@@ -1,10 +1,11 @@
-//Ikram Kheira
+/**
+ * Autor: Ikram Hallouz
+ * Descripción: Clase que representa una actividad online.
+ */
 
 package activitats;
 
-
-import extras;
-import java.time.LocalDate;
+import extras.Data;
 
 public class ActivitatOnline extends Activitat {
 
@@ -22,8 +23,8 @@ public class ActivitatOnline extends Activitat {
      * @param periodeVisualitzacio Durada en dies
      * @param enllac URL de l'activitat
      */
-    public ActivitatOnline(String nom, String[] collectius, LocalDate dataIniInscripcio, 
-                           LocalDate dataFiInscripcio, LocalDate dataInici, 
+    public ActivitatOnline(String nom, String[] collectius, Data dataIniInscripcio, 
+                           Data dataFiInscripcio, Data dataInici, 
                            int periodeVisualitzacio, String enllac) {
         
         // Cridem al pare. No passem preu ni places perquè Activitat no en té.
@@ -79,15 +80,36 @@ public class ActivitatOnline extends Activitat {
     }
     
     /**
-     * Mètode auxiliar per si necessiteu guardar en fitxer separats per ;
-     * Ja que el toString() del pare que m'has passat fa servir format "llegible" i no CSV.
+     * Retorna informació de l'objecte en format CSV separat per punts i coma
+     * Format pare + propis: 
+     * Tipus;Nom;Colectius;IniciIns;FiIns;DataIniciAct;Periode;Enllac
      */
     public String toCSV() {
-        // Necessitareu un mètode així si voleu complir el requisit del PDF de guardar amb ';'
-        // ja que el toString() actual posa "Nom: ...".
-        return getNom() + ";" + 
-               // Aquí caldria gestionar l'array de col·lectius per guardar-lo
-               getDataIniInscripcio() + ";" + getDataFiInscripcio() + ";" +
-               dataInici + ";" + periodeVisualitzacio + ";" + enllac;
+        // Construïm la part dels col·lectius separats per comes dins del CSV
+        String cols = String.join(",", super.collectius);
+
+        return tipusActivitat() + ";" + 
+               super.nom + ";" + 
+               cols + ";" +
+               super.dataIniciInscripcio.getDia() + "/" + super.dataIniciInscripcio.getMes() + "/" + super.dataIniciInscripcio.getAny() + ";" +
+               super.dataFiInscripcio.getDia() + "/" + super.dataFiInscripcio.getMes() + "/" + super.dataFiInscripcio.getAny() + ";" +
+               this.dataInici.getDia() + "/" + this.dataInici.getMes() + "/" + this.dataInici.getAny() + ";" +
+               this.periodeVisualitzacio + ";" + 
+               this.enllac;
     }
+
+    @Override
+    public ActivitatOnline copia() {
+        // Important: Fem servir .copia() de Data per no compartir referències (Deep Copy)
+        return new ActivitatOnline(
+            super.nom,
+            super.collectius, // Els Strings són immutables, no cal clonar l'array si no el modifiquem
+            super.dataIniciInscripcio.copia(),
+            super.dataFiInscripcio.copia(),
+            this.dataInici.copia(),
+            this.periodeVisualitzacio,
+            this.enllac
+        );
+    }
+
 }
