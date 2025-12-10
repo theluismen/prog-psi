@@ -71,7 +71,7 @@ public class ActivitatOnline extends Activitat {
 
     @Override
     public String toString() {
-        // Aprofitem el toString del pare que ja mostra Nom, Col·lectius i Inscripció
+        // Aprofitem el toString del pare.
         return super.toString() +
                "Tipus: Online" + "\n" +
                "Data Inici Activitat: " + this.dataInici + "\n" +
@@ -80,7 +80,7 @@ public class ActivitatOnline extends Activitat {
     }
     
     /**
-     * Retorna informació de l'objecte en format CSV separat per punts i coma
+     * Retorna informació de l'objecte en format CSV separat per ;
      * Format pare + propis: 
      * Tipus;Nom;Colectius;IniciIns;FiIns;DataIniciAct;Periode;Enllac
      */

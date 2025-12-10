@@ -1,3 +1,8 @@
+/**
+ * Autor: Ikram Hallouz
+ * Descripción: Test per a la classe ActivitatOnline
+ */
+
 package tests;
 
 import activitats.ActivitatOnline;

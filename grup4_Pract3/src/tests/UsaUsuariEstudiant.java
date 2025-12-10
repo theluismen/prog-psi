@@ -1,51 +1,44 @@
+/**
+ * Autor(@s): Ikram Kheira
+ * Descripción: Test per a la classe UsuariEstudiant
+ */
+
+
 package tests;
 
 import usuaris.UsuariEstudiant;
 
 public class UsaUsuariEstudiant {
-
     public static void main(String[] args) {
-        System.out.println("-------------------------------------------------");
-        System.out.println(" INICI TEST USUARI ESTUDIANT");
-        System.out.println("-------------------------------------------------");
+        // Crear un usuari estudiant amb dades d'exemple
+        UsuariEstudiant estudiant = new UsuariEstudiant(
+            "mar.garcia",    // Àlies
+            "mar.garcia",    // Part esquerra del correu
+            "GEI",           // Ensenyament
+            2023             // Any d'inici
+        );
 
-        try {
-            // 1. Creació de l'objecte UsuariEstudiant
-            // Constructor: (alies, email, ensenyament, anyInici)
-            UsuariEstudiant estudiant = new UsuariEstudiant(
-                "mar.garcia",    // Àlies
-                "mar.garcia",    // Part esquerra del correu
-                "GEI",           // Ensenyament
-                2023             // Any d'inici
-            );
+        // Imprimir les propietats bàsiques (heretades del pare)
+        System.out.println("Àlies: " + estudiant.getAlies());
+        System.out.println("Correu complet: " + estudiant.getEmailComplet()); // Verifica la generació del correu
+        System.out.println("Col·lectiu: " + estudiant.getCollectiu());
 
-            // 2. Mostrar la informació completa (Test del toString i dadesExtra)
-            System.out.println(">> Dades de l'estudiant creat:");
-            System.out.println(estudiant.toString());
+        // Imprimir les propietats específiques d'Estudiant
+        System.out.println("Ensenyament: " + estudiant.getEnsenyament());
+        System.out.println("Any d'inici: " + estudiant.getAnyInici());
 
-            // 3. Verificació específica del Correu (Mètode del pare Usuari)
-            String correuEsperat = "mar.garcia@estudiants.urv.cat";
-            String correuReal = estudiant.getEmailComplet();
-            
-            System.out.println(">> Verificació del correu:");
-            if (correuReal.equals(correuEsperat)) {
-                System.out.println("CORRECTE: El correu és " + correuReal);
-            } else {
-                System.out.println("ERROR: Esperàvem " + correuEsperat + " però tenim " + correuReal);
-            }
+        // Verificar el format textual complet (toString)
+        System.out.println("\n--- Informació completa (toString) ---");
+        System.out.println(estudiant.toString());
 
-            // 4. Verificació dels Getters propis
-            System.out.println("\n>> Verificació dades específiques:");
-            System.out.println("Ensenyament: " + estudiant.getEnsenyament());
-            System.out.println("Any d'inici: " + estudiant.getAnyInici());
+        // Verificar el format CSV (per fitxers)
+        System.out.println("\n--- Format CSV ---");
+        System.out.println(estudiant.toCSV());
 
-        } catch (Exception e) {
-            System.out.println("S'ha produït un error inesperat:");
-            e.printStackTrace();
-        }
-
-        System.out.println("-------------------------------------------------");
-        System.out.println(" FI DEL TEST");
-        System.out.println("-------------------------------------------------");
+        // Verificar el funcionament de la còpia
+        UsuariEstudiant copia = estudiant.copia();
+        System.out.println("\n--- Verificació de Còpia ---");
+        System.out.println("Àlies de la còpia: " + copia.getAlies());
+        System.out.println("És el mateix objecte? " + (estudiant == copia)); // Ha de donar false (són instàncies diferents)
     }
 }
