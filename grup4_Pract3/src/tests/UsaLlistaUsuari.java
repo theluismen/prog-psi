@@ -1,8 +1,9 @@
+//Aesha Naz
 package test;
 
-import enumeraciones.CampusURV;
+import enumeraciones.*;
 import llistes.LlistaUsuaris;
-import usuaris.*;
+import excepcions.*;
 
 public class UsaLlistaUsuaris {
 
@@ -11,24 +12,38 @@ public class UsaLlistaUsuaris {
 
         System.out.println("-- Test LlistaUsuaris --");
 
-        llista.afegirUsuari(new UsuariEstudiant("joan2", "joan.perez", "GEI", 2022));
-        llista.afegirUsuari(new UsuariPDI("marta", "marta.sole","DEIM", "Sescelades"));
-        llista.afegirUsuari(new UsuariPTGAS("pau",  "pau.sala", CampusURV.TERRES_EBRE));
+        try {
+            // Carrega des de fitxer
+            System.out.println("\nLlegint fitxer usuaris.txt ...");
+            llista.carregaFitxer("usuaris.txt");
 
-        System.out.println("\nTotal usuaris: " + llista.getNumUsuaris());
+            // Mostrar quantitat d'usuaris
+            System.out.println("\nTotal d'usuaris carregats: " + llista.getNumUsuaris());
 
-        System.out.println("\n--- Usuaris Estudiants ---");
-        llista.mostrarUCollectiu("Estudiant");
+            // Mostrar tots
+            System.out.println("\n--- Tots els usuaris ---");
+            llista.mostrarU();
 
-        System.out.println("\n--- Tots els usuaris ---");
-        llista.mostrarU();
+            // Mostrar col·lectiu Estudiant
+            System.out.println("\n--- Usuaris del col·lectiu Estudiant ---");
+            llista.mostrarUCollectiu("Estudiant");
 
-        System.out.println("\n--- Cerca usuari `marta` ---");
-        System.out.println(llista.cerca("marta"));
+            // Cerca d'un usuari
+            System.out.println("\n--- Cercant usuari `marta` ---");
+            System.out.println(llista.cerca("marta"));
 
+        } catch (UsuariDuplicat e) {
+            System.err.println("ERROR: Usuari duplicat → " + e.getMessage());
+
+        } catch (FormatInvalid e) {
+            System.err.println("ERROR de format → " + e.getMessage());
+
+        } catch (CollectiuDesconegut e) {
+            System.err.println("ERROR col·lectiu → " + e.getMessage());
+
+        } catch (IOException e) {
+            System.err.println("No s'ha pogut llegir el fitxer: " + e.getMessage());
+        }
+        System.out.println("\n-- FI DEL TEST --");
     }
-
-
-
-
 }
