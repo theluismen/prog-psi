@@ -3,13 +3,13 @@
 package llistes;
 
 import java.io.*;
-import extras.Inscripcions;
+import inscripcions.Inscripcio;
 
 /**
  * Classe que gestiona la llista d'inscripcions fent servir un array dinàmic.
  * Implementa Serializable per poder guardar-se directament al fitxer .dat.
  */
-public class LlistaInscripcions implements Serializable {
+public class LlistaInscripcio implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
