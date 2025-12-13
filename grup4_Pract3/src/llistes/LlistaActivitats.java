@@ -1,5 +1,9 @@
 package llistes;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import activitats.*;
 
 public class LlistaActivitats /*implements Llista*/{        //falta crear llista
@@ -68,9 +72,17 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
         }
     }
 
+    public void guardarLlista(String fitxer) throws IOException{       //tratar excepciones (no estan bien tratadas, es solo temporal para probar que funciona)
+        BufferedWriter f = new BufferedWriter(new FileWriter(fitxer));
+        
+        for (int i = 0; i < this.nElems; i++){
+            String linea = this.llista[i].toCSV();
+            f.write(linea);
+            f.newLine();
+        }
 
-
-
+        f.close();
+    }
 
 
 
@@ -92,14 +104,5 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
     /*public LlistaActivitats llegirFitxer(String nomFitxer){
         
     }*/
-    
-   
 
-
-    /*
--elimar              ainara
--busca activitat   ainara 
--from csv         ainara
--guardar csv   alexandra
-     */
 }

@@ -15,7 +15,7 @@ public class UsaActivitatPeriodica {
 
         //testConstructor(dataIniIns, dataFiIns, dataIni);
 
-        ActivitatPeriodica activitat = new ActivitatPeriodica("Ioga", new String[]{"PDI", "PTGAS"}, dataIniIns, dataFiIns,
+        ActivitatPeriodica activitat = new ActivitatPeriodica("ioga", new String[]{"PDI", "PTGAS"}, dataIniIns, dataFiIns,
                                     DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
                                     "Centre Blau", "Barcelona");
         testHorariYDataFinal(activitat);
