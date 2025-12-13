@@ -18,11 +18,11 @@ public class UsaActivitatPeriodica {
         ActivitatPeriodica activitat = new ActivitatPeriodica("Ioga", new String[]{"PDI", "PTGAS"}, dataIniIns, dataFiIns,
                                     DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
                                     "Centre Blau", "Barcelona");
-        //testHorariYDataFinal(activitat);
-        //testAvuiHiHaClasse(activitat);
-        //testEstaActiva(activitat);
-        //testTipusActivitat(activitat);
-        testToCSV(activitat);
+        testHorariYDataFinal(activitat);
+        testAvuiHiHaClasse(activitat);
+        testEstaActiva(activitat);
+        testTipusActivitat(activitat);
+        //testToCSV(activitat);
 
     }
 

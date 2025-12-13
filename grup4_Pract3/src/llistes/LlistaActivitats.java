@@ -2,18 +2,104 @@ package llistes;
 
 import activitats.*;
 
-public class LlistaActivitats implements Llista{        //falta crear llista
-    private ActivitatPeriodica llista[];
+public class LlistaActivitats /*implements Llista*/{        //falta crear llista
+    private Activitat llista[];
     private int nElems;
 
 
-    public void afegirActivitat(Activitat a) {
-        
-    }
-
-    public LlistaActivitats llegirFitxer(String nomFitxer){
-        
+    
+    /**
+     * Constructor con el parametro para el tamaño de la lista
+     * @param n tamaño total de la lista
+     */
+    public LlistaActivitats(int n){
+        this.llista = new Activitat[n];         //añadir excepcion
+        nElems = 0;
     }
     
+    /**
+     * Metodo para añadir una actividad a la lista ordenado alfabeticamente por su nombre
+     * si ya existe una actividad con el mismo nombre (ignora las mayusculas), lanzara un error
+     * @param act
+     */
+    public void afegirActivitat(Activitat act) {
+        if (this.existeix(act.getNom())){
+            //lanzar excepcion
+        }
+        
+        if (this.llista.length > nElems){
+            this.amplia();
+        }
+
+        int pos = this.nElems - 1;
+        while ((pos >= 0) && (this.llista[pos].getNom().compareToIgnoreCase(act.getNom()) > 0)){
+            this.llista[pos+1] = this.llista[pos];
+            pos--;
+        }
+        this.llista[pos+1] = act;
+        this.nElems++;
+    }
+
+    /**
+     * Metodo que comprueba si una actividad ya existe en la lista
+     * @param nomAct
+     * @return
+     */
+    public boolean existeix(String nomAct){
+        boolean trobat = false;
+        int i = 0;
+
+        while (!trobat && (i < nElems)){
+            if (this.llista[i].getNom().equalsIgnoreCase(nomAct)){
+                trobat = true;
+            }
+            i++;
+        }
+        
+        return trobat;
+    }
+
+    /**
+     * Metodo que escribe por 
+     */
+    public void mostrarActivitats(){
+        for (int i = 0; i < nElems; i++){
+            System.out.println(this.llista[i]+"\n");
+        }
+    }
+
+
+
+
+
+
+
+//Metodos privados de la clase
+    /**
+     * Metodo que amplia el tamaño del array de la lista
+     */
+    private void amplia(){
+        Activitat aux[] = new Activitat[this.llista.length+1];
+        
+        for (int i = 0; i < this.nElems; i++){
+            aux[i] = this.llista[i];
+        }
+        this.llista = aux;
+    }
+    
+
+    
+    /*public LlistaActivitats llegirFitxer(String nomFitxer){
+        
+    }*/
+    
    
+
+
+    /*
+-elimar              ainara
+-busca activitat   ainara 
+-from csv         ainara
+-guardar csv   alexandra
+     */
 }

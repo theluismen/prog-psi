@@ -204,7 +204,7 @@ public class ActivitatPeriodica extends Activitat {
 
 
     public String getHorari(){
-        String aux = "El horario es: "+this.dia+" de"+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
+        String aux = "El horario es: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
         " a ";
 
         int hora = (int)(this.durada);
@@ -230,7 +230,7 @@ public class ActivitatPeriodica extends Activitat {
     public String toString(){
         //aprovechando el toString del padre
         String aux = super.toString()+
-                    "\nCentre: "+this.centre+
+                    "Centre: "+this.centre+
                     "\nCiutat: "+this.ciutat+
                     "\nPreu: "+this.preu+
                     "\nPlaçes: "+this.places+
