@@ -63,15 +63,6 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
         return trobat;
     }
 
-    /**
-     * Metodo que escribe por 
-     */
-    public void mostrarActivitats(){
-        for (int i = 0; i < nElems; i++){
-            System.out.println(this.llista[i]+"\n");
-        }
-    }
-
     public void guardarLlista(String fitxer) throws IOException{       //tratar excepciones (no estan bien tratadas, es solo temporal para probar que funciona)
         BufferedWriter f = new BufferedWriter(new FileWriter(fitxer));
         
@@ -82,6 +73,18 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
         }
 
         f.close();
+    }
+
+
+//toString
+    public String toString(){
+        String aux = "";
+        
+        for (int i = 0; i < nElems; i++){
+            aux += this.llista[i]+"\n";
+        }
+
+        return aux;
     }
 
 

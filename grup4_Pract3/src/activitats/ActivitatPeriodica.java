@@ -204,12 +204,13 @@ public class ActivitatPeriodica extends Activitat {
 
 
     public String getHorari(){
-        String aux = "El horario es: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
+        String aux = "Horari: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
         " a ";
 
-        int hora = (int)(this.durada);
-        int minutos = (int)((this.durada - hora) * 60);
-        aux = aux + hora+":"+minutos;
+        //tratar excepcion hora no existe
+        int hora = (int)(this.durada) + this.dataHoraIni.getHora();
+        int minutos = (int)((this.durada - hora) * 60) + this.dataHoraIni.getMinutos();
+        aux = aux + hora+":"+minutos+" pm";
 
         return aux;
     }
@@ -229,7 +230,8 @@ public class ActivitatPeriodica extends Activitat {
 //toString
     public String toString(){
         //aprovechando el toString del padre
-        String aux = super.toString()+
+        String aux = "\n---ACTIVITAT PERIODICA---\n"+
+                    super.toString()+
                     "Centre: "+this.centre+
                     "\nCiutat: "+this.ciutat+
                     "\nPreu: "+this.preu+
