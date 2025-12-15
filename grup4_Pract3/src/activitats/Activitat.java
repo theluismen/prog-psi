@@ -97,6 +97,13 @@ public abstract class Activitat {
     public abstract Activitat copia();
 
     /**
+     * Metode que retorna un string en format CSV amb tota la informació de la activitat
+     * 
+     * @return informacio de l'activitat en format CSV
+     */
+    public abstract String toCSV();
+
+    /**
      * Retorna una representació textual de l'activitat, incloent
      * totes les seves dades (nom, col·lectius i període d'inscripció)
      * 
