@@ -1,11 +1,14 @@
 package extras;
+
+import excepcions.ValorInexistent;
+
 /**
  * Classe per guardar dates.
  *
  * @author Professores de programació.
+ * Se han añadido atributos y metodos para guardar y tratar la hora (Alexandra Núñez)
  *
  */
-
 
 public class Data {
     private int dia;
@@ -20,8 +23,9 @@ public class Data {
 	 * @param dia
 	 * @param mes
 	 * @param any
+     * @throws ValorInexistent si la fecha no existe
 	 */
-	public Data(int dia, int mes, int any){
+	public Data(int dia, int mes, int any) throws ValorInexistent{
 		if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
@@ -29,7 +33,7 @@ public class Data {
 			hora = 0;
 			minutos = 0;
         } else {
-            //lanzar excepcion
+            throw new ValorInexistent("Dies, mes, any");
         }
 	}
 
@@ -40,20 +44,24 @@ public class Data {
      * @param dia
      * @param mes
      * @param any
+     * @throws ValorInexistent si la fecha o la hora no existen
      */
-    public Data(int dia, int mes, int any, int hora, int minutos) {
+    public Data(int dia, int mes, int any, int hora, int minutos) throws ValorInexistent{
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         } else {
-            //lanzar excepcion
+            throw new ValorInexistent("Dies, mes, any");
         }
 
         if (horaExisteix(hora, minutos)){
 			this.hora = hora;
 			this.minutos = minutos;
-		}
+		} else{
+            throw new ValorInexistent("Hora, minuts");
+        }
+
     }
 
 
@@ -106,15 +114,16 @@ public class Data {
      * @param dia
      * @param mes
      * @param any
+     * @throws ValorInexistent si la fecha no existe
      */
-    public void setData(int dia, int mes, int any) {
+    public void setData(int dia, int mes, int any) throws ValorInexistent{
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que hi ha una data vàlida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         }
 		else{
-			//lanzar excepcion
+			throw new ValorInexistent("Dies, mes, any");
 		}
     }
 
@@ -124,14 +133,15 @@ public class Data {
      * Només es fa la modificació de l'hora si el que es rep per paràmetre és correcte.
      * @param hora
      * @param minutos
+     * @throws ValorInexistent si la hora no existe
      */
-    public void setHora(int hora, int minutos) {
-        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una data vàlida
+    public void setHora(int hora, int minutos) throws ValorInexistent{
+        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una hora vàlida
             this.hora = hora;
 			this.minutos = minutos;
         }
 		else{
-			//lanzar excepcion
+			throw new ValorInexistent("Hora, minuts");
 		}
     }
 
@@ -159,7 +169,6 @@ public class Data {
 
         // també podria haver-se fet de la següent forma:
         // Data novaData=this.copia();
-
 
         novaData.dia++;
         if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
@@ -348,12 +357,10 @@ public class Data {
     private static boolean horaExisteix (int hora, int minutos){
         boolean res = true;
 		if ((hora >= 24) || (hora < 0)){
-            //lanzar una excepcion cuando este creada
             res = false;
         }
 
 		if ((minutos > 59) || (minutos < 0)){
-			//lanzar excepcion cuando este creada
 			res = false;
 		}
         return res;

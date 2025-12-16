@@ -1,4 +1,8 @@
-//Alexandra Núñez
+/**
+ * Autor(@s): Alexandra Núñez
+ * Descripción: clase para crear instancias de usuariPTGAS, se usará para guardar la informacion de los 
+ * usuarios del colectivo PTGAS
+ */
 
 package usuaris;
 

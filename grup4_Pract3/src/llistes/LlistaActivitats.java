@@ -1,3 +1,8 @@
+/**
+ * Autor(@s): Alexandra Núñez y Ainara Sofia Cabreras
+ * Descripción: el uso principal de esta clase es tratar las actividades guardadas en un
+ * txt y añadir las que se quieran (dentro de lo posible)
+ */
 package llistes;
 
 import java.io.BufferedWriter;
@@ -6,10 +11,9 @@ import java.io.IOException;
 
 import activitats.*;
 
-public class LlistaActivitats /*implements Llista*/{        //falta crear llista
+public class LlistaActivitats implements Llista<Activitat>{        //falta crear llista
     private Activitat llista[];
     private int nElems;
-
 
     
     /**
@@ -20,13 +24,23 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
         this.llista = new Activitat[n];         //añadir excepcion
         nElems = 0;
     }
+
+
+    /**
+     * Metode que retorna el nombre d'elements actuals a la llista
+     * @return el total d'elements a la llista
+     */
+    public int getNumElements(){
+        return this.nElems;
+    }
+
     
     /**
      * Metodo para añadir una actividad a la lista ordenado alfabeticamente por su nombre
      * si ya existe una actividad con el mismo nombre (ignora las mayusculas), lanzara un error
      * @param act
      */
-    public void afegirActivitat(Activitat act) {
+    public void afegir(Activitat act) {
         if (this.existeix(act.getNom())){
             //lanzar excepcion
         }
@@ -43,6 +57,7 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
         this.llista[pos+1] = act;
         this.nElems++;
     }
+
 
     /**
      * Metodo que comprueba si una actividad ya existe en la lista
@@ -63,6 +78,12 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
         return trobat;
     }
 
+
+    /**
+     * Metodo para guardar la lista en un fichero en formato CSV
+     * @param fitxer nombre del fichero en el que se guardan los datos
+     * @throws IOException
+     */
     public void guardarLlista(String fitxer) throws IOException{       //tratar excepciones (no estan bien tratadas, es solo temporal para probar que funciona)
         BufferedWriter f = new BufferedWriter(new FileWriter(fitxer));
         
@@ -76,15 +97,15 @@ public class LlistaActivitats /*implements Llista*/{        //falta crear llista
     }
 
 
-//toString
-    public String toString(){
+//toString??
+    public void mostrar(){
         String aux = "";
         
         for (int i = 0; i < nElems; i++){
             aux += this.llista[i]+"\n";
         }
 
-        return aux;
+        System.out.println(aux);
     }
 
 

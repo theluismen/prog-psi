@@ -1,4 +1,11 @@
-//Alexandra Núñez
+/**
+ * Autor(@s): Alexandra Núñez
+ * Descripción: esta clase sirve para crear las instancias de actividad periodica
+ * contiene un atributo para guardar el dia de la semana que se hace,
+ * la fecha de inicio y su hora (ambos se guardan en el mismo atributo, la fecha solo es la de inicio pero la hora es la misma cada semana),
+ * la duración de la actividad en formato decimal (una hora y 30 min serian 1,5 horas),
+ * la cantidad de semanas que se hara la actividad, las plazas que tiene, el precio y el lugar donde se hará (centro y ciudad)
+ */
 //falta añadir todas las excepciones y cambiar los print por excepciones
 
 package activitats;
@@ -195,11 +202,21 @@ public class ActivitatPeriodica extends Activitat {
     }
 
     /**
-     * setter para cambiar la fecha de inicio de la actividad o la hora a la que empieza
+     * setter para cambiar la fecha de inicio de la actividad, la hora mantiene la anterior
      * @param nouDataHoraIni
      */
-    public void setDataHoraIni(Data nouDataHoraIni){    
+    public void setDataIni(Data nouDataHoraIni){    
+        nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
         this.dataHoraIni = nouDataHoraIni;    
+    }
+
+    /**
+     * setter para cambiar la hora a la que se hace la actividad
+     * @param h hora
+     * @param m minutos
+     */
+    public void setHora(int h, int m){
+        this.dataHoraIni.setHora(h, m);
     }
 
 
