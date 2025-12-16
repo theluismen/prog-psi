@@ -22,7 +22,7 @@ public class UsaLlistaUsuaris {
 
             // Mostrar tots
             System.out.println("\n--- Tots els usuaris ---");
-            llista.mostrarU();
+            llista.mostrar();
 
             // Mostrar col·lectiu Estudiant
             System.out.println("\n--- Usuaris del col·lectiu Estudiant ---");

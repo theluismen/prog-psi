@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LlistaUsuaris {
+public class LlistaUsuaris implements Llista<Usuari> {
     
     private Usuari[] usuaris;   //array que conté els usuaris
     private int compt;          //nombre d'usuaris guardats
@@ -19,6 +19,16 @@ public class LlistaUsuaris {
     public LlistaUsuaris() {
         usuaris = new Usuari[10];  //capacitat inicial?
         compt = 0;
+    }
+
+    /**
+     *  Retorna el nombre d'elements guardats a la llista
+     * 
+     * @return nombre d'elements
+     */
+    @Override
+    public int getNumElements() {
+        return getNumUsuaris();
     }
 
     /**
@@ -37,7 +47,8 @@ public class LlistaUsuaris {
      * @param u usuari que es vol llegir 
      * @throws UsuariDuplicat excepcio si ja existeix un usuari amb el mateix alies
      */
-    public void afegirUsuari(Usuari u) throws UsuariDuplicat {
+    @Override
+    public void afegir(Usuari u) throws UsuariDuplicat {
         if(existeix(u.getAlies())) {
             throw new UsuariDuplicat(u.getAlies());
         }
@@ -62,6 +73,7 @@ public class LlistaUsuaris {
      * @param alies àlies de l'usuari
      * @return l'usuari si es troba, sino null
      */
+    @Override
     public Usuari cerca(String alies) {
         for(int i = 0; i < compt; i++) {
             if (usuaris[i].getAlies().equalsIgnoreCase(alies)) {
@@ -77,6 +89,7 @@ public class LlistaUsuaris {
      * @param alies àlies de l'usuari per comprovar
      * @return true si la cerca retorna un usuari diferent de null sino false
      */
+    @Override
     public boolean existeix(String alies) {
         return cerca(alies) != null;
     }
@@ -84,7 +97,8 @@ public class LlistaUsuaris {
     /**
      * Metode que mostra per pantalla tots els usuaris de la llista
      */
-    public void mostrarU() {
+    @Override
+    public void mostrar() {
         for(int i = 0; i < compt; i++) {
             System.out.println(usuaris[i] + "\n");
         }
@@ -169,14 +183,13 @@ public class LlistaUsuaris {
 
 
                 }
-                afegirUsuari(u);
+                afegir(u);
             }
-        br.close();
         }
     }
  
     /**
-     * Metode que duplica la capacitat de l'array d'usuaris si d'arriba al limit
+     * Mètode que duplica la capacitat de l'array d'usuaris si d'arriba al limit
      */
     private void ampliar() {
         Usuari[] nou = new Usuari[usuaris.length *2];
