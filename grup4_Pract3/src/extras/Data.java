@@ -164,22 +164,25 @@ public class Data {
      * * @return la data del dia seguent
      */
     public Data diaSeguent() {
-        Data novaData=new Data(dia, mes, any, hora, minutos);
+        try{
+            Data novaData=new Data(dia, mes, any, hora, minutos);
+            // també podria haver-se fet de la següent forma:
+            // Data novaData=this.copia();
 
-
-        // també podria haver-se fet de la següent forma:
-        // Data novaData=this.copia();
-
-        novaData.dia++;
-        if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
-            novaData.dia = 1;
-            novaData.mes++;
-            if (novaData.mes > 12) {
-                novaData.mes = 1;
-                novaData.any++;
+            novaData.dia++;
+            if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
+                novaData.dia = 1;
+                novaData.mes++;
+                if (novaData.mes > 12) {
+                    novaData.mes = 1;
+                    novaData.any++;
+                }
             }
+            return novaData;
+        }catch(ValorInexistent e){
+
         }
-        return novaData;
+        return null;
     }
 
 
@@ -218,17 +221,22 @@ public class Data {
         Data dataTemp;
         int contador;
         // és necessari una nova instancia per no modificar la data actual
-        dataTemp = new Data(dia, mes, any, hora, minutos);
-        if (dataTemp.esDataInferiorOigual(data)) {
-            contador = 0;
-            // la data rebuda és major que l'actual
-            while (!dataTemp.esIgual(data)) {
-                dataTemp=dataTemp.diaSeguent(); // augmenta la data actual fins coincidir amb la rebuda per paràmetre
-                contador++;
-            }
-        } else
-            contador = -1;
-        return contador;
+        try{
+            dataTemp = new Data(dia, mes, any, hora, minutos);
+            if (dataTemp.esDataInferiorOigual(data)) {
+                contador = 0;
+                // la data rebuda és major que l'actual
+                while (!dataTemp.esIgual(data)) {
+                    dataTemp=dataTemp.diaSeguent(); // augmenta la data actual fins coincidir amb la rebuda per paràmetre
+                    contador++;
+                }
+            } else
+                contador = -1;
+            return contador;
+        }catch(ValorInexistent e){
+
+        }
+        return 0;
     }
 
 
@@ -284,7 +292,12 @@ public class Data {
      * @return un nou objecte amb el mateix contingut
      */
     public Data copia() {
-        return new Data(dia, mes, any, hora, minutos);
+        try{
+            return new Data(dia, mes, any, hora, minutos);
+        }catch(ValorInexistent e){
+
+        }
+        return null;
     }
 
 

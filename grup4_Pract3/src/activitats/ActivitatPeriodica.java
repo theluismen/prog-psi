@@ -11,6 +11,7 @@
 package activitats;
 
 import enumeraciones.*;
+import excepcions.*;
 import extras.*;
 
 
@@ -43,7 +44,7 @@ public class ActivitatPeriodica extends Activitat {
      */
     public ActivitatPeriodica (String nom, String[] collectius, Data dataIniInscripcio, Data dataFiInscripcio,
                                 DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
-                                int places, double preu, String centre, String ciutat){
+                                int places, double preu, String centre, String ciutat)throws ValorInexistent{
        
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
@@ -51,20 +52,32 @@ public class ActivitatPeriodica extends Activitat {
         this.ciutat = ciutat;
         this.dataHoraIni = diaYHoraInicio;
         
-        this.setmanes = setmanes;       //controlar excepciones
-
-        this.preu = preu;       //controlar excepciones
-
-        if (places > 0)
+        //Una activitat periodica ha de durar mínim 1 setmana
+        if (setmanes > 0){
+            this.setmanes = setmanes;
+        }else{
+            throw new ValorInexistent("Setmanes d'activitat periodica");
+        }
+        
+        //el preu de l'activitat no pot ser negatiu
+        if (preu >= 0){
+            this.preu = preu;       //controlar excepciones
+        }else{
+            throw new ValorInexistent("Preu negatiu");
+        }
+        
+        //Una actividad no se puede dar si no hay plazas y un valor negativo es imposible
+        if (places > 0){
             this.places = places;
-        else{
-            //crear excepcion correspondiente
+        }else{
+            throw new ValorInexistent("Places");
         }
 
+        //la duración de una actividad no puede ser 0 o inferior
         if (durada > 0)
             this.durada = durada;
         else{
-            //crear excepcion correspondiente
+            throw new ValorInexistent("Durada");
         }
        
     }
@@ -206,20 +219,30 @@ public class ActivitatPeriodica extends Activitat {
      * @param nouDataHoraIni
      */
     public void setDataIni(Data nouDataHoraIni){    
-        nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
-        this.dataHoraIni = nouDataHoraIni;    
+        try{
+            nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
+            this.dataHoraIni = nouDataHoraIni; 
+        }catch(ValorInexistent e){
+
+        }   
     }
 
     /**
      * setter para cambiar la hora a la que se hace la actividad
      * @param h hora
      * @param m minutos
+     * @throws ValorInexisten si la hora no existe
      */
-    public void setHora(int h, int m){
+    public void setHora(int h, int m) throws ValorInexistent{
         this.dataHoraIni.setHora(h, m);
     }
 
 
+    /**
+     * Metodo para saber el horario semanal de la actividad (dia de la semana y hora)
+     * Para devolver la información, lo hace con un String
+     * @return String con el horario
+     */
     public String getHorari(){
         String aux = "Horari: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
         " a ";
@@ -239,8 +262,13 @@ public class ActivitatPeriodica extends Activitat {
      * @return duplicado
      */
     public ActivitatPeriodica copia(){
-        return new ActivitatPeriodica(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
-        this.dia, this.durada, this.dataHoraIni, this.setmanes, this.places, this.preu, this.centre, this.ciutat);
+        try{
+            return new ActivitatPeriodica(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
+            this.dia, this.durada, this.dataHoraIni, this.setmanes, this.places, this.preu, this.centre, this.ciutat);
+        }catch(ValorInexistent e){
+
+        }
+        return null;
     }
 
 

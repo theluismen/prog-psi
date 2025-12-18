@@ -1,7 +1,7 @@
 //Aesha Naz
 package llistes;
 import enumeraciones.*;
-import excepcions;
+import excepcions.*;
 import usuaris.*;
 
 import java.io.BufferedReader;

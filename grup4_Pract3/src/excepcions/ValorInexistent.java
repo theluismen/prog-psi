@@ -6,7 +6,7 @@
  */
 package excepcions;
 
-public class ValorInexistent extends RuntimeException {
+public class ValorInexistent extends Exception {
     
     /**
      * Contructor

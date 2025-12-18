@@ -58,5 +58,10 @@ public class UsuariPTGAS extends Usuari{
         return super.toString() + this.dadesExtra();
     }
 
+//toCSV
+    public String toCSV(){
+        return super.alies + ";" + super.email + ";" + super.collectiu + ";" + this.campus;
+    }
+
 
 }
