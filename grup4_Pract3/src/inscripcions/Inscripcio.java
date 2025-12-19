@@ -1,6 +1,9 @@
-//Ikram Hallouz
+/**
+ * Autor: Ikram Hallouz
+ * Descripción: Clase que representa les Inscripcions dels usuaris a les activitats.
+ */
 
-package inscripciones;
+package inscripcions;
 
 import java.io.Serializable;
 
@@ -8,10 +11,10 @@ import java.io.Serializable;
  * Classe que representa la inscripció d'un usuari a una activitat.
  * Implementa Serializable per poder guardar-se en fitxers binaris (.dat).
  */
-public class Inscripcions implements Serializable {
+public class Inscripcio implements Serializable {
 
     // És recomanable definir un versionUID per evitar warnings i problemes de versions
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
 
     private String idUsuari;      // Guardem l'àlies de l'usuari (Clau forana)
     private String idActivitat;   // Guardem el nom de l'activitat (Clau forana)
@@ -22,7 +25,7 @@ public class Inscripcions implements Serializable {
      * @param idUsuari Àlies de l'usuari que s'inscriu
      * @param idActivitat Nom de l'activitat a la qual s'inscriu
      */
-    public Inscripcions(String idUsuari, String idActivitat) {
+    public Inscripcio(String idUsuari, String idActivitat) {
         this.idUsuari = idUsuari;
         this.idActivitat = idActivitat;
         this.valoracio = null; // Inicialment no està valorada (null indica "pendent")
@@ -64,6 +67,19 @@ public class Inscripcions implements Serializable {
      */
     public boolean esValorada() {
         return valoracio != null;
+    }
+
+    /**
+     * Crea una còpia de la inscripció (Deep Copy).
+     * @return Una nova instància amb les mateixes dades.
+     */
+    public Inscripcio copia() {
+        Inscripcio nova = new Inscripcio(this.idUsuari, this.idActivitat);
+        // Si té valoració, la copiem també. Si és null, es queda null al constructor.
+        if (this.valoracio != null) {
+            nova.setValoracio(this.valoracio);
+        }
+        return nova;
     }
 
     @Override
