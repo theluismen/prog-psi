@@ -8,240 +8,179 @@
 package apps;
 
 import java.util.Scanner;
-import llistes.LlistaInscripcio;
-import inscripcions.Inscripcio;
-import excepcions.InscripcioDuplicada;
+import java.io.*;
+
+// Imports de les teves classes
+import llistes.*;
+import inscripcions.*;
+import usuaris.*;
+import activitats.*;
+import enumeraciones.*;
+import excepcions.*;
+import extras.Data;
 
 public class AppConsola {
 
-    // Ruta on es guardarà el fitxer. Assegura't que la carpeta 'fitxers' existeix dins de src
-    private static final String RUTA_FITXER = "src/fitxers/inscripcions.dat";
-    
-    // Variables globals de l'aplicació
+    // 1. RUTES DELS FITXERS
+    private static final String FITXER_INSCRIPCIONS = "src/fitxers/inscripcions.dat";
+    private static final String FITXER_USUARIS = "src/fitxers/usuaris.txt";
+    private static final String FITXER_ACTIVITATS = "src/fitxers/activitats.txt";
+
+    // 2. VARIABLES GLOBALS (LLISTES)
     private static LlistaInscripcio llistaInscripcions;
+    private static LlistaUsuaris llistaUsuaris;
+    private static LlistaActivitats llistaActivitats;
+    
+    // Eines globals
     private static Scanner teclat = new Scanner(System.in);
+    private static String dataActualStr = "01/09/2025"; // Data inicial per defecte
 
     public static void main(String[] args) {
         
-        // 1. CÀRREGA INICIAL 
-        // Deleguem a la classe Llista la feina de llegir el fitxer
+        // --- INICIALITZACIÓ ---
+        boolean sortir = false;
+        int opcio = 0;
+
+        // --- CÀRREGA DE DADES ---
         carregarDadesSistema();
 
-        // 2. BUCLE D'EXECUCIÓ PRINCIPAL
-        boolean sortir = false;
+        // --- BUCLE PRINCIPAL ---
         while (!sortir) {
             mostrarMenu();
-            int opcio = llegirEnter();
+            opcio = llegirEnter();
 
             switch (opcio) {
-                // --- GESTIÓ DE DATA I VISUALITZACIÓ GENERAL ---
-                case 1: 
-                    // Indicar la data del dia d'avui (simulació) 
-                    System.out.println("Funcionalitat: Canviar data sistema (Actual: " + dataActual + ")");
-                    // TODO: Demanar nova data i actualitzar variable 'dataActual'
+                // --- GESTIÓ BÀSICA ---
+                case 1:
+                    // TODO: Indicar/Canviar la data del sistema
                     break;
-
                 case 2:
-                    // Mostrar dades de les llistes (Usuaris, Activitats o Inscripcions)
-                    System.out.println("Funcionalitat: Mostrar llistes completes.");
-                    // TODO: Preguntar quina llista vol veure i fer el toString() corresponent
+                    // TODO: Mostrar les dades de les llistes
                     break;
 
-                // --- CONSULTES D'ACTIVITATS ---
+                // --- CONSULTES ---
                 case 3:
-                    // Activitats en període d'inscripció + places disponibles 
-                    System.out.println("Funcionalitat: Veure activitats obertes a inscripció.");
+                    // TODO: Activitats en període d'inscripció amb places disponibles
                     break;
-
                 case 4:
-                    // Activitats que tenen classe AVUI 
-                    System.out.println("Funcionalitat: Veure activitats amb classe el dia " + dataActual);
+                    // TODO: Activitats que tenen classe AVUI
                     break;
-
                 case 5:
-                    // Activitats actives AVUI (dins periode inici-fi)
-                    System.out.println("Funcionalitat: Veure activitats actives en data " + dataActual);
+                    // TODO: Activitats actives AVUI (dins període)
                     break;
-
                 case 6:
-                    // Activitats amb places disponibles (qualsevol data) 
-                    System.out.println("Funcionalitat: Veure activitats amb vacants.");
+                    // TODO: Activitats amb places disponibles (qualsevol data)
                     break;
-
                 case 7:
-                    // Detall d'una activitat pel seu nom 
-                    System.out.println("Funcionalitat: Cercar activitat per nom.");
+                    // TODO: Detall d'una activitat pel seu nom
                     break;
-
-                // --- CONSULTES D'USUARIS I INSCRIPCIONS ---
                 case 8:
-                    // Detall d'un usuari pel seu alies 
-                    System.out.println("Funcionalitat: Cercar usuari per àlies.");
+                    // TODO: Detall d'un usuari pel seu àlies
                     break;
-
                 case 9:
-                    // Activitats on està apuntat un usuari 
-                    System.out.println("Funcionalitat: Veure inscripcions d'un usuari.");
-                    // TODO: Fer servir llistaInscripcions.getInscripcionsUsuari(alies)
+                    // TODO: Activitats on està apuntat un usuari
                     break;
 
+                // --- GESTIÓ D'INSCRIPCIONS ---
                 case 10:
-                    // Inscriure's a una activitat 
-                    System.out.println("Funcionalitat: Nova inscripció.");
-                    // TODO: Demanar usuari i activitat, comprovar places i afegir.
-                    // Ja tens part d'això fet al mètode 'tractarNovaInscripcio()'
-                    tractarNovaInscripcio();
+                    // TODO: Inscriure's a una activitat
                     break;
-
                 case 11:
-                    // Usuaris apuntats a una activitat + Llista d'espera 
-                    System.out.println("Funcionalitat: Veure assistents d'una activitat.");
-                    // TODO: Fer servir llistaInscripcions.getInscripcionsActivitat(nomAct)
+                    // TODO: Mostrar usuaris apuntats a una activitat i llista d'espera
                     break;
-
                 case 12:
-                    // Eliminar un usuari d'una activitat (Gestió llista espera)
-                    System.out.println("Funcionalitat: Baixa d'inscripció.");
-                    // TODO: Cridar llistaInscripcions.eliminarInscripcio(...)
+                    // TODO: Eliminar un usuari d'una activitat
                     break;
 
-                // --- GESTIÓ D'ALTES D'ACTIVITATS ---
+                // --- ALTES D'ACTIVITATS ---
                 case 13:
-                    // Afegir nova activitat d'un dia [
-                    System.out.println("Funcionalitat: Crear activitat Jornada/Taller.");
+                    // TODO: Afegir nova activitat d'un dia
                     break;
-
                 case 14:
-                    // Afegir nova activitat periòdica 
-                    System.out.println("Funcionalitat: Crear activitat Periòdica.");
+                    // TODO: Afegir nova activitat periòdica
                     break;
-
                 case 15:
-                    // Afegir nova activitat online 
-                    System.out.println("Funcionalitat: Crear activitat Online.");
+                    // TODO: Afegir nova activitat online
                     break;
 
                 // --- VALORACIONS I ESTADÍSTIQUES ---
                 case 16:
-                    // Valorar activitat (si ha acabat i usuari ha assistit) 
-                    System.out.println("Funcionalitat: Posar nota a una activitat.");
+                    // TODO: Valorar una activitat
                     break;
-
                 case 17:
-                    // Resum valoracions d'activitats acabades 
-                    System.out.println("Funcionalitat: Veure estadístiques d'activitats acabades.");
+                    // TODO: Resum de valoracions d'activitats acabades
                     break;
-
                 case 18:
-                    // Resum valoracions fetes per un usuari
-                    System.out.println("Funcionalitat: Veure valoracions d'un usuari.");
+                    // TODO: Resum valoracions fetes per un usuari
                     break;
-
                 case 19:
-                    // Mitjana valoracions per col·lectiu (PDI, PTGAS, Estudiants)
-                    System.out.println("Funcionalitat: Comparativa de satisfacció per col·lectius.");
+                    // TODO: Mitjana valoracions per col·lectiu
                     break;
-
                 case 20:
-                    // Usuari més actiu d'un col·lectiu 
-                    System.out.println("Funcionalitat: Trobar l'usuari més participatiu.");
+                    // TODO: Usuari més actiu d'un col·lectiu
                     break;
 
-                // --- MANTENIMENT AUTOMÀTIC ---
+                // --- MANTENIMENT ---
                 case 21:
-                    // Donar de baixa activitats amb poca participació (<10% o <20 online)
-                    System.out.println("Funcionalitat: Cancel·lació automàtica d'activitats.");
+                    // TODO: Donar de baixa activitats amb poca participació
                     break;
 
                 // --- SORTIDA ---
                 case 22:
-                    // Sortir 
                     sortir = true;
                     break;
 
                 default:
-                    System.out.println("ATENCIÓ: Opció no vàlida. Tria entre 1 i 22.");
+                    System.out.println("Opció no vàlida.");
             }
         }
 
-        // 3. TANCAMENT I GUARDAT 
-        // Aquí és on preguntem i cridem al mètode de la llista
+        // --- TANCAMENT I GUARDAT ---
         gestionarSortida();
     }
 
-    // -----------------------------------------------------------------
-    // MÈTODES AUXILIARS
-    // -----------------------------------------------------------------
+    // MÈTODES AUXILIARS BÀSICS
 
-    /**
-     * S'encarrega de carregar les dades a l'inici utilitzant el mètode estàtic de la llista.
-     */
     private static void carregarDadesSistema() {
-        System.out.println("Iniciant sistema...");
+        System.out.println("Carregant dades...");
+        // Inicialització segura per evitar errors si els fitxers no existeixen
+        llistaInscripcions = LlistaInscripcio.carregarFitxer(FITXER_INSCRIPCIONS);
+        llistaUsuaris = new LlistaUsuaris(); 
+        // llistaUsuaris.carregarFitxer(FITXER_USUARIS);
+        llistaActivitats = new LlistaActivitats(100);
+        // llistaActivitats.carregarFitxer(FITXER_ACTIVITATS);
         
-        // CRIDA AL MÈTODE DE LA LLISTA: Ella sap com llegir el fitxer serialitzat
-        llistaInscripcions = LlistaInscripcio.carregarFitxer(RUTA_FITXER);
-        
-        System.out.println("Dades carregades: " + llistaInscripcions.getNumElements() + " inscripcions a memòria.");
+        System.out.println("Sistema inicialitzat correctament.");
     }
 
-    /**
-     * Gestiona la pregunta final i ordena a la llista que es guardi.
-     */
     private static void gestionarSortida() {
-        System.out.print("\nVols guardar els canvis abans de sortir? (S/N): ");
-        String resposta = teclat.nextLine();
-
-        if (resposta.equalsIgnoreCase("S")) {
+        System.out.print("Vols guardar els canvis abans de sortir? (S/N): ");
+        String resp = teclat.nextLine();
+        if (resp.equalsIgnoreCase("S")) {
             System.out.println("Guardant dades...");
-            
             try {
-                // CRIDA AL MÈTODE DE LA LLISTA: Ella sap com escriure's al disc
-                llistaInscripcions.guardarFitxer(RUTA_FITXER);
-                System.out.println("OK! Dades guardades correctament a " + RUTA_FITXER);
-            } catch (Exception e) { // Capturem excepcions generals per si falla el disc
-                System.out.println("ERROR CRÍTIC: No s'ha pogut guardar el fitxer. " + e.getMessage());
+                llistaInscripcions.guardarFitxer(FITXER_INSCRIPCIONS);
+                // llistaUsuaris.guardarFitxer(FITXER_USUARIS);
+                // llistaActivitats.guardarFitxer(FITXER_ACTIVITATS);
+                System.out.println("Dades guardades.");
+            } catch (Exception e) {
+                System.out.println("Error guardant: " + e.getMessage());
             }
-            
-        } else {
-            System.out.println("Tancant sense guardar canvis.");
         }
-    }
-
-    /**
-     * Lògica per demanar dades a l'usuari i afegir a la llista en memòria.
-     */
-    private static void tractarNovaInscripcio() {
-        System.out.println("\n--- NOVA INSCRIPCIÓ ---");
-        System.out.print("Àlies Usuari: ");
-        String usuari = teclat.nextLine();
-        System.out.print("Nom Activitat: ");
-        String activitat = teclat.nextLine();
-
-        try {
-            Inscripcio nova = new Inscripcio(usuari, activitat);
-            // Modifiquem només la RAM
-            llistaInscripcions.afegirInscripcio(nova);
-            System.out.println("Inscripció realitzada correctament (en memòria).");
-        } catch (InscripcioDuplicada e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Error: Dades incorrectes.");
-        }
+        System.out.println("Adéu!");
     }
 
     private static void mostrarMenu() {
         System.out.println("\n--- MENÚ PRINCIPAL ---");
-        System.out.println("2.  Mostrar totes les inscripcions");
-        System.out.println("10. Inscriure's a una activitat");
+        System.out.println("1. Data Sistema | 2. Llistes");
+        System.out.println("10. Inscriure | 13. Nova Activitat");
         System.out.println("22. Sortir");
-        System.out.print("Tria opció: ");
+        System.out.print("Opció: ");
     }
 
     private static int llegirEnter() {
         try {
-            int i = Integer.parseInt(teclat.nextLine());
-            return i;
+            return Integer.parseInt(teclat.nextLine());
         } catch (NumberFormatException e) {
             return -1;
         }
