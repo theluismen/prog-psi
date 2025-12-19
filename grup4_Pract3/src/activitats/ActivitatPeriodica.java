@@ -42,10 +42,11 @@ public class ActivitatPeriodica extends Activitat {
      * @param centre lugar en que se lleva a cabo la actividad
      * @param ciutat
      * @throws ValorInexistent
+     * @throws CollectiuDesconegut
      */
     public ActivitatPeriodica (String nom, String[] collectius, Data dataIniInscripcio, Data dataFiInscripcio,
                                 DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
-                                int places, double preu, String centre, String ciutat)throws ValorInexistent{
+                                int places, double preu, String centre, String ciutat)throws ValorInexistent, CollectiuDesconegut{
        
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;

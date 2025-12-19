@@ -8,6 +8,9 @@
 package apps;
 
 import java.util.Scanner;
+
+import javax.xml.bind.ValidationException;
+
 import java.io.*;
 
 // Imports de les teves classes
@@ -200,7 +203,7 @@ public class AppConsola {
         System.out.println("7.  | 8. Buscar la informació d'un usuari");
         System.out.println("9.  | 10. Inscriure");
         System.out.println("11. | 12. ");
-        System.out.println("13. Nova Activitat d'un dia | 14. ");
+        System.out.println("13. Afegir activitat d'un dia | 14. Afegir activitat periodica");
         System.out.println("15. | 16. ");
         System.out.println("17. | 18. ");
         System.out.println("19. | 20. ");
@@ -317,27 +320,85 @@ public class AppConsola {
         //afegir una nova activitat periodica
         String nom, centre, ciutat;
         String[] col;
-        Data dIniI, dFi, dH;
+        Data dIniI = null, dFi = null, dH;
         DiaSetmana dia;
         double durada, preu;
         int setmanes, places;
-        int diaAux, mesAux, anyAux;
+        boolean res = false;
+        ActivitatPeriodica act = null;
 
-        System.out.println("Nom de l'activitat?");  //nom
+        System.out.println("\nNom de l'activitat?");  //nom
         nom = teclat.nextLine();
-
-        col = demanarColectius();   //colectivos
         
-        demanarPeriodeInscripcio(dIniI, dFi);   //periodo de inscripcion
+        System.out.println("\nEscull la data d'inici d'inscripcions:");   //data inicio de inscripcion
+        dIniI = demanarData();
+
+        System.out.println("\nEscull la data de fi d'inscripcions");   //data fin de inscripcion
+        dFi = demanarData();
         
         dia = demanarDia();     //dia de la semana
 
+        dH = demanarDiaYHora();     //dia y hora d'inici de l'activitat
 
+        System.out.println("\nCiutat on es farà l'activitat?");  //ciutat
+        ciutat = teclat.nextLine();
 
+        System.out.println("\nCentre on es farà l'activitat?");  //centre
+        centre = teclat.nextLine();
 
+        System.out.println("\nCol·lectius participants? (separats per comes: colaA,colB,...)");     //colectivos
+        col = teclat.nextLine().split(",");
+            
+        System.out.println("\nQuina serà la durada de l'activitat? (utilitzar punt com a separador decimal)");         //duracion
+        durada = Double.parseDouble(teclat.nextLine().replace(",", "."));
+            
+        System.out.println("\nQuantes setmanes durarà l'activitat?");     //semanas
+        setmanes = llegirEnter();
+
+        System.out.println("\nQuantes plaçes tè?");       //plazas
+        places = llegirEnter();
+
+        System.out.println("\nQuin preu tè l'activitat?");        //precio
+        preu = Double.parseDouble(teclat.nextLine().replace(",", "."));
         
-        ActivitatPeriodica act = new ActivitatPeriodica(nom, col, dIniI, dFi, 
-        dia, 0, null, 0, 0, 0, null, null)
+        while (!res){
+            try{
+                act = new ActivitatPeriodica(nom, col, dIniI, dFi, 
+                dia, durada, dH, setmanes, places, preu, centre, ciutat);
+                res = true;
+
+            }catch(ValorInexistent e){
+                System.out.println("Un dels valors es incorrecte."+ e);
+
+                System.out.println("Quina serà la durada de l'activitat?");
+                durada = teclat.nextDouble();
+                
+                System.out.println("Quantes setmanes durarà l'activitat?");
+                setmanes = llegirEnter();
+
+                System.out.println("Quantes plaçes tè?");
+                places = llegirEnter();
+
+                System.out.println("Quin preu tè l'activitat?");
+                preu = teclat.nextDouble();
+
+            }catch(CollectiuDesconegut e){
+                System.out.println("\n" + e + "\nTorna a introduir");
+                System.out.println("\nCol·lectius participants? (separats per comes: colaA,colB,...)");
+                col = teclat.nextLine().split(",");
+            }
+        }
+
+        res = false;
+        while (!res){
+            try{
+                llistaActivitats.afegir(act);
+                res = true;
+
+            }catch(ActivitatDuplicada e){
+                System.out.println(e + "\nEscull un nom diferent");
+            }
+        }
     }
 
     private static void case15(){
@@ -485,75 +546,29 @@ public class AppConsola {
         }
     }
 
-    //metodo para comprobar si los colectivos enviados por parametro en un array existen
-    private static boolean existeixenCols(String[] cols){
-        boolean res = true;
-        int i = 0;
-
-        while (res && (i < cols.length)){
-            if (!cols[i].equalsIgnoreCase("PDI") && !cols[i].equalsIgnoreCase("PTGAS") && !cols[i].equalsIgnoreCase("Estudiant")){
-                res = false;
-            }
-        }
-
-        return res;
-    }
-
-    //metodo para pedir los colectivos comprobando que sea correcto
-    private static String[] demanarColectius(){
-        boolean res = false;
-        String[] col = null;
-
-        while (!res){
-            System.out.println("\nCol·lectius participants? (separats per comes: colaA,colB,...)");
-            col = teclat.nextLine().split(",");
-            res = existeixenCols(col);
-
-            if (!res){
-                System.out.println("Els colectius introduits no segueixen el format adequat o no existeixen, torna-ho a probar");
-                System.out.println("Col·lectius participants? (separats per comes: colaA,colB,...)");
-            }
-        }
-
-        return col;
-    }
-
-    //metodo para pedir el periodo de inscripcion y comprobar que es correcto
-    private static void demanarPeriodeInscripcio(Data dIni, Data dFi){
+    //metodo para pedir una fecha y comprobar que sea correcta
+    private static Data demanarData(){
         boolean res = false;
         int diaAux, mesAux, anyAux;
+        Data aux = null;
+
         while (!res){
-            System.out.println("Dia inici inscripció?");
+            System.out.println("Dia?");
             diaAux = llegirEnter();
-            System.out.println("Mes inici inscripció?");
+            System.out.println("Mes?");
             mesAux = llegirEnter();
-            System.out.println("Any inici inscripció?");
+            System.out.println("Any?");
             anyAux = llegirEnter();
 
             try{
-                dIni = new Data(diaAux, mesAux, anyAux);
+                aux = new Data(diaAux, mesAux, anyAux);
                 res = true;
             }catch(ValorInexistent e){
                 System.out.println("La data no existeix, proba amb una altra\n");
             }
         }
 
-        res = false;
-        while (!res){
-            System.out.println("Dia fi inscripció?");
-            diaAux = llegirEnter();
-            System.out.println("Mes fi inscripció?");
-            mesAux = llegirEnter();
-            System.out.println("Any fi inscripció?");
-            anyAux = llegirEnter();
-
-            try{
-                dFi = new Data(diaAux, mesAux, anyAux);
-                res = true;
-            }catch(ValorInexistent e){
-                System.out.println("La data no existeix, proba amb una altra\n");
-            }
-        }
+        return aux;
     }
 
     //metodo para pedir el dia de la semana en que se hace una actividad
@@ -563,11 +578,12 @@ public class AppConsola {
         DiaSetmana dia = null;
 
         while (!res){
-            System.out.println("En quin dia de la setmana es farà l'activitat? (escrit en català i en minúscula)");
+            System.out.println("\nEn quin dia de la setmana es farà l'activitat? (escrit en català i en minúscula)");
             aux = teclat.nextLine();
 
             try{
                 dia = DiaSetmana.valueOf(aux.toUpperCase());
+                res = true;
             }catch(IllegalArgumentException e){
                 System.out.println("El dia no existeix, torna-ho a probar");
             }
@@ -581,7 +597,8 @@ public class AppConsola {
         boolean res = false;
         int dia, mes, any, hora, min;
         Data data = null;
-
+        
+        System.out.println("\nEscull l'horari setmanal de l'activitat i el primer dia que es farà");
         while (!res){
             System.out.println("Dia inici de l'activitat?");
             dia = llegirEnter();
@@ -593,15 +610,17 @@ public class AppConsola {
             hora = llegirEnter();
             System.out.println("Minut inici de l'activitat?");
             min = llegirEnter();
-        }
 
         try{
-                data = new Data(dia, mesAux, anyAux);
+                data = new Data(dia, mes, any, hora, min);
                 res = true;
             }catch(ValorInexistent e){
-                System.out.println("La data no existeix, proba amb una altra\n");
+                System.out.println("La data o l'hora no existeixen, proba amb una altra\n");
             }
-    }
+    
+        }
 
+        return data;
+    }
 
 }

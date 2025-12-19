@@ -1,6 +1,7 @@
 //Aesha Naz
 
 package activitats;
+import excepcions.CollectiuDesconegut;
 import extras.Data;
 
 public abstract class Activitat {
@@ -18,11 +19,16 @@ public abstract class Activitat {
      *                  s'ofereix l'activitat ("PDI", "PTGAS" i/o "Estudiant")
      * @param dataIniciInscripcio data a partir de la qual l'usuari es pot inscriure
      * @param dataFiInscripcio data límit fins a la qual es permet fer inscripcions
+     * @throws CollectiuDesconegut
      */
 
-    public Activitat (String nom, String[] collectius, Data dataIniciInscripcio, Data dataFiInscripcio) {
+    public Activitat (String nom, String[] collectius, Data dataIniciInscripcio, Data dataFiInscripcio)throws CollectiuDesconegut{
         this.nom = nom;
-        this.collectius = collectius;
+        if(colectiuCorrecte(collectius)){
+            this.collectius = collectius;
+        }else{
+            throw new CollectiuDesconegut(collectius.toString());
+        }
         this.dataIniciInscripcio = dataIniciInscripcio;
         this.dataFiInscripcio = dataFiInscripcio;
     }
@@ -122,6 +128,20 @@ public abstract class Activitat {
                 " fins " + dataFiInscripcio + "\n";
 
         return info;
+    }
+
+    private boolean colectiuCorrecte(String[] cols){
+        boolean res = true;
+        int i = 0;
+
+        while (res && (i < cols.length)){
+            if (!cols[i].equalsIgnoreCase("PDI") && !cols[i].equalsIgnoreCase("PTGAS") && !cols[i].equalsIgnoreCase("Estudiant")){
+                res = false;
+            }
+            i++;
+        }
+
+        return res;
     }
 
 }
