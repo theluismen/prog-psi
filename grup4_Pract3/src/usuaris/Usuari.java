@@ -12,7 +12,7 @@ public abstract class Usuari {
      * Constructor de la classe Usuari
      * @param alies àlies de l'usuari (únic)
      * @param email part inicial del correu institucional (sense @)
-     * @param colectiu col·lectiu al qual pertany (PDI, PTGAS o Estudiant)
+     * @param collectiu col·lectiu al qual pertany (PDI, PTGAS o Estudiant)
      */
     public Usuari (String alies, String email, String collectiu) {
         this.alies = alies;

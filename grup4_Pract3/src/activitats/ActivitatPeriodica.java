@@ -410,7 +410,7 @@ public class ActivitatPeriodica extends Activitat {
      * @return una cadena que indica el tipus d'activitat
      */
     @Override
-     public String tipusActivitat(){
+    public String tipusActivitat(){
         return "Activitat periodica";
     }
 

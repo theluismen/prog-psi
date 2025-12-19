@@ -199,4 +199,26 @@ public class LlistaUsuaris implements Llista<Usuari> {
         }
         usuaris = nou;
     }
+
+
+    /**
+     * Metodo que devuelve una nueva lista de usuarios con solo los usuarios de un colectivo
+     * @param col colectivo de los usuarios de la nueva lista (PDI, PTGAS o estudiants)
+     * @return
+     */
+    public LlistaUsuaris tipusLlista(String col){
+        LlistaUsuaris nova = new LlistaUsuaris();
+
+        for (int i = 0; i < this.compt; i++){
+            if (col.equalsIgnoreCase(this.usuaris[i].getCollectiu())){
+                try{
+                    nova.afegir(this.usuaris[i]);
+                }catch(UsuariDuplicat e){
+                    
+                }
+            }
+        }
+
+        return nova;
+    }
 }

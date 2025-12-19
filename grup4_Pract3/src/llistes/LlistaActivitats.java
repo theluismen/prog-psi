@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import activitats.*;
+import excepcions.ActivitatDuplicada;
 
 public class LlistaActivitats implements Llista<Activitat>{        //falta crear llista
     private Activitat llista[];
@@ -21,7 +22,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * @param n tamaño total de la lista
      */
     public LlistaActivitats(int n){
-        this.llista = new Activitat[n];         //añadir excepcion
+        this.llista = new Activitat[n];
         nElems = 0;
     }
 
@@ -40,11 +41,12 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * Metodo para añadir una actividad a la lista ordenado alfabeticamente por su nombre
      * si ya existe una actividad con el mismo nombre (ignora las mayusculas), lanzara un error
      * @param act
+     * @throws ActivitatDuplicada
      */
     @Override
-    public void afegir(Activitat act) {
+    public void afegir(Activitat act)throws ActivitatDuplicada {
         if (this.existeix(act.getNom())){
-            //lanzar excepcion
+            throw new ActivitatDuplicada(act.getNom());
         }
         
         if (this.llista.length > nElems){
@@ -79,6 +81,28 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
         }
         
         return trobat;
+    }
+
+
+    /**
+     * Metodo que devuelve una nueva lista de actividades con solo las actividades de un tipo
+     * @param tipus tipo de actividades de la nueva lista (periodicas, online o de un dia)
+     * @return
+     */
+    public LlistaActivitats tipusLlista(String tipus){
+        LlistaActivitats nova = new LlistaActivitats(1);
+
+        for (int i = 0; i < this.nElems; i++){
+            if (tipus.equalsIgnoreCase(this.llista[i].tipusActivitat())){
+                try{
+                    nova.afegir(this.llista[i]);
+                }catch(ActivitatDuplicada e){
+
+                }
+            }
+        }
+
+        return nova;
     }
 
 
