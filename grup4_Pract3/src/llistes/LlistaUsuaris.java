@@ -97,11 +97,12 @@ public class LlistaUsuaris implements Llista<Usuari> {
     /**
      * Metode que mostra per pantalla tots els usuaris de la llista
      */
-    @Override
-    public void mostrar() {
+    public String toString() {
+        String aux = "";
         for(int i = 0; i < compt; i++) {
-            System.out.println(usuaris[i] + "\n");
+            aux += usuaris[i] + "\n";
         }
+        return aux;
     }
 
     /**

@@ -33,14 +33,15 @@ public class ActivitatPeriodica extends Activitat {
      * @param collectius
      * @param dataIniInscripcio
      * @param dataFiInscripcio
-     * @param dia
-     * @param durada
-     * @param diaYHoraInicio
-     * @param setmanes
+     * @param dia dia de la setmana (dilluns, dimarts, etc)
+     * @param durada de la activitat (1,5 h = una hora i mitja)
+     * @param diaYHoraInicio el primer día en que se da la actividad y la hora a la que se dará cada semana
+     * @param setmanes cantidad de semanas en que se repetirá la actividad
      * @param places
      * @param preu
-     * @param centre
+     * @param centre lugar en que se lleva a cabo la actividad
      * @param ciutat
+     * @throws ValorInexistent
      */
     public ActivitatPeriodica (String nom, String[] collectius, Data dataIniInscripcio, Data dataFiInscripcio,
                                 DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
@@ -111,10 +112,16 @@ public class ActivitatPeriodica extends Activitat {
     /**
      * setter para cambiar la duracion de la actividad (horas)
      * @param novaDurada
+     * @throws ValorInexistent
      */
-    public void setDurada(double novaDurada){   
-        this.durada = novaDurada;   
-    }   //controlar excepciones
+    public void setDurada(double novaDurada)throws ValorInexistent{   
+        //la duración de una actividad no puede ser 0 o inferior
+        if (novaDurada > 0)
+            this.durada = novaDurada;
+        else{
+            throw new ValorInexistent("Durada");
+        }  
+    }
 
     /**
      * getter de la cantidad de plazas de la actividad
@@ -127,10 +134,16 @@ public class ActivitatPeriodica extends Activitat {
     /**
      * setter para cambiar las plazas de una actividad
      * @param nouPlaces
+     * @throws ValorInexistent
      */
-    public void setPlaces(int nouPlaces){   
-        this.places = nouPlaces;    
-    }   //controlar excepciones
+    public void setPlaces(int nouPlaces)throws ValorInexistent{   
+        //Una actividad no se puede dar si no hay plazas y un valor negativo es imposible
+        if (nouPlaces > 0){
+            this.places = nouPlaces;
+        }else{
+            throw new ValorInexistent("Places");
+        }    
+    }
 
     /**
      * getter para saber la fecha del final de la actividad
@@ -151,10 +164,16 @@ public class ActivitatPeriodica extends Activitat {
     /**
      * setter para cambiar la cantidad de semanas que dura la actividad
      * @param nouSetmanes
+     * @throws ValorInexistent
      */
-    public void setSetmanes(int nouSetmanes){   
-        this.setmanes = nouSetmanes;    
-    }   //controlar excepciones
+    public void setSetmanes(int nouSetmanes)throws ValorInexistent{   
+        //Una activitat periodica ha de durar mínim 1 setmana
+        if (nouSetmanes > 0){
+            this.setmanes = nouSetmanes;
+        }else{
+            throw new ValorInexistent("Setmanes d'activitat periodica");
+        }    
+    }
    
     /**
      * getter del precio de la actividad
@@ -167,10 +186,16 @@ public class ActivitatPeriodica extends Activitat {
     /**
      * setter para cambiar el precio de la actividad
      * @param nouPreu
+     * @throws ValorInexistent
      */
-    public void setPreu(double nouPreu){    
-        this.preu = nouPreu;    
-    }   //controlar excepciones
+    public void setPreu(double nouPreu)throws ValorInexistent{    
+        //el preu de l'activitat no pot ser negatiu
+        if (nouPreu >= 0){
+            this.preu = nouPreu;       //controlar excepciones
+        }else{
+            throw new ValorInexistent("Preu negatiu");
+        }    
+    }
 
     /**
      * getter del centro donde se imparte la actividad

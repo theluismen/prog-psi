@@ -24,7 +24,7 @@ public class AppConsola {
     // 1. RUTES DELS FITXERS
     private static final String FITXER_INSCRIPCIONS = "src/fitxers/inscripcions.dat";
     private static final String FITXER_USUARIS = "src/fitxers/usuaris.txt";
-    private static final String FITXER_ACTIVITATS = "src/fitxers/activitats.txt";
+    private static final String FITXER_ACTIVITATS = "src/fitxers/activitat.txt";
 
     // 2. VARIABLES GLOBALS (LLISTES)
     private static LlistaInscripcio llistaInscripcions;
@@ -33,13 +33,18 @@ public class AppConsola {
     
     // Eines globals
     private static Scanner teclat = new Scanner(System.in);
-    private static String dataActualStr = "01/09/2025"; // Data inicial per defecte
+    private static Data dataActual;
 
     public static void main(String[] args) {
         
         // --- INICIALITZACIÓ ---
         boolean sortir = false;
         int opcio = 0;
+        try{
+            dataActual = new Data(1, 9, 2025); // Data inicial per defecte
+        }catch(ValorInexistent e){  //es obligatori tractar l'excepció, però com que es un valor per defecte no donarà error
+            System.out.println("La data no existeix");
+        }
 
         // --- CÀRREGA DE DADES ---
         carregarDadesSistema();
@@ -56,6 +61,11 @@ public class AppConsola {
                     break;
                 case 2:
                     // TODO: Mostrar les dades de les llistes
+                    /*Mostrar les dades de les llistes. Es demanarà de quina llista es vol mostrar la informació. En el
+                    cas de llistes amb diferents tipus d’elements, per exemple usuaris de diferents col·lectius, es
+                    demanarà també si es volen mostrat tots o només els d’un tipus. Aplica també a les activitats.*/
+                    
+                    
                     break;
 
                 // --- CONSULTES ---
@@ -128,15 +138,13 @@ public class AppConsola {
                 // --- SORTIDA ---
                 case 22:
                     sortir = true;
+                    gestionarSortida();     // --- TANCAMENT I GUARDAT ---
                     break;
 
                 default:
                     System.out.println("Opció no vàlida.");
             }
         }
-
-        // --- TANCAMENT I GUARDAT ---
-        gestionarSortida();
     }
 
     // MÈTODES AUXILIARS BÀSICS
@@ -154,25 +162,34 @@ public class AppConsola {
     }
 
     private static void gestionarSortida() {
-        System.out.print("Vols guardar els canvis abans de sortir? (S/N): ");
+        System.out.print("\nVols guardar els canvis abans de sortir? (S/N): ");
         String resp = teclat.nextLine();
-        if (resp.equalsIgnoreCase("S")) {
-            System.out.println("Guardant dades...");
-            try {
-                llistaInscripcions.guardarFitxer(FITXER_INSCRIPCIONS);
-                // llistaUsuaris.guardarFitxer(FITXER_USUARIS);
-                // llistaActivitats.guardarFitxer(FITXER_ACTIVITATS);
-                System.out.println("Dades guardades.");
-            } catch (Exception e) {
-                System.out.println("Error guardant: " + e.getMessage());
+        boolean res = false;
+        while (!res){
+            if (resp.equalsIgnoreCase("S")) {
+                System.out.println("Guardant dades...");
+                try {
+                    llistaInscripcions.guardarFitxer(FITXER_INSCRIPCIONS);
+                    // llistaUsuaris.guardarFitxer(FITXER_USUARIS);
+                    llistaActivitats.guardarLlista(FITXER_ACTIVITATS);
+                    System.out.println("Dades guardades.");
+                    res = true;
+                } catch (Exception e) {
+                    System.out.println("Error guardant: " + e.getMessage());
+                    System.out.println("Torna-ho a probar");
+                }
+            }else if (resp.equalsIgnoreCase("N")){
+                res = true;
+            }else{
+                System.out.println("\nL'opció introduida no existeix, el format ha de ser S o N");
             }
+            System.out.println("Adéu!");
         }
-        System.out.println("Adéu!");
     }
 
     private static void mostrarMenu() {
         System.out.println("\n--- MENÚ PRINCIPAL ---");
-        System.out.println("1. Data Sistema | 2. Llistes");
+        System.out.println("1. Consulta la data d'avui | 2. Mostrar les llistes");
         System.out.println("10. Inscriure | 13. Nova Activitat");
         System.out.println("22. Sortir");
         System.out.print("Opció: ");
@@ -185,4 +202,14 @@ public class AppConsola {
             return -1;
         }
     }
+
+    /*Mostrar les dades de les llistes. Es demanarà de quina llista es vol mostrar la informació. En el
+            cas de llistes amb diferents tipus d’elements, per exemple usuaris de diferents col·lectius, es
+            demanarà també si es volen mostrat tots o només els d’un tipus. Aplica també a les activitats.*/
+    private static void case2(){
+        System.out.println("\nQuina llista vols veure?");
+        System.out.println("\t(opció 1: Llista d'activitats)\n\t(opció 2: Llista d'usuaris)\n\t(opció 3: Llista d'inscripcions)");
+    }
+
+
 }

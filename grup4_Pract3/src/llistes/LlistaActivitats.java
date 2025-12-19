@@ -30,6 +30,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * Metode que retorna el nombre d'elements actuals a la llista
      * @return el total d'elements a la llista
      */
+    @Override
     public int getNumElements(){
         return this.nElems;
     }
@@ -40,6 +41,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * si ya existe una actividad con el mismo nombre (ignora las mayusculas), lanzara un error
      * @param act
      */
+    @Override
     public void afegir(Activitat act) {
         if (this.existeix(act.getNom())){
             //lanzar excepcion
@@ -64,6 +66,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * @param nomAct
      * @return
      */
+    @Override
     public boolean existeix(String nomAct){
         boolean trobat = false;
         int i = 0;
@@ -97,15 +100,15 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
     }
 
 
-//toString??
-    public void mostrar(){
+//toString
+    public String toString(){
         String aux = "";
         
         for (int i = 0; i < nElems; i++){
             aux += this.llista[i]+"\n";
         }
 
-        System.out.println(aux);
+        return aux;
     }
 
 

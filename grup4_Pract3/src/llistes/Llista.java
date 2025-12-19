@@ -40,9 +40,4 @@ public interface Llista<T> {
      */
     int getNumElements();
 
-    /**
-     * Metode que mostra tots els elements de la llista
-     */
-    void mostrar();
-
 }
