@@ -54,6 +54,16 @@ public class ActivitatOnline extends Activitat {
     }
 
     /**
+     * Metode que retorna quantes places té una activitat -
+     * en aquest cas en té il·limitades
+     */
+    @Override
+    public int getPlacesMaximes() {
+        return Integer.MAX_VALUE;
+    }
+
+
+    /**
      * Comprova si l'activitat està activa en una data concreta.
      * Per online: data >= dataInici i data <= dataInici + periode
      */

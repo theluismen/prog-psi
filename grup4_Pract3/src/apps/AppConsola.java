@@ -260,6 +260,39 @@ public class AppConsola {
     }
 
     private static void case3(){
+        boolean hiHa = false;
+
+        System.out.println("\n--- Activitats en període d'inscripció amb places disponibles ---");
+
+        for (int i = 0; i < llistaActivitats.getNumElements(); i++) {
+            Activitat act = llistaActivitats.get(i);
+
+            if (act != null && act.esEnPeriodeInscripcio(dataActual)) {
+
+                
+                int inscrits = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+                int placesMax = act.getPlacesMaximes();
+
+                System.out.println(act);
+
+                if (inscrits < placesMax) {
+                    if (placesMax == Integer.MAX_VALUE) { 
+                        System.out.println("Places disponibles: Il·limitades ");
+                    } else {
+                        System.out.println("Places disponibles: " + (placesMax - inscrits));
+                    }
+                } else {
+                    System.out.println("Activitat completa (no hi ha places disponibles)");
+                }
+
+                System.out.println();
+                hiHa = true;
+            }
+        }
+
+        if (!hiHa) {
+            System.out.println("No hi ha activitats amb inscripció oberta.");
+        }
         
     }
 
@@ -272,6 +305,27 @@ public class AppConsola {
     }
 
     private static void case6(){
+        boolean hiHa = false;
+
+        System.out.println("\n--- Activitats amb places disponibles ---");
+
+        for(int i = 0; i < llistaActivitats.getNumElements(); i++) {
+            Activitat act = llistaActivitats.get(i);
+
+            if (act != null) {
+                int inscrits = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+                int placesMax = act.getPlacesMaximes();
+
+                if(inscrits < placesMax) {
+                    System.out.println("- " + act.getNom());
+                    hiHa = true;
+                }
+            }
+        }
+
+        if(!hiHa) { 
+            System.out.println("No hi ha cap activitat amb places disponibles")
+        }
         
     }
 

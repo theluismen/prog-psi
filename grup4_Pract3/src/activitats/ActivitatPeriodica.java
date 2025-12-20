@@ -128,7 +128,8 @@ public class ActivitatPeriodica extends Activitat {
      * getter de la cantidad de plazas de la actividad
      * @return plazas
      */
-    public int getPlaces(){     
+    @Override
+    public int getPlacesMaximes(){     
         return this.places;     
     }
 
