@@ -62,6 +62,26 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
         this.nElems++;
     }
 
+    
+    /**
+     * Método que busca una actividad por el id de esta.
+     * @param id Nombre de la actividad
+     * @return objeto de esa actividad.
+     */
+    @Override
+    public Activitat cerca(String id){
+        Activitat act = null;
+        boolean encontrada = false;
+
+        for(int i = 0; i < nElems && !encontrada; i++){
+            if(this.llista[i].getNom().equalsIgnoreCase(id)){
+                act = this.llista[i];
+                encontrada = true;
+            }
+        }
+        return act;
+    }
+
 
     /**
      * Metodo que comprueba si una actividad ya existe en la lista
@@ -85,6 +105,33 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
 
 
     /**
+     * Método que elimina una actividad de al lista por su nombre.
+     * @param act   Nombre de la actividad a eliminar.
+     */
+    public void eliminar(Activitat act){
+        int borrar = -1;
+        boolean encontrado = false;
+
+        for(int i = 0; i < nElems && !encontrado; i++){
+            if(this.llista[i].getNom().equalsIgnoreCase(act.getNom())){
+                borrar = i;
+                encontrado = true;
+            }
+        }
+        if(encontrado){
+            //Mover todos los ellementos a la izquierda
+            for(int i = borrar; i < nElems -1; i++){
+                this.llista[i]= this.llista[i + 1];
+            }
+            //Eliminar el valor de la última posición (duplicado).
+            this.llista[nElems -1] = null;
+            nElems--;
+            reduir();
+        }
+    }
+
+
+    /**
      * Metodo que devuelve una nueva lista de actividades con solo las actividades de un tipo
      * @param tipus tipo de actividades de la nueva lista (periodicas, online o de un dia)
      * @return
@@ -103,6 +150,11 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
         }
 
         return nova;
+    }
+
+
+    public void fromCSV(String nomFichero){
+        
     }
 
 
@@ -151,6 +203,17 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
     }
     
 
+    /**
+     * Método que reduce en uno el tamaño físico del array.
+     */
+    private void reduir(){
+        Activitat aux[] = new Activitat[this.llista.length-1];
+
+        for(int i = 0; i < this.nElems; i++){
+            aux[i] = this.llista[i];
+        }
+        this.llista = aux;
+    }
     
     /*public LlistaActivitats llegirFitxer(String nomFitxer){
         

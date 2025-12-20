@@ -18,7 +18,7 @@ public class ActivitatUnDia extends Activitat{
      * @param collectius Colectivo al que pertenece la persona.
      * @param dataIniInscripcio Fecha de inicio de inscripción.
      * @param dataFiInscripcio Fecha de fin de inscripción.
-     * @param dataActivitat Fecha de la actividad.
+     * @param dataActivitat Fecha de la actividad y hora de inicio.
      * @param places Número de plazas disponibles.
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
@@ -44,7 +44,7 @@ public class ActivitatUnDia extends Activitat{
     
     /**
      * Getter de fecha de la actividad.
-     * @return fecha de tipo LocalDate.
+     * @return fecha de tipo Data.
      */
     public Data getData(){
         return dataActivitat;
@@ -144,6 +144,31 @@ public class ActivitatUnDia extends Activitat{
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
             "\tPreu: " + preu + " euros";
+    }
+
+    public String toCSV(){
+        String aux = this.tipusActivitat() + ";" + super.nom + ";";
+
+        for (int i = 0; i < (super.collectius.length - 1); i++){    //-1 para evitar que al poner el ultimo colectivo quede una coma al final
+            aux += super.collectius[i]+",";
+        }
+        aux += super.collectius[super.collectius.length - 1] + ";" +
+               super.dataIniciInscripcio.getDia() + ";" +
+               super.dataIniciInscripcio.getMes() + ";" +
+               super.dataIniciInscripcio.getAny() + ";" +
+               super.dataFiInscripcio.getDia() + ";" +
+               super.dataFiInscripcio.getMes() + ";" +
+               super.dataFiInscripcio.getAny() + ";" +
+               this.dataActivitat.getDia() + ";" +
+               this.dataActivitat.getMes() + ";" +
+               this.dataActivitat.getAny() + ";" +
+               this.dataActivitat.getHora() + ";" +
+               this.dataActivitat.getMinutos() + ";" +
+               this.places + ";" +
+               this.preu + ";" +
+               this.ciutat;
+               
+        return aux;
     }
 }
 

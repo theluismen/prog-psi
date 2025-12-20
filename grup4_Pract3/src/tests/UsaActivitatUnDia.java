@@ -12,6 +12,7 @@ public class UsaActivitatUnDia {
         testEstaActiva();
         testTipusActivitat();
         testToString();
+        testToCSV();
     }
 
     private static void testConstructor(){
@@ -114,5 +115,18 @@ public class UsaActivitatUnDia {
                                                 11, 
                                                 "Amposta");
         System.out.println(act.toString());
+    }
+
+    private static void testToCSV(){
+        System.out.println("\n\n---TEST toCSV()---");
+        ActivitatUnDia act = new ActivitatUnDia("Excursión al Delta", 
+                                                new String[]{"PDI", "Estudiant"}, 
+                                                new Data(1,11,2025,23,59), 
+                                                new Data(30,11,2025,23,59), 
+                                                new Data(5, 12, 2025, 10, 00), 
+                                                25, 
+                                                11, 
+                                                "Amposta");
+        System.out.println(act.toCSV());
     }
 }
