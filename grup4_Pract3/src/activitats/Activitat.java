@@ -70,6 +70,13 @@ public abstract class Activitat {
     }
 
     /**
+     * Mètode que retorna el nombre de places que hi ha en una activitat
+     * 
+     * @return el nombre de places que hi ha
+     */
+    public abstract int getPlacesMaximes();
+
+    /**
      * Mètode que determina si avui es pot fer una inscripcio
      * 
      * @param avui la data d'aquell dia

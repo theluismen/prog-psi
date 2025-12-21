@@ -116,7 +116,8 @@ public class ActivitatUnDia extends Activitat{
      * Getter de número de plazas para la actividad.
      * @return Número de plazastipo int.
      */
-    public int getPlaces(){
+    @Override
+    public int getPlacesMaximes(){
         return places;
     }
 
