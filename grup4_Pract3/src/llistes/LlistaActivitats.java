@@ -5,12 +5,19 @@
  */
 package llistes;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import activitats.*;
+import enumeraciones.DiaSetmana;
 import excepcions.ActivitatDuplicada;
+import excepcions.CollectiuDesconegut;
+import excepcions.ValorInexistent;
+import extras.Data;
 
 public class LlistaActivitats implements Llista<Activitat>{        //falta crear llista
     private Activitat llista[];
@@ -153,8 +160,119 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
     }
 
 
-    public void fromCSV(String nomFichero){
-        
+    /**
+     * Método que lee las actividades de un fichero.csv y lo guarda en una llista.
+     * @param nomFichero
+     * @throws IOException
+     */
+    public void fromCSV(String nomFichero) throws IOException{
+        BufferedReader archivo = null;
+        String linea;   //Variable almacena cada linea leida del fichero
+        int nLinea = 1; //Contador de line apara indicar el error
+        //Abro el archivo y lo leo.
+        archivo = new BufferedReader(new FileReader(nomFichero));
+        linea = archivo.readLine();
+
+        while(linea != null){
+            Scanner scanner = new Scanner(linea);   //Trabajamos la linea de manera individual.
+            scanner.useDelimiter(";");              //Separo la linea en cada elemento del objeto.
+
+            try{
+                Activitat nuevaAct = null;
+                //Posiciones comunes para todas las actividades.
+                String tipoAct = scanner.next();    //Leo el tipo de actividad.
+                String nom = scanner.next();        //Nombre actividad.
+                String[] collectius = scanner.next().split(",");    //Array con colectivos
+
+                //Fecha de inicio del período de inscripción.
+                int iniciInscripcioDia = scanner.nextInt();         
+                int iniciInscripcioMes = scanner.nextInt();         
+                int iniciInscripcioAny = scanner.nextInt(); 
+                Data iniciInscripcio = new Data(iniciInscripcioDia, iniciInscripcioMes, iniciInscripcioAny); 
+
+                //Fecha de fin del período de inscripción.       
+                int fiInscripcioDia = scanner.nextInt();            
+                int fiInscripcioMes = scanner.nextInt();            
+                int fiInscripcioAny = scanner.nextInt();    
+                Data fiInscripcio = new Data(fiInscripcioDia, fiInscripcioMes, fiInscripcioAny);            
+
+                if (tipoAct.equalsIgnoreCase("Activitat periodica")) {
+                    String diaSetmanaStr = scanner.next().toUpperCase();
+                    DiaSetmana diaSetmana = DiaSetmana.valueOf(diaSetmanaStr);
+                    double duracio = scanner.nextDouble();
+
+                    int diaAct = scanner.nextInt();
+                    int mesAct = scanner.nextInt();
+                    int anyAct = scanner.nextInt();
+                    int hora = scanner.nextInt();
+                    int minutos = scanner.nextInt();
+                    Data diaYHoraInicio = new Data(diaAct, mesAct, anyAct, hora, minutos);
+
+                    int setmanes = scanner.nextInt();
+                    int places = scanner.nextInt();
+                    double preu = scanner.nextDouble();
+                    String centre = scanner.next();
+                    String ciutat = scanner.next();
+
+                    //Creo activitat.
+                    nuevaAct = new ActivitatPeriodica(nom, collectius, iniciInscripcio, fiInscripcio,
+                                                            diaSetmana, duracio, diaYHoraInicio, setmanes, 
+                                                            places, preu, centre, ciutat);
+                        
+                }else if(tipoAct.equalsIgnoreCase("Activitat d'un dia")){
+                    int diaAct = scanner.nextInt();
+                    int mesAct = scanner.nextInt();
+                    int anyAct = scanner.nextInt();
+                    int hora = scanner.nextInt();
+                    int minutos = scanner.nextInt();
+                    Data diaYHoraInicio = new Data(diaAct, mesAct, anyAct, hora, minutos);
+
+                    int horaDurada = scanner.nextInt();
+                    int minutosDurada = scanner.nextInt();
+                    int places = scanner.nextInt();
+                    int preu = scanner.nextInt();
+                    String ciutat = scanner.next();
+
+                    //Creo activitat.
+                    nuevaAct = new ActivitatUnDia(nom, collectius, iniciInscripcio, fiInscripcio, diaYHoraInicio, 
+                                                        horaDurada, minutosDurada, places, preu, ciutat);
+                        
+                }else if(tipoAct.equalsIgnoreCase("Online")){   //preguntar de unificar nomeclatura
+                    int diaAct = scanner.nextInt();
+                    int mesAct = scanner.nextInt();
+                    int anyAct = scanner.nextInt();
+                    Data diaInicio = new Data(diaAct, mesAct, anyAct);
+
+                    int periodoVisualizacion = scanner.nextInt();
+                    String enlace = scanner.next();
+                    
+                    //Creo activitat.
+                    nuevaAct = new ActivitatOnline(nom, collectius, iniciInscripcio, fiInscripcio, 
+                                                        diaInicio, periodoVisualizacion, enlace);   
+                    
+                }
+                if(nuevaAct != null){
+                    //Añadir a la lsita el objeto.
+                    this.afegir(nuevaAct);
+                }
+            }catch(ValorInexistent e){
+                System.out.println("Línia " + nLinea + ": Valor inexistent → " + e.getMessage());
+            }catch(CollectiuDesconegut e){
+                System.out.println("Línia " + nLinea + ": Col·lectiu desconegut → " + e.getMessage());
+            }catch(ActivitatDuplicada e){
+                System.out.println("Línia " + nLinea + ": Activitat duplicada → " + e.getMessage());
+            }catch(IllegalArgumentException e){
+                System.out.println("Línia " + nLinea + ": Error en DiaSetmana o format incorrecte → " + e.getMessage());
+            }catch(Exception e){
+                System.out.println("Línia " + nLinea + ": Error inesperat → " + e.getMessage());
+            }finally{
+                scanner.close();
+            }
+              
+            linea = archivo.readLine();
+            nLinea++;
+        }
+        archivo.close();
     }
 
 

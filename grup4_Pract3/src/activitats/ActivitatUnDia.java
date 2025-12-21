@@ -2,11 +2,14 @@
 
 package activitats;
 
+import excepcions.*;
 import extras.*;
 
 
 public class ActivitatUnDia extends Activitat{
-    private Data dataActivitat;               
+    private Data dataActivitatIhora; 
+    private int horaDurada;
+    private int minutosDurada;              
     private int places;                
     private double preu;               
     private String ciutat;            
@@ -19,6 +22,8 @@ public class ActivitatUnDia extends Activitat{
      * @param dataIniInscripcio Fecha de inicio de inscripción.
      * @param dataFiInscripcio Fecha de fin de inscripción.
      * @param dataActivitat Fecha de la actividad y hora de inicio.
+     * @param horaDurada Duración de horas de la actividad (XX:00)
+     * @param minutosDurada Duración de minutos de la actividad (00:XX).
      * @param places Número de plazas disponibles.
      * @param preu Precio de la actividad.
      * @param ciutat Ciudad de la actividad.
@@ -27,16 +32,41 @@ public class ActivitatUnDia extends Activitat{
                           String[] collectius, 
                           Data dataIniciInscripcio, 
                           Data dataFiInscripcio, 
-                          Data dataActivitat, 
+                          Data dataActivitatIhora,
+                          int horaDurada, 
+                          int minutosDurada,
                           int places, 
                           double preu, 
-                          String ciutat){
+                          String ciutat)throws CollectiuDesconegut, ValorInexistent{
 
-        super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
-        this.dataActivitat = dataActivitat;
-        this.places = places;
-        this.preu = preu;
+        super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); 
+        this.dataActivitatIhora = dataActivitatIhora;
         this.ciutat = ciutat;
+
+        //La hora ha de ser 0 <= hora <= 24.
+        if (horaDurada>=0 && horaDurada <=24){
+            this.horaDurada = horaDurada;
+        }else{
+            throw new ValorInexistent("Valor de hora inexistent");
+        }
+        //Los minutos han de ser 0 < minutos <= 59.
+        if (minutosDurada>=0 && minutosDurada <=24){
+            this.minutosDurada = minutosDurada;
+        }else{
+            throw new ValorInexistent("Valor de minuts inexistent");
+        }
+        //El número de plazas > 0.
+        if (places > 0){
+            this.places = places;
+        }else{
+            throw new ValorInexistent("Valor negatiu");
+        }
+        //El precio > 0.
+        if (preu > 0){
+            this.preu = preu;
+        }else{
+            throw new ValorInexistent("Valor inexistent");
+        }
     }
 
 
@@ -46,8 +76,8 @@ public class ActivitatUnDia extends Activitat{
      * Getter de fecha de la actividad.
      * @return fecha de tipo Data.
      */
-    public Data getData(){
-        return dataActivitat;
+    public Data getDataInici(){
+        return dataActivitatIhora;
     }
 
     /**
@@ -55,7 +85,7 @@ public class ActivitatUnDia extends Activitat{
      * @return minuto de la actividad.
      */
     public int getMinuto(){
-        return dataActivitat.getMinutos();
+        return dataActivitatIhora.getMinutos();
     }
 
     /**
@@ -63,7 +93,23 @@ public class ActivitatUnDia extends Activitat{
      * @return hora de la actividad.
      */
     public int getHora(){
-        return dataActivitat.getHora();
+        return dataActivitatIhora.getHora();
+    }
+
+        /**
+     * Getter de minuto de la actividad.
+     * @return minuto de la actividad.
+     */
+    public int getMinutoDurada(){
+        return minutosDurada;
+    }
+
+    /**
+     * Getter de hora de la actividad.
+     * @return hora de la actividad.
+     */
+    public int getHoraDurada(){
+        return horaDurada;
     }
 
     /**
@@ -104,12 +150,12 @@ public class ActivitatUnDia extends Activitat{
         boolean resultado = false;
     
         if(hoy != null ){
-            boolean mismoDia = hoy.getDia() == dataActivitat.getDia() &&
-                           hoy.getMes() == dataActivitat.getMes() &&
-                           hoy.getAny() == dataActivitat.getAny();
+            boolean mismoDia = hoy.getDia() == dataActivitatIhora.getDia() &&
+                           hoy.getMes() == dataActivitatIhora.getMes() &&
+                           hoy.getAny() == dataActivitatIhora.getAny();
             if(mismoDia){
-                if(hoy.getHora() > dataActivitat.getHora()){
-                    resultado = hoy.getMinutos() >= dataActivitat.getMinutos();
+                if(hoy.getHora() > dataActivitatIhora.getHora()){
+                    resultado = hoy.getMinutos() >= dataActivitatIhora.getMinutos();
                 }
             }
         }
@@ -129,18 +175,40 @@ public class ActivitatUnDia extends Activitat{
     /**
      * Metodo que devuelve un duplicado de la instancia
      * @return duplicado
+     * @throws ValorInexistent
+     * @throws CollectiuDesconegut
      */
     public ActivitatUnDia copia(){
-        return new ActivitatUnDia(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
-                                  this.dataActivitat, this.places, this.preu, this.ciutat);
+        ActivitatUnDia copia = null;
+        try{
+            copia = new ActivitatUnDia(super.nom, 
+                                       super.collectius, 
+                                       super.dataIniciInscripcio, 
+                                       super.dataFiInscripcio, 
+                                       this.dataActivitatIhora,
+                                       this.horaDurada, 
+                                       this.minutosDurada, 
+                                       this.places, 
+                                       this.preu, 
+                                       this.ciutat);
+        }catch(ValorInexistent x){
+            copia = null;
+
+        }catch(CollectiuDesconegut c){
+            copia = null;
+        }
+        return copia;
     }
 
     //Método para pasar toda la clase por string.
     public String toString(){
         return"--- ACTIVITAT D'UN DIA ---\n" + 
             super.toString()+
-            "\tData: " + dataActivitat.getDia() + "/" + dataActivitat.getMes() + "/" + dataActivitat.getAny() + 
-            " a les " + String.format("%02d", dataActivitat.getHora()) + ":" + String.format("%02d", dataActivitat.getMinutos()) + "\n" +
+            "\tData d'inici de període de l'inscripció: " + dataIniciInscripcio.getDia() + "/" + dataIniciInscripcio.getMes() + "/" + dataIniciInscripcio.getAny() + "\n" +
+            "\tData de fi de període de l'inscripció: " + dataFiInscripcio.getDia() + "/" + dataFiInscripcio.getMes() + "/" + dataFiInscripcio.getAny() + "\n" +
+            "\tData: " + dataActivitatIhora.getDia() + "/" + dataActivitatIhora.getMes() + "/" + dataActivitatIhora.getAny() + 
+            " a les " + String.format("%02d", dataActivitatIhora.getHora()) + ":" + String.format("%02d", dataActivitatIhora.getMinutos()) + "\n" + 
+            "\tDurada: " + String.format("%02d", horaDurada) +  ":" + String.format("%02d", minutosDurada) + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
             "\tPreu: " + preu + " euros";
@@ -159,11 +227,13 @@ public class ActivitatUnDia extends Activitat{
                super.dataFiInscripcio.getDia() + ";" +
                super.dataFiInscripcio.getMes() + ";" +
                super.dataFiInscripcio.getAny() + ";" +
-               this.dataActivitat.getDia() + ";" +
-               this.dataActivitat.getMes() + ";" +
-               this.dataActivitat.getAny() + ";" +
-               this.dataActivitat.getHora() + ";" +
-               this.dataActivitat.getMinutos() + ";" +
+               this.dataActivitatIhora.getDia() + ";" +
+               this.dataActivitatIhora.getMes() + ";" +
+               this.dataActivitatIhora.getAny() + ";" +
+               this.dataActivitatIhora.getHora() + ";" +
+               this.dataActivitatIhora.getMinutos() + ";" +
+               this.horaDurada + ";" +
+               this.minutosDurada + ";" +
                this.places + ";" +
                this.preu + ";" +
                this.ciutat;
