@@ -162,7 +162,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
 
     /**
      * Método que lee las actividades de un fichero.csv y lo guarda en una llista.
-     * @param nomFichero
+     * @param nomFichero    Nombre del fichero a leer.
      * @throws IOException
      */
     public void fromCSV(String nomFichero) throws IOException{
