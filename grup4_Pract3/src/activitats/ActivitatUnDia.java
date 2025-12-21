@@ -3,6 +3,7 @@
 package activitats;
 
 import extras.*;
+import excepcions.*;
 
 
 public class ActivitatUnDia extends Activitat{
@@ -30,7 +31,7 @@ public class ActivitatUnDia extends Activitat{
                           Data dataActivitat, 
                           int places, 
                           double preu, 
-                          String ciutat){
+                          String ciutat)throws CollectiuDesconegut{
 
         super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); //Llama al constructor de la clase padre
         this.dataActivitat = dataActivitat;
@@ -102,19 +103,20 @@ public class ActivitatUnDia extends Activitat{
      */
     @Override
     public boolean estaActiva(Data hoy) {
-        boolean resultado = false;
-    
-        if(hoy != null ){
-            boolean mismoDia = hoy.getDia() == dataActivitat.getDia() &&
-                           hoy.getMes() == dataActivitat.getMes() &&
-                           hoy.getAny() == dataActivitat.getAny();
-            if(mismoDia){
-                if(hoy.getHora() > dataActivitat.getHora()){
-                    resultado = hoy.getMinutos() >= dataActivitat.getMinutos();
-                }
-            }
-        }
-    return resultado;
+        return this.dataActivitat.esIgual(hoy);
+    }
+
+
+    /**
+     * Método que determina si la actividad tiene clase en la fecha dada.
+     * es necesario para un metodo de la lista pero es igual que "estaActiva"
+     * 
+     * @param avui Fecha a comprovar.
+     * @return true si la fecha coincide con el día de la actividad, false en caso contrario.
+     */
+    @Override
+    public boolean avuiHiHaClase(Data hoy) {
+        return this.dataActivitat.esIgual(hoy);
     }
 
     /**
@@ -132,8 +134,13 @@ public class ActivitatUnDia extends Activitat{
      * @return duplicado
      */
     public ActivitatUnDia copia(){
-        return new ActivitatUnDia(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
+        try{
+            return new ActivitatUnDia(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio, 
                                   this.dataActivitat, this.places, this.preu, this.ciutat);
+        }catch(CollectiuDesconegut e){
+            //no puede dar error nuna porque es una copia de uno que ya se ha comprobado
+            return null;
+        }
     }
 
     //Método para pasar toda la clase por string.

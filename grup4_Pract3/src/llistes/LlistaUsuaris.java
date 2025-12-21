@@ -40,6 +40,10 @@ public class LlistaUsuaris implements Llista<Usuari> {
         return compt;
     }
 
+    public Usuari getUsuariIesim(int n){
+        return this.usuaris[n].copia();
+    }
+
     /**
      * Afegeix un usuari a la llista de forma ordenada pel seu alies
      * No es poden afegir duplicats
@@ -60,7 +64,7 @@ public class LlistaUsuaris implements Llista<Usuari> {
         //Inserció ordenada per alies
         int pos = compt - 1;
         while(pos >= 0 && usuaris[pos].getAlies().compareTo(u.getAlies()) > 0) {
-            usuaris[pos + 1] = usuaris[pos];
+            usuaris[pos + 1] = usuaris[pos].copia();
             pos --;
         }
         usuaris[pos + 1 ] = u;
@@ -221,4 +225,6 @@ public class LlistaUsuaris implements Llista<Usuari> {
 
         return nova;
     }
+
+
 }
