@@ -1,52 +1,72 @@
-/**
- * Autor(@s): Alexandra Núñez y Ainara Sofia Cabreras
- * Descripción: app para probar los metodos de la clase LlistaActivitats
- */
-package tests;
+// -----------------------------------------------------------------
+    // MÈTODES PER GESTIONAR AFORAMENT I LLISTA D'ESPERA
+    // -----------------------------------------------------------------
 
-import java.io.IOException;
-
-import activitats.*;
-import enumeraciones.*;
-import extras.*;
-import llistes.*;
-
-public class UsaLlistaActivitat {
-    
-    private static LlistaActivitats l = new LlistaActivitats(0); //cambiar por la leida del fichero en el test correspondiente cuando este hecha
-    
-    public static void main(String[] args){
-        System.out.println("Juego de pruebas de LlistaActivitats\n");
-
-        //testExisteix();
-        testGuardarLlista();
+    /**
+     * Comprova si una activitat ha arribat al seu límit de places.
+     * @param idActivitat Nom de l'activitat.
+     * @param placesMaximes Aforament màxim de l'activitat.
+     * @return true si està plena (o hi ha llista d'espera), false si queda lloc.
+     */
+    public boolean activitatEstaPlena(String idActivitat, int placesMaximes) {
+        // Si placesMaximes és molt gran (ex: Integer.MAX_VALUE per Online), mai estarà plena
+        if (placesMaximes == Integer.MAX_VALUE) return false;
         
+        return comptarInscripcionsActivitat(idActivitat) >= placesMaximes;
     }
 
-
-    //Cuando se haga el test de la leída de ficheros, en el mismo metodo ya se estaran probando el constructor y el añadir (ordenado alfabeticamente)
-
-
-    private static void testExisteix(){
-        System.out.println("Test del metode existeix per saber si una activitat ja hi es a la llista\n");
+    /**
+     * Retorna quantes persones hi ha en llista d'espera per a una activitat.
+     * @param idActivitat Nom de l'activitat.
+     * @param placesMaximes Aforament màxim de l'activitat.
+     * @return 0 si no hi ha ningú en espera, o el número de persones que sobren.
+     */
+    public int getNumEnEspera(String idActivitat, int placesMaximes) {
+        int totalInscrits = comptarInscripcionsActivitat(idActivitat);
         
-        LlistaActivitats l;
-        System.out.println("Cas que no hi es:");
-        //System.out.println(l.existeix(act1.getNom()));
-        System.out.println("\nCas que ja hi es:");
-        //System.out.println(l.existeix(act.getNom()));
-    }
-
-    private static void testGuardarLlista(){
-        System.out.println("Test del metodo para guardar la lista en un fichero\n");
-        
-        //se guarda en el fichero enviado por parametro, en nuestra practica es activitat.txt
-        //cada vez que se guarda se sobreescribe lo que hay
-        //para poder evaluar si funciona hay que abrir el txt
-        try{
-            l.guardarLlista("activitat.txt");
-        }catch (IOException e){
-            System.out.println("Ha habido un error en la escritura del fichero");
+        if (totalInscrits > placesMaximes) {
+            return totalInscrits - placesMaximes;
         }
+        return 0; // No hi ha ningú en espera
     }
-}
+
+    /**
+     * Retorna ARRAY NOMÉS amb les inscripcions que estan EN ESPERA.
+     * (Les que han arribat després d'omplir les places).
+     */
+    public Inscripcio[] getLlistaEspera(String idActivitat, int placesMaximes) {
+        // 1. Obtenim tots els inscrits ordenats per arribada
+        Inscripcio[] tots = getInscripcionsActivitat(idActivitat);
+        int numEspera = getNumEnEspera(idActivitat, placesMaximes);
+        
+        if (numEspera == 0) return new Inscripcio[0]; // Array buit
+
+        // 2. Creem l'array de resultats
+        Inscripcio[] espera = new Inscripcio[numEspera];
+        
+        // 3. Copiem només els que sobren (a partir de l'índex 'placesMaximes')
+        // Exemple: si 20 places, el 21è està a l'índex 20.
+        for (int i = 0; i < numEspera; i++) {
+            espera[i] = tots[placesMaximes + i];
+        }
+        
+        return espera;
+    }
+
+    /**
+     * Retorna ARRAY NOMÉS amb les inscripcions ADMESES (dins del límit).
+     */
+    public Inscripcio[] getAdmesos(String idActivitat, int placesMaximes) {
+        Inscripcio[] tots = getInscripcionsActivitat(idActivitat);
+        int total = tots.length;
+        
+        // Si n'hi ha menys que el límit, tots són admesos. Si més, tallem al límit.
+        int numAdmesos = (total < placesMaximes) ? total : placesMaximes;
+        
+        Inscripcio[] admesos = new Inscripcio[numAdmesos];
+        for (int i = 0; i < numAdmesos; i++) {
+            admesos[i] = tots[i];
+        }
+        
+        return admesos;
+    }

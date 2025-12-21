@@ -13,9 +13,6 @@ import java.io.Serializable;
  */
 public class Inscripcio implements Serializable {
 
-    // És recomanable definir un versionUID per evitar warnings i problemes de versions
-    //private static final long serialVersionUID = 1L;
-
     private String idUsuari;      // Guardem l'àlies de l'usuari (Clau forana)
     private String idActivitat;   // Guardem el nom de l'activitat (Clau forana)
     private Integer valoracio;    // Nota de 0 a 10. Fem servir Integer (objecte) per permetre null

@@ -6,6 +6,7 @@
 package activitats;
 
 import extras.Data;
+import excepcions.CollectiuDesconegut;
 
 public class ActivitatOnline extends Activitat {
 
@@ -25,9 +26,9 @@ public class ActivitatOnline extends Activitat {
      */
     public ActivitatOnline(String nom, String[] collectius, Data dataIniInscripcio, 
                            Data dataFiInscripcio, Data dataInici, 
-                           int periodeVisualitzacio, String enllac) {
+                           int periodeVisualitzacio, String enllac) throws CollectiuDesconegut { // <--- 2. AFEGIR THROWS
         
-        // Cridem al pare. No passem preu ni places perquè Activitat no en té.
+        // Cridem al pare. Ara ja podem propagar l'error si el col·lectiu no és vàlid
         super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
         
         this.dataInici = dataInici;
@@ -101,25 +102,29 @@ public class ActivitatOnline extends Activitat {
         return tipusActivitat() + ";" + 
                super.nom + ";" + 
                cols + ";" +
-               super.dataIniciInscripcio.getDia() + "/" + super.dataIniciInscripcio.getMes() + "/" + super.dataIniciInscripcio.getAny() + ";" +
-               super.dataFiInscripcio.getDia() + "/" + super.dataFiInscripcio.getMes() + "/" + super.dataFiInscripcio.getAny() + ";" +
-               this.dataInici.getDia() + "/" + this.dataInici.getMes() + "/" + this.dataInici.getAny() + ";" +
+               super.dataIniciInscripcio.getDia() + ";" + super.dataIniciInscripcio.getMes() + ";" + super.dataIniciInscripcio.getAny() + ";" +
+               super.dataFiInscripcio.getDia() + ";" + super.dataFiInscripcio.getMes() + ";" + super.dataFiInscripcio.getAny() + ";" +
+               this.dataInici.getDia() + ";" + this.dataInici.getMes() + ";" + this.dataInici.getAny() + ";" +
                this.periodeVisualitzacio + ";" + 
                this.enllac;
     }
 
     @Override
     public ActivitatOnline copia() {
-        // Important: Fem servir .copia() de Data per no compartir referències (Deep Copy)
-        return new ActivitatOnline(
-            super.nom,
-            super.collectius, // Els Strings són immutables, no cal clonar l'array si no el modifiquem
-            super.dataIniciInscripcio.copia(),
-            super.dataFiInscripcio.copia(),
-            this.dataInici.copia(),
-            this.periodeVisualitzacio,
-            this.enllac
-        );
+        try {
+            return new ActivitatOnline(
+                super.nom,
+                super.collectius,
+                super.dataIniciInscripcio.copia(),
+                super.dataFiInscripcio.copia(),
+                this.dataInici.copia(),
+                this.periodeVisualitzacio,
+                this.enllac
+            );
+        } catch (CollectiuDesconegut e) {
+            // Això no hauria de passar mai en una còpia d'un objecte ja vàlid, 
+            return null; 
+        }
     }
 
 }
