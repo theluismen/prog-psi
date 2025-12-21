@@ -21,7 +21,7 @@ public class UsaActivitatUnDia {
                                                 new String[]{"PDI", "Estudiant"}, 
                                                 new Data(1,11,2025,23,59), 
                                                 new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
+                                                new Data(5, 12, 2025, 10, 00),12, 35, 
                                                 25, 
                                                 11, 
                                                 "Amposta");
@@ -69,7 +69,7 @@ public class UsaActivitatUnDia {
                                                 new String[]{"PDI", "Estudiant"}, 
                                                 new Data(1,11,2025,23,59), 
                                                 new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
+                                                new Data(5, 12, 2025, 10, 00),12,35, 
                                                 25, 
                                                 11, 
                                                 "Amposta");
