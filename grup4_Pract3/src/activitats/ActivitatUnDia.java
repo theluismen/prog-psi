@@ -96,7 +96,7 @@ public class ActivitatUnDia extends Activitat{
         return dataActivitatIhora.getHora();
     }
 
-        /**
+    /**
      * Getter de minuto de la actividad.
      * @return minuto de la actividad.
      */
