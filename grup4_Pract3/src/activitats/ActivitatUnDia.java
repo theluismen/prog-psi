@@ -1,4 +1,7 @@
-//Ainara Sofia
+/**
+ * Autor(@s): Ainara Sofía Cabrera Robles
+ * Descripción: Esta clase crea instancias de actividad de un día y la gestiona.
+ */
 
 package activitats;
 
@@ -195,11 +198,11 @@ public class ActivitatUnDia extends Activitat{
                                        this.preu, 
                                        this.ciutat);
         }catch(ValorInexistent e){  //Es una copia asi que nunca dará ninguna de las excepciones, se tratan por obligatoriedad
-            System.out.println("ERROR INESPERAT DE COPIA EN ACTIVITAT UN DIA");
+            System.out.println("Error de valor inexistent de copia en activitat d'un día.");
             copia = null;
 
         }catch(CollectiuDesconegut e){
-            System.out.println("ERROR INESPERAT DE COPIA EN ACTIVITAT UN DIA");
+            System.out.println("Error de collectiu desconegut de copia en activitat d'un dia");
             copia = null;
         }
         return copia;
