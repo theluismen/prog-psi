@@ -490,7 +490,34 @@ public class AppConsola {
 
 
     private static void case9(){
+        System.out.println("\n--- Activitats on està apuntat un usuari ---");
+        System.out.println("Introdueix l'àlies de l'usuari: ");
+
+        String alies = teclat.nextLine();
+
+        Usuari u = llistaUsuaris(cerca(alies));
+
+        if (u == null) {
+            System.out.println("No existeix cap usuari amb aquest àlies. ");
+            return;
+        }
+
+        Inscripcio[] ins = llistaInscripcions.getInscripcionsUsuari(alies);
+
+        if(ins.length == 0) {
+            System.out.println("Aquest usuari no està inscrit a cap activitat.");
+            return;
+        }
+
+        System.out.println("\nActivitats on està inscrit" + alies + ":");
+        for (int i = 0; i < ins.length; i++) {
+            Activitat act = llistaActivitats.cerca(ins[i].getIdActivitat());
+            if(act != null){
+                System.out.println("-" + act.getNom());
+            }
+        }
        
+
     }
 
 
@@ -626,12 +653,75 @@ public class AppConsola {
 
 
     private static void case17(){
+        boolean hiHa = false;
+
+        System.out.println("\n--- Resum valoracions d'activitats acabades ---");
+
+        for (int i = 0; i < llistaActivitats.getNumElements(); i++) {
+            Activitat act;
+            try {
+                act = llistaActivitats.getActivitatIesima(i);
+            } catch (ValorInexistent e) {
+                continue;
+            }
+
+            if (act.getDataFinal().esDataInferiorOigual(dataActual)) {
+                Inscripcio[] ins = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+
+                int suma = 0;
+                int comptador = 0;
+
+                for(int j = 0; j < ins.length; j++) {
+                    if(ins[j].esValorada()) {
+                        suma += ins.getValoracio();
+                        comptador++;
+                    }
+                }
+
+                if (comptador > 0) {
+                    double mitjana = (double) suma / comptador;
+                    System.out.println("Activitat: %s | Mitjana: %.2f\n", act.getNom(), mitjana);                
+                } else {
+                    System.out.println("Activitat: " + act.getNom() + " | Sense valoracions");
+                }
+
+                hiHa = true;
+            }
+        }
+
+        if(!hiHa) {
+            System.out.println("No hi ha activitats acabades. ");
+        }
        
     }
 
 
     private static void case18(){
-       
+        System.out.println("\n--- Resum de valoracions fetes per un usuari ---");
+        System.out.println("Introdueix l'àlies de l'usuari: ");
+
+        String alies = teclat.nextLine();
+
+        Usuari u = llistaUsuaris(cerca(alies));
+
+        if (u == null) {
+            System.out.println("No existeix cap usuari amb aquest àlies. ");
+            return;
+        }
+
+        Inscripcio[] ins = llistaInscripcions.getInscripcionsUsuari(alies);
+
+        boolean hiHa = false;
+        for(int i = 0; i < ins.length; i++) {
+            if(ins[i].esValorada()) {
+                System.out.println("- Activitat: " + ins[i].getIdActivitat() + " | Valoració: " + ins[i].getValoracio());
+                hiHa = true;
+            }
+        }
+
+        if(!hiHa) {
+            System.out.println("Aquest usuari encara no ha fet cap valoracó.");
+        }
     }
 
 
