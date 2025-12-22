@@ -71,7 +71,7 @@ public class AppConsola {
             switch (opcio) {
                 // --- GESTIÓ BÀSICA ---
                 case 1:
-                    // TODO: Indicar/Canviar la data del sistema
+                    // Indicar/Canviar la data del sistema
                     case1();
                     break;
 
@@ -96,7 +96,7 @@ public class AppConsola {
 
 
                 case 5:
-                    // TODO: Activitats actives AVUI (dins període)
+                    // Activitats actives AVUI (dins període)
                     case5();
                     break;
 
@@ -263,10 +263,25 @@ public class AppConsola {
 
 
     private static void case1(){
+        System.out.println("\nData actual del systema: " + dataActual);
 
+        System.out.println("\nVols canviar la data actual? (S/N): ");
+        String respuesta = teclat.nextLine();
 
+        if(respuesta.equalsIgnoreCase("S")){
+            System.out.println("\n\tIntrodueix la nova data: ");
+            dataActual = demanarData();
+            System.out.println("\n\tLa nova data actual del systema és: " + dataActual);
+
+        }else if(respuesta.equalsIgnoreCase("N")){
+            System.out.println("La data no s'ha modificat.");
+
+        }else{
+            System.out.println("Opció no válida. Has d'introduir S o N.");
+        }
     }
    
+
     private static void case2(){
         int opcio;
         boolean res = false;
@@ -380,7 +395,28 @@ public class AppConsola {
 
 
     private static void case5(){
-       
+        boolean actActiva = false;
+
+        System.out.println("\n--- Activitats actives en la data d'avui ---");
+
+        for (int i = 0; i < llistaActivitats.getNumElements(); i++) {
+            try {
+                Activitat act = llistaActivitats.getActivitatIesima(i);
+
+                if (act.estaActiva(dataActual)) {
+                    System.out.println("-> " + act.getNom());
+                    actActiva = true;
+                }
+
+            } catch (ValorInexistent e) {
+                
+                System.out.println("ERROR INESPERAT EN CASE5");
+            }
+        }
+
+        if (!actActiva) {
+            System.out.println("No hi ha cap activitat activa en la data d'avui.");
+        }
     }
 
 
