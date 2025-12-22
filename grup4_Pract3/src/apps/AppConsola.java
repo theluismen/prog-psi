@@ -108,7 +108,7 @@ public class AppConsola {
 
 
                 case 7:
-                    // TODO: Detall d'una activitat pel seu nom
+                    // Detall d'una activitat pel seu nom
                     case7();
                     break;
 
@@ -455,7 +455,19 @@ public class AppConsola {
 
 
     private static void case7(){
-       
+        System.out.println("\n---Mostrar el detall d'informació d'una activitat---");
+
+        System.out.println("\nIntrodueix el nom de l'activitat:");
+        String nom = teclat.nextLine();
+
+        Activitat act = llistaActivitats.cerca(nom);
+
+        if (act == null) {
+            System.out.println("No existeix cap activitat amb el nom " + nom + ".");
+        } else {
+            System.out.println("\nDetall de l'activitat: ");
+            System.out.println(act);
+        }
     }
 
 
