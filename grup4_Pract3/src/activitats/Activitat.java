@@ -70,6 +70,13 @@ public abstract class Activitat {
     }
 
     /**
+    * Mètode que retona la data de fi  de l'activitat
+    * 
+    * @return un objecte {@code Data} que representa la data final d'inscripció
+    */
+    public abstract Data getDataFinal();
+
+    /**
      * Mètode que retorna el nombre de places que hi ha en una activitat
      * 
      * @return el nombre de places que hi ha

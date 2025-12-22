@@ -160,6 +160,7 @@ public class ActivitatPeriodica extends Activitat {
      * getter para saber la fecha del final de la actividad
      * @return fecha final
      */
+    @Override
     public Data getDataFinal(){    
         return this.dataHoraIni.dataPlusDies(this.setmanes*7);      
     }

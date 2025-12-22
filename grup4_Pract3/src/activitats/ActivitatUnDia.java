@@ -141,6 +141,15 @@ public class ActivitatUnDia extends Activitat{
         return ciutat;
     }
 
+    /**
+     * getter para saber la fecha del final de la actividad
+     * @return fecha final
+     */
+    @Override
+    public Data getDataFinal(){    
+        return this.dataHoraIni.dataPlusDies(this.setmanes*7);      
+    }
+
 
     //Métodos de la clase padre.
 

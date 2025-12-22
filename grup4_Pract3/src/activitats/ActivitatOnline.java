@@ -40,6 +40,15 @@ public class ActivitatOnline extends Activitat {
     public Data getDataInici() { return dataInici; }
     public void setDataInici(Data dataInici) { this.dataInici = dataInici; }
 
+    /**
+     * getter para saber la fecha del final de la actividad
+     * @return fecha final
+     */
+    @Override
+    public Data getDataFinal(){    
+        return this.dataHoraIni.dataPlusDies(this.setmanes*7);      
+    }
+
     public int getPeriodeVisualitzacio() { return periodeVisualitzacio; }
     public void setPeriodeVisualitzacio(int periode) { this.periodeVisualitzacio = periode; }
 
