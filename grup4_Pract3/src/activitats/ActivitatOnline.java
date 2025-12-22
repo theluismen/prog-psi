@@ -78,6 +78,22 @@ public class ActivitatOnline extends Activitat {
                avui.esDataInferiorOigual(dataFi);
     }
 
+
+    /**
+     * Comprova si l'activitat te clase en una data concreta.
+     * es necessari per un metode de la llista pero es igual que "estaActiva"
+     * Per online: data >= dataInici i data <= dataInici + periode
+     */
+    @Override
+    public boolean avuiHiHaClase(Data avui) {
+        // Calculem la data final sumant els dies a la data d'inici
+        Data dataFi = this.dataInici.dataPlusDies(this.periodeVisualitzacio);
+        
+        // Està activa si: dataInici <= avui  I  avui <= dataFi
+        return this.dataInici.esDataInferiorOigual(avui) && 
+               avui.esDataInferiorOigual(dataFi);
+    }
+
     // --- ToString ---
 
     @Override

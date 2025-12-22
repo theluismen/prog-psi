@@ -96,6 +96,15 @@ public abstract class Activitat {
     public abstract boolean estaActiva (Data avui);
 
     /**
+     * Determina si una actividad tiene clase en la fecha indicada
+     * para las actividades Online y las de un dia, el metodo sera igual que 
+     * "estaActiva" pero para las periodicas diferirá
+     * @param avui
+     * @return true si en la fecha hay clase
+     */
+    public abstract boolean avuiHiHaClase (Data avui);
+
+    /**
      * Metode que retorna el tipus d'activitat
      * 
      * @return una cadena que indica el tipus d'activitat

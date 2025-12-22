@@ -1,6 +1,0 @@
-joan2;joan.perez;Estudiant;GEI;2022
-marta;marta.sole;PDI;DEIM;SESCELADES
-pau;pau.sala;PTGAS;TERRES_EBRE
-laia;laia.marti;Estudiant;GESST;2023
-pere;pere.rovira;PDI;DQFI;CATALUNYA
-anna;anna.soler;PTGAS;BELLISENS

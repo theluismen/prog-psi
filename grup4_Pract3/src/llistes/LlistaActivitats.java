@@ -43,6 +43,20 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
         return this.nElems;
     }
 
+
+    /**
+     * Metodo que devuelve la actividad en la posicion n
+     * @param n
+     * @return actividad
+     * @throws ValorInexistent si se pide un valor fuera de la tabla
+     */
+    public Activitat getActivitatIesima(int n)throws ValorInexistent{
+        if (n >= this.nElems){
+            throw new ValorInexistent("Valor fora de la taula");
+        }
+        return this.llista[n].copia();  
+    }
+
     
     /**
      * Metodo para añadir una actividad a la lista ordenado alfabeticamente por su nombre
@@ -56,7 +70,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
             throw new ActivitatDuplicada(act.getNom());
         }
         
-        if (this.llista.length > nElems){
+        if (this.llista.length >= nElems){
             this.amplia();
         }
 
@@ -65,7 +79,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
             this.llista[pos+1] = this.llista[pos];
             pos--;
         }
-        this.llista[pos+1] = act;
+        this.llista[pos+1] = act.copia();
         this.nElems++;
     }
 
@@ -86,7 +100,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
                 encontrada = true;
             }
         }
-        return act;
+        return act.copia();
     }
 
 
@@ -115,12 +129,12 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * Método que elimina una actividad de al lista por su nombre.
      * @param act   Nombre de la actividad a eliminar.
      */
-    public void eliminar(Activitat act){
+    public void eliminar(String act){
         int borrar = -1;
         boolean encontrado = false;
 
         for(int i = 0; i < nElems && !encontrado; i++){
-            if(this.llista[i].getNom().equalsIgnoreCase(act.getNom())){
+            if(this.llista[i].getNom().equalsIgnoreCase(act)){
                 borrar = i;
                 encontrado = true;
             }
@@ -151,7 +165,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
                 try{
                     nova.afegir(this.llista[i]);
                 }catch(ActivitatDuplicada e){
-
+                    //nunca dará este error porque la lista de la que se copian las actividades ya lo ha verificado
                 }
             }
         }
@@ -160,6 +174,26 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
     }
 
 
+    /**
+     * Metodo que devuelve una nueva lista con unicamente las actividades que tienen clase hoy
+     * @param data
+     * @return
+     */
+    public LlistaActivitats claseAvui(Data data){
+        LlistaActivitats act = new LlistaActivitats(1);
+
+        try{
+            for (int i = 0; i < this.nElems; i++){
+                act.afegir(this.llista[i]);
+            }
+        }catch(ActivitatDuplicada e){
+            //no puede dar nunca este error porque la lista de la que esta copiando la informacion ya lo ha comprobado
+        }
+        
+        return act;
+    }
+
+    
     /**
      * Método que lee las actividades de un fichero.csv y lo guarda en una llista.
      * @param nomFichero    Nombre del fichero a leer.
@@ -333,8 +367,5 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
         this.llista = aux;
     }
     
-    /*public LlistaActivitats llegirFitxer(String nomFitxer){
-        
-    }*/
 
 }

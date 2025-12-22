@@ -53,7 +53,7 @@ public class LlistaInscripcio implements Serializable {
         if (nElems >= llista.length) {
             ampliarCapacitat();
         }
-        llista[nElems] = ins;
+        llista[nElems] = ins.copia();
         nElems++;
     }
 
@@ -62,7 +62,7 @@ public class LlistaInscripcio implements Serializable {
      */
     private void ampliarCapacitat() {
 
-        int novaCapacitat = capacitat * 2;
+        int novaCapacitat = capacitat + 10;
         Inscripcio[] nouArray = new Inscripcio[novaCapacitat];
         for (int i=0; i<nElems; i++) {
             nouArray[i] = llista[i];
@@ -151,7 +151,7 @@ public class LlistaInscripcio implements Serializable {
         // 1. Comptem quantes en té per saber la mida de l'array a retornar
         int total = 0;
         for (int i = 0; i < nElems; i++) {
-            if (llista[i].getIdUsuari().equalsIgnoreCase(idUsuari)) {
+            if (llista[i].getIdUsuari().equals(idUsuari)) {
                 total++;
             }
         }
@@ -160,7 +160,7 @@ public class LlistaInscripcio implements Serializable {
         Inscripcio[] resultat = new Inscripcio[total];
         int j = 0;
         for (int i = 0; i < nElems; i++) {
-            if (llista[i].getIdUsuari().equalsIgnoreCase(idUsuari)) {
+            if (llista[i].getIdUsuari().equals(idUsuari)) {
                 resultat[j] = llista[i].copia(); // Fem servir copia() per seguretat
                 j++;
             }
@@ -222,6 +222,22 @@ public class LlistaInscripcio implements Serializable {
             return totalInscrits - placesMaximes;
         }
         return 0; // No hi ha ningú en espera
+    }
+
+    /**
+     * Metode que retorna quantes places de les disponibles estan ocupades sense tenir en compte la llista d'espera
+     * 
+     * @param idActivitat nom de l'activitat a evaluar
+     * @param placesMaximes maxim nombre de places de l'activitat
+     * @return places oficials ocupades
+     */
+    public int getNumAdmesos(String idActivitat, int placesMaximes){
+        int totalAdmesos = comptarInscripcionsActivitat(idActivitat);
+
+        if (activitatEstaPlena(idActivitat, placesMaximes)) {
+            return placesMaximes;
+        }
+        return totalAdmesos; // No hi ha ningú en espera
     }
 
     /**

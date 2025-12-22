@@ -4,6 +4,7 @@ package activitats;
 
 import excepcions.*;
 import extras.*;
+import excepcions.*;
 
 
 public class ActivitatUnDia extends Activitat{
@@ -148,19 +149,20 @@ public class ActivitatUnDia extends Activitat{
      */
     @Override
     public boolean estaActiva(Data hoy) {
-        boolean resultado = false;
-    
-        if(hoy != null ){
-            boolean mismoDia = hoy.getDia() == dataActivitatIhora.getDia() &&
-                           hoy.getMes() == dataActivitatIhora.getMes() &&
-                           hoy.getAny() == dataActivitatIhora.getAny();
-            if(mismoDia){
-                if(hoy.getHora() > dataActivitatIhora.getHora()){
-                    resultado = hoy.getMinutos() >= dataActivitatIhora.getMinutos();
-                }
-            }
-        }
-    return resultado;
+        return this.dataActivitatIhora.esIgual(hoy);
+    }
+
+
+    /**
+     * Método que determina si la actividad tiene clase en la fecha dada.
+     * es necesario para un metodo de la lista pero es igual que "estaActiva"
+     * 
+     * @param avui Fecha a comprovar.
+     * @return true si la fecha coincide con el día de la actividad, false en caso contrario.
+     */
+    @Override
+    public boolean avuiHiHaClase(Data hoy) {
+        return this.dataActivitatIhora.esIgual(hoy);
     }
 
     /**
@@ -192,10 +194,12 @@ public class ActivitatUnDia extends Activitat{
                                        this.places, 
                                        this.preu, 
                                        this.ciutat);
-        }catch(ValorInexistent x){
+        }catch(ValorInexistent e){  //Es una copia asi que nunca dará ninguna de las excepciones, se tratan por obligatoriedad
+            System.out.println("ERROR INESPERAT DE COPIA EN ACTIVITAT UN DIA");
             copia = null;
 
-        }catch(CollectiuDesconegut c){
+        }catch(CollectiuDesconegut e){
+            System.out.println("ERROR INESPERAT DE COPIA EN ACTIVITAT UN DIA");
             copia = null;
         }
         return copia;
