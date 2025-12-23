@@ -116,7 +116,7 @@ public class LlistaUsuaris implements Llista<Usuari> {
      */
     public void mostrarUCollectiu(String col) {
         for(int i = 0; i < compt; i++) {
-            if(usuaris[i].getCollectiu().equalsIgnoreCase(col)) {
+            if(usuaris[i].getCollectiu() == col) {
                 System.out.println(usuaris[i] + "\n");
             }
         }
@@ -210,12 +210,12 @@ public class LlistaUsuaris implements Llista<Usuari> {
      * @param col colectivo de los usuarios de la nueva lista (PDI, PTGAS o estudiants)
      * @return
      */
-    public LlistaUsuaris tipusLlista(String col){
+    public LlistaUsuaris tipusLlista(Collectiu col){
         LlistaUsuaris nova = new LlistaUsuaris();
 
         for (int i = 0; i < this.compt; i++){
-            if (col.equalsIgnoreCase(this.usuaris[i].getCollectiu())){
-                try{
+            if (usuaris[i].getCollectiu() == col){
+                try {
                     nova.afegir(this.usuaris[i]);
                 }catch(UsuariDuplicat e){
                     
