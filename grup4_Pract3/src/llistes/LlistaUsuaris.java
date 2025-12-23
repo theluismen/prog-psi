@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LlistaUsuaris implements Llista<Usuari> {
+public class LlistaUsuaris {
     
     private Usuari[] usuaris;   //array que conté els usuaris
     private int compt;          //nombre d'usuaris guardats
@@ -26,7 +26,6 @@ public class LlistaUsuaris implements Llista<Usuari> {
      * 
      * @return nombre d'elements
      */
-    @Override
     public int getNumElements() {
         return getNumUsuaris();
     }
@@ -51,7 +50,6 @@ public class LlistaUsuaris implements Llista<Usuari> {
      * @param u usuari que es vol llegir 
      * @throws UsuariDuplicat excepcio si ja existeix un usuari amb el mateix alies
      */
-    @Override
     public void afegir(Usuari u) throws UsuariDuplicat {
         if(existeix(u.getAlies())) {
             throw new UsuariDuplicat(u.getAlies());
@@ -77,7 +75,6 @@ public class LlistaUsuaris implements Llista<Usuari> {
      * @param alies àlies de l'usuari
      * @return l'usuari si es troba, sino null
      */
-    @Override
     public Usuari cerca(String alies) {
         for(int i = 0; i < compt; i++) {
             if (usuaris[i].getAlies().equalsIgnoreCase(alies)) {
@@ -93,7 +90,6 @@ public class LlistaUsuaris implements Llista<Usuari> {
      * @param alies àlies de l'usuari per comprovar
      * @return true si la cerca retorna un usuari diferent de null sino false
      */
-    @Override
     public boolean existeix(String alies) {
         return cerca(alies) != null;
     }
@@ -228,6 +224,5 @@ public class LlistaUsuaris implements Llista<Usuari> {
 
         return nova;
     }
-
 
 }
