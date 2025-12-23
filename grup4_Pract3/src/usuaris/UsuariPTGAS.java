@@ -13,7 +13,7 @@ public class UsuariPTGAS extends Usuari{
 
 
     public UsuariPTGAS(String alies, String collectiu, String email, CampusURV campus){
-        super(alies, email, collectiu);
+        super(alies, email, Collectiu.PTGAS);
         this.campus = campus;
     }
 

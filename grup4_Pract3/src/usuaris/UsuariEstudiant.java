@@ -4,6 +4,7 @@
  */
 
 package usuaris;
+import enumeraciones.Collectiu;
 
 public class UsuariEstudiant extends Usuari {
 
@@ -21,7 +22,7 @@ public class UsuariEstudiant extends Usuari {
      */
     public UsuariEstudiant(String alies, String email, String ensenyament, int anyInici) {
         // Passem "Estudiant" automàticament al pare
-        super(alies, email, "Estudiant");
+        super(alies, email, Collectiu.ESTUDIANT);
         this.ensenyament = ensenyament;
         this.anyInici = anyInici;
     }

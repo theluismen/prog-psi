@@ -23,7 +23,7 @@ public class UsuariPDI extends Usuari{
                      DepartamentURV departament, 
                      CampusURV campus){
 
-        super(alies, email, collectiu);
+        super(alies, email, Collectiu.PDI);
         this.departament = departament;
         this.campus = campus;
     }
