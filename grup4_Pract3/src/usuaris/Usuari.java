@@ -1,11 +1,12 @@
 //Aesha Naz
 
 package usuaris;
+import enumeraciones.Colectius;
 
 public abstract class Usuari {
     
     protected String alies;           //Identificador del usuari
-    protected String collectiu;      // PDI / PTGAS / Estudiant
+    protected Collectiu collectiu;      // PDI / PTGAS / Estudiant
     protected String email;          // Part principal del correu (sense @)
 
     /**
@@ -14,7 +15,7 @@ public abstract class Usuari {
      * @param email part inicial del correu institucional (sense @)
      * @param collectiu col·lectiu al qual pertany (PDI, PTGAS o Estudiant)
      */
-    public Usuari (String alies, String email, String collectiu) {
+    public Usuari (String alies, String email, Collectiu collectiu) {
         this.alies = alies;
         this.email = email;
         this.collectiu = collectiu;
@@ -38,7 +39,7 @@ public abstract class Usuari {
      */
     public String getEmailComplet() {
         //Segons el tipus de col·lectiu: URV o PDI i PTGAS
-        if (collectiu.equalsIgnoreCase("Estudiant")) {
+        if (collectiu == Collectiu.ESTUDIANT) {
             return email + "@estudiants.urv.cat";
         } else {
             return email + "@urv.cat";  //PDI i PTGAS
@@ -54,7 +55,7 @@ public abstract class Usuari {
      * 
      * @return una cadena de text que identifica el col·lectiu del usuari
      */
-    public String getCollectiu() {  
+    public Collectiu getCollectiu() {  
         return collectiu;  
     }
 
@@ -93,7 +94,7 @@ public abstract class Usuari {
     public String toString() {
         return "Àlies: " + alies + 
                 "\nCorreu: " + getEmailComplet() + 
-                "\nCol·lectiu: " + collectiu;
+                "\nCol·lectiu: " + collectiu.name();
     }
 
     
