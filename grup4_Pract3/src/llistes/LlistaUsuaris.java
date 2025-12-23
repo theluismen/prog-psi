@@ -135,7 +135,6 @@ public class LlistaUsuaris implements Llista<Usuari> {
     public void carregaFitxer(String nomFitxer) throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat  {
         try (BufferedReader br = new BufferedReader(new FileReader(nomFitxer))) {
             String linia;
-
         
             while  ((linia = br.readLine()) != null) {
 
@@ -147,46 +146,50 @@ public class LlistaUsuaris implements Llista<Usuari> {
 
                 String alies = dades[0];
                 String email = dades[1];
-                String col = dades[2];
+
+                Collectiu col;
+                try {
+                    col = Collectiu.valueOf(dades[2].toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new CollectiuDesconegut(dades[2]);
+                }
 
                 Usuari u;
 
                 switch (col) {
-
-                    case "Estudiant":
+                    case ESTUDIANT:
                         if (dades.length != 5){
                             throw new FormatInvalid("Format uncorrecte per Estudiant: " + linia);
                         }
 
                         String ensenyament = dades[3];
-                        u = new UsuariEstudiant(alies, email, ensenyament, Integer.parseInt(dades[4]));
+                        int anyInici = Integer.parseInt(dades[4]);
+                        u = new UsuariEstudiant(alies, email, col, ensenyament, anyInici);
                         break;
 
-                    case "PDI":
+                    case PDI:
 
                     if (dades.length != 5){
                             throw new FormatInvalid("Format uncorrecte per PDI: " + linia);
                         }
-                        DepartamentURV dept = DepartamentURV.valueOf(dades[3]);
-                        CampusURV campPDI = CampusURV.valueOf(dades[4]);
+                        DepartamentURV dept = DepartamentURV.valueOf(dades[3].toUpperCase());
+                        CampusURV campPDI = CampusURV.valueOf(dades[4].toUpperCase());
                     
                         u = new UsuariPDI(alies, email, col, dept, campPDI);
                         break;
 
-                    case "PTGAS":
+                    case PTGAS:
 
                         if (dades.length != 4){
                             throw new FormatInvalid("Format uncorrecte per PTGAS: " + linia);
                         }
 
-                        CampusURV campusPTGAS = CampusURV.valueOf(dades[3]);
-                        u = new UsuariPTGAS(alies, col, email, campusPTGAS);
+                        CampusURV campusPTGAS = CampusURV.valueOf(dades[3].toUpperCase());
+                        u = new UsuariPTGAS(alies, email, col, campusPTGAS);
                         break;
                         
                     default:
                         throw new CollectiuDesconegut("Col·lectiu desconegut: " + col);
-
-
                 }
                 afegir(u);
             }
