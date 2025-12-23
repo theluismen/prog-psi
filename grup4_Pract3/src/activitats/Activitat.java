@@ -102,6 +102,9 @@ public abstract class Activitat {
      */
     public abstract boolean estaActiva (Data avui);
 
+    public boolean estaAcabada(Data avui) {
+        return getDataFinal().esDataInferior(avui);
+    }
     /**
      * Determina si una actividad tiene clase en la fecha indicada
      * para las actividades Online y las de un dia, el metodo sera igual que 

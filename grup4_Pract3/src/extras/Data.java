@@ -379,5 +379,56 @@ public class Data {
         return res;
     }
 
+    /**
+    * Comprova si aquesta data és estrictament anterior a una altra
+    * @param altra data amb la qual es compara
+     * @return true si aquesta data és anterior a altra
+     */
+    public boolean esDataInferior(Data altra) {
 
+        if (this.any < altra.any) {
+            return true;
+        }
+
+        if (this.any > altra.any) {
+            return false;
+        }
+
+        if (this.mes < altra.mes) {
+            return true;
+        }
+        
+        if (this.mes > altra.mes) {
+            return false;
+        }
+
+        if (this.dia < altra.dia) {
+            return true;
+        }
+
+        if (this.dia > altra.dia) {
+            return false;
+        }
+
+        // Si no hi ha hora, considerem que són iguals
+        if (this.teHora() && altra.teHora()) {
+
+            if (this.hora < altra.hora) {
+                return true;
+            }
+
+            if (this.hora > altra.hora) {
+                return false;
+            }
+
+            if (this.minuts < altra.minuts) {
+                return true;
+            }
+
+            if (this.minuts > altra.minuts) {
+                return false;
+            }
+        } return false; // són iguals o aquesta no és inferior
+    
+    }
 }

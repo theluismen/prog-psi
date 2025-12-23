@@ -147,7 +147,7 @@ public class ActivitatUnDia extends Activitat{
      */
     @Override
     public Data getDataFinal(){    
-        return this.dataHoraIni.dataPlusDies(this.setmanes*7);      
+        return dataActivitat;      
     }
 
 

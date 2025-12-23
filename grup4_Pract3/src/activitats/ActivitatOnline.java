@@ -46,7 +46,7 @@ public class ActivitatOnline extends Activitat {
      */
     @Override
     public Data getDataFinal(){    
-        return this.dataHoraIni.dataPlusDies(this.setmanes*7);      
+        return dataInici.dataPlusDies(periodeVisualitzacio);      
     }
 
     public int getPeriodeVisualitzacio() { return periodeVisualitzacio; }
