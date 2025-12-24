@@ -1,6 +1,6 @@
 package enumeracions;
 
-public enum Collectiu {
+public enum Collectius {
         ESTUDIANT,
         PDI,
         PTGAS

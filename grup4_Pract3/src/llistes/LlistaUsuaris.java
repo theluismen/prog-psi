@@ -1,28 +1,37 @@
-//Aesha Naz
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * Descripció: Clase que gestiona una llista d'usuaris del sistema
+ * Permet, afegir, cercar, filtrar i carregar usuaris des s'un fitxer,
+ * així com obtenir informació sobre el conujnt d'usuaris emmagatzemats.
+ */
+
 package llistes;
+
 import enumeraciones.*;
 import excepcions.*;
-import usuaris.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import usuaris.*;
 
 public class LlistaUsuaris {
     
-    private Usuari[] usuaris;   //array que conté els usuaris
-    private int compt;          //nombre d'usuaris guardats
+    /** Atributs de la classe */
+    private Usuari[] usuaris;   // Array que conté els usuaris de la llista
+    private int compt;          // Nombre d'usuaris emmagatzemats (actualment)
 
     /**
-     * Constructor que inicialitza la llista amb capacitat inicial 10
+     * Constructor que inicialitza la llista amb capacitat inicial de 10 usuaris
      */
     public LlistaUsuaris() {
-        usuaris = new Usuari[10];  //capacitat inicial?
+        usuaris = new Usuari[10];
         compt = 0;
     }
 
+    /** Getters */
+
     /**
-     *  Retorna el nombre d'elements guardats a la llista
+     *  Métode que retorna el nombre d'elements guardats a la llista
      * 
      * @return nombre d'elements
      */
@@ -31,7 +40,7 @@ public class LlistaUsuaris {
     }
 
     /**
-     *  Retorna el nombre d'usuaris guardats a la llista
+     *  Métode que retorna el nombre d'usuaris guardats a la llista
      * 
      * @return nombre d'usuaris
      */
@@ -39,12 +48,21 @@ public class LlistaUsuaris {
         return compt;
     }
 
+    /**
+     * Métode que retorna una còpia de l'usuari situat
+     * a la posició indicada
+     * 
+     * @param n posició de l'usuari
+     * @return còpia de l'usuari
+     */
     public Usuari getUsuariIesim(int n){
         return this.usuaris[n].copia();
     }
 
+    /** Métodes */
+
     /**
-     * Afegeix un usuari a la llista de forma ordenada pel seu alies
+     * Métode que afegeix un usuari a la llista de forma ordenada pel seu àlies
      * No es poden afegir duplicats
      * 
      * @param u usuari que es vol llegir 
@@ -70,10 +88,10 @@ public class LlistaUsuaris {
     }
 
     /**
-     * Cerca un usuari pel seu alies
+     * Métode que cerca un usuari pel seu alies
      * 
      * @param alies àlies de l'usuari
-     * @return l'usuari si es troba, sino null
+     * @return l'usuari si existeix, sinó null
      */
     public Usuari cerca(String alies) {
         for(int i = 0; i < compt; i++) {
@@ -85,18 +103,21 @@ public class LlistaUsuaris {
     }
 
     /**
-     * Metode que detemina si existeix un usuari amb l'àlies indicat
+     * Métode que detemina si existeix un usuari amb l'àlies indicat
      * 
      * @param alies àlies de l'usuari per comprovar
-     * @return true si la cerca retorna un usuari diferent de null sino false
+     * @return true si existeix, false en cas contrari
      */
     public boolean existeix(String alies) {
         return cerca(alies) != null;
     }
 
     /**
-     * Metode que mostra per pantalla tots els usuaris de la llista
+     * Métode que mostra per pantalla tots els usuaris de la llista.
+     * 
+     * @return cadena amb la informació dels usuaris
      */
+    @Override
     public String toString() {
         String aux = "";
         for(int i = 0; i < compt; i++) {
@@ -106,11 +127,11 @@ public class LlistaUsuaris {
     }
 
     /**
-     * Metode que mostra els usuaris que pertanyen a un col·lectiu indicat
+     * Métode que mostra els usuaris que pertanyen a un col·lectiu determinat
      * 
      * @param col col·lectiu (Estudiant, PDI, PTGAS)
      */
-    public void mostrarUCollectiu(String col) {
+    public void mostrarUCollectiu(Collectius col) {
         for(int i = 0; i < compt; i++) {
             if(usuaris[i].getCollectiu() == col) {
                 System.out.println(usuaris[i] + "\n");
@@ -119,7 +140,9 @@ public class LlistaUsuaris {
     }
 
     /**
-     * Metode que carrega usuaris des d'un fitxer de text
+     * Métode que carrega usuaris des d'un fitxer de text.
+     * Cada línia del fitxer representa un usuari amb el format especificat
+     * segons el seu col·lectiu
      * 
      * 
      * @param nomFitxer nom del fitxer
@@ -129,6 +152,7 @@ public class LlistaUsuaris {
      * @throws UsuariDuplicat excepcio si un àlies ja existeix
      */
     public void carregaFitxer(String nomFitxer) throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat  {
+
         try (BufferedReader br = new BufferedReader(new FileReader(nomFitxer))) {
             String linia;
         
@@ -143,9 +167,9 @@ public class LlistaUsuaris {
                 String alies = dades[0];
                 String email = dades[1];
 
-                Collectiu col;
+                Collectius col;
                 try {
-                    col = Collectiu.valueOf(dades[2].toUpperCase());
+                    col = Collectius.valueOf(dades[2].toUpperCase());
                 } catch (IllegalArgumentException e) {
                     throw new CollectiuDesconegut(dades[2]);
                 }
@@ -160,14 +184,16 @@ public class LlistaUsuaris {
 
                         String ensenyament = dades[3];
                         int anyInici = Integer.parseInt(dades[4]);
+
                         u = new UsuariEstudiant(alies, email, col, ensenyament, anyInici);
                         break;
 
                     case PDI:
 
-                    if (dades.length != 5){
+                        if (dades.length != 5){
                             throw new FormatInvalid("Format uncorrecte per PDI: " + linia);
                         }
+
                         DepartamentURV dept = DepartamentURV.valueOf(dades[3].toUpperCase());
                         CampusURV campPDI = CampusURV.valueOf(dades[4].toUpperCase());
                     
@@ -181,6 +207,7 @@ public class LlistaUsuaris {
                         }
 
                         CampusURV campusPTGAS = CampusURV.valueOf(dades[3].toUpperCase());
+                        
                         u = new UsuariPTGAS(alies, email, col, campusPTGAS);
                         break;
                         
@@ -193,7 +220,7 @@ public class LlistaUsuaris {
     }
  
     /**
-     * Mètode que duplica la capacitat de l'array d'usuaris si d'arriba al limit
+     * Métode que duplica la capacitat de l'array d'usuaris si arriba al límit
      */
     private void ampliar() {
         Usuari[] nou = new Usuari[usuaris.length *2];
@@ -203,25 +230,24 @@ public class LlistaUsuaris {
         usuaris = nou;
     }
 
-
     /**
-     * Metodo que devuelve una nueva lista de usuarios con solo los usuarios de un colectivo
-     * @param col colectivo de los usuarios de la nueva lista (PDI, PTGAS o estudiants)
-     * @return
+     * Métode que retorna una nova llista de usuaris amb només els usuaris d'un col·lectiu
+     * 
+     * @param col col·lectiu dels usuaris
+     * @return nova llista amb els usuaris filtrats
      */
-    public LlistaUsuaris tipusLlista(Collectiu col){
+    public LlistaUsuaris tipusLlista(Collectius col){
         LlistaUsuaris nova = new LlistaUsuaris();
 
         for (int i = 0; i < this.compt; i++){
             if (usuaris[i].getCollectiu() == col){
                 try {
                     nova.afegir(this.usuaris[i]);
-                }catch(UsuariDuplicat e){
+                } catch(UsuariDuplicat e){
                     
                 }
             }
         }
-
         return nova;
     }
 

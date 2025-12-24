@@ -1,11 +1,17 @@
-//Aesha Naz
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * Descripció: Classe abstracta que representa una acticitat del sistema
+ * Defineix els atributs i mètodes comuns a tots els tipus d'activitats.
+ */
 
 package activitats;
+
 import excepcions.CollectiuDesconegut;
 import extras.Data;
 
 public abstract class Activitat {
 
+    /** Atributs de la classe */
     protected String nom;
     protected String[] collectius;
     protected Data dataIniciInscripcio;
@@ -15,44 +21,39 @@ public abstract class Activitat {
      * Constructor de la classe Activitat
      *
      * @param nom nom identificador de l'activitat (no pot ser repetit)
-     * @param collectius array de cadenes que indica els col·lectius als quals
-     *                  s'ofereix l'activitat ("PDI", "PTGAS" i/o "Estudiant")
+     * @param collectius col·lectius als quals s'ofereix l'activitat
      * @param dataIniciInscripcio data a partir de la qual l'usuari es pot inscriure
      * @param dataFiInscripcio data límit fins a la qual es permet fer inscripcions
-     * @throws CollectiuDesconegut
      */
-
-    public Activitat (String nom, String[] collectius, Data dataIniciInscripcio, Data dataFiInscripcio)throws CollectiuDesconegut{
+    public Activitat (String nom, Collectius collectius, Data dataIniciInscripcio, Data dataFiInscripcio) {
         this.nom = nom;
-        if(colectiuCorrecte(collectius)){
-            this.collectius = collectius;
-        }else{
-            throw new CollectiuDesconegut(collectius.toString());
-        }
+        this.collectius = collectius;
         this.dataIniciInscripcio = dataIniciInscripcio;
         this.dataFiInscripcio = dataFiInscripcio;
     }
 
+    /** Getters */
+
     /**
-     * Metode que retorna el nom de l'usuari
+     * Mètode que retorna el nom de l'activitat
      * 
-     * @return un String que representa el nom de l'usuari
+     * @return nom de l'activitat
      */
     public String getNom() {    
         return nom;  
     }
 
     /**
-     * Metode que retorna la llista de col·lectius als que pot pertanyer l'usuari
+     * Mètode que retorna la llista de col·lectius als que pot pertanyer l'usuari
      * 
-     * @return un array de cadenes amb els col·lectius
+     * @return tipus de col·lectius
      */
-    public String[] getCollectius() {   
+    public Collectius getCollectius() {   
         return collectius;  
         }
 
     /**
-     * Metode que retorna la data d'inici del període d'inscripció
+     * Mètode que retorna la data d'inici del període d'inscripció
      * 
      * @return un objecte {@code Data} que representa la data inicial d'inscripció
      */
@@ -102,13 +103,21 @@ public abstract class Activitat {
      */
     public abstract boolean estaActiva (Data avui);
 
+    /**
+     * Métode que determina si l'activitat s'ha acabat o no
+     * 
+     * @param avui data a comprovar
+     * @return true si s'ha acabat l'activitat, sinó false
+     */
     public boolean estaAcabada(Data avui) {
         return getDataFinal().esDataInferior(avui);
     }
+
     /**
      * Determina si una actividad tiene clase en la fecha indicada
      * para las actividades Online y las de un dia, el metodo sera igual que 
      * "estaActiva" pero para las periodicas diferirá
+     * 
      * @param avui
      * @return true si en la fecha hay clase
      */
@@ -156,7 +165,13 @@ public abstract class Activitat {
         return info;
     }
 
-    private boolean colectiuCorrecte(String[] cols){
+    /**
+     * Mètode que comprova si el col·lectiu es correcte (dels tipus que hi han)
+     * 
+     * @param cols Collectius que hi han (ESTUDIANT, PDI, PTGAS)
+     * @return true si es correcte, sinó false
+     */
+    private boolean colectiuCorrecte(Collectius cols){
         boolean res = true;
         int i = 0;
 
@@ -169,5 +184,4 @@ public abstract class Activitat {
 
         return res;
     }
-
 }
