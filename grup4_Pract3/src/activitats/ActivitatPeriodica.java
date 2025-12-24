@@ -46,11 +46,11 @@ public class ActivitatPeriodica extends Activitat {
      * @throws ValorInexistent
      * @throws CollectiuDesconegut
      */
-    public ActivitatPeriodica (String nom, String[] collectius, Data dataIniInscripcio, Data dataFiInscripcio,
+    public ActivitatPeriodica (String nom, Collectius collectiu, Data dataIniInscripcio, Data dataFiInscripcio,
                                 DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
                                 int places, double preu, String centre, String ciutat)throws ValorInexistent, CollectiuDesconegut{
        
-        super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
+        super(nom, collectiu, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
         this.centre = centre;
         this.ciutat = ciutat;
@@ -268,10 +268,9 @@ public class ActivitatPeriodica extends Activitat {
         try{
             nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
             this.dataHoraIni = nouDataHoraIni;
-        }catch(ValorInexistent e){
-
-
-        }  
+        }catch(ValorInexistent e) {
+            
+        }
     }
 
 
@@ -315,9 +314,10 @@ public class ActivitatPeriodica extends Activitat {
      * Metodo que devuelve un duplicado de la instancia
      * @return duplicado
      */
+    @Override
     public ActivitatPeriodica copia(){
         try{
-            return new ActivitatPeriodica(super.nom, super.collectius, super.dataIniciInscripcio, super.dataFiInscripcio,
+            return new ActivitatPeriodica(super.nom, super.collectiu, super.dataIniciInscripcio, super.dataFiInscripcio,
             this.dia, this.durada, this.dataHoraIni, this.setmanes, this.places, this.preu, this.centre, this.ciutat);
         }catch(ValorInexistent e){
 
@@ -332,6 +332,7 @@ public class ActivitatPeriodica extends Activitat {
 
 
 //toString
+    @Override
     public String toString(){
         //aprovechando el toString del padre
         String aux = "\n---ACTIVITAT PERIODICA---\n"+
@@ -369,37 +370,38 @@ public class ActivitatPeriodica extends Activitat {
      * Ciutat = ciudad donde se hara la actividad
      * @return
      */
+    @Override
     public String toCSV(){
         String aux = this.tipusActivitat() +";"+ super.nom+";";
 
 
-        for (int i = 0; i < (super.collectius.length - 1); i++){    //-1 para evitar que al poner el ultimo colectivo quede una coma al final
-            aux += super.collectius[i]+",";
+        if (super.collectiu != null) {
+            aux += super.collectiu.name(); 
+        } else {
+            aux += ";"; // si no hi ha collectius
         }
-        aux += super.collectius[super.collectius.length-1]+";"+
-        super.dataIniciInscripcio.getDia()+";"+
-        super.dataIniciInscripcio.getMes()+";"+
-        super.dataIniciInscripcio.getAny()+";"+
-        super.dataFiInscripcio.getDia()+";"+
-        super.dataFiInscripcio.getMes()+";"+
-        super.dataFiInscripcio.getAny()+";"+
-        this.dia+";"+
-        this.durada+";"+
-        this.dataHoraIni.getDia()+";"+
-        this.dataHoraIni.getMes()+";"+
-        this.dataHoraIni.getAny()+";"+
-        this.dataHoraIni.getHora()+";"+
-        this.dataHoraIni.getMinutos()+";"+
-        this.setmanes+";"+
-        this.places+";"+
-        this.preu+";"+
-        this.centre+";"+
-        this.ciutat;
+
+        aux += super.dataIniciInscripcio.getDia()+";"+
+            super.dataIniciInscripcio.getMes()+";"+
+            super.dataIniciInscripcio.getAny()+";"+
+            super.dataFiInscripcio.getDia()+";"+
+            super.dataFiInscripcio.getMes()+";"+
+            super.dataFiInscripcio.getAny()+";"+
+            this.dia+";"+
+            this.durada+";"+
+            this.dataHoraIni.getDia()+";"+
+            this.dataHoraIni.getMes()+";"+
+            this.dataHoraIni.getAny()+";"+
+            this.dataHoraIni.getHora()+";"+
+            this.dataHoraIni.getMinutos()+";"+
+            this.setmanes+";"+
+            this.places+";"+
+            this.preu+";"+
+            this.centre+";"+
+            this.ciutat;
 
 
         return aux;
-
-
     }
 
 
@@ -412,6 +414,7 @@ public class ActivitatPeriodica extends Activitat {
      * @param hoy
      * @return true si hay clase en esa fecha, false en caso contrario
      */
+    @Override
     public boolean avuiHiHaClase(Data hoy){
         boolean res = false;
         int totalDiesDurada = this.setmanes * 7;

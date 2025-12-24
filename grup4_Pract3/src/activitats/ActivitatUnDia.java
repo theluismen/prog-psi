@@ -5,9 +5,9 @@
 
 package activitats;
 
+import enumeraciones.Collectius;
 import excepcions.*;
 import extras.*;
-import excepcions.*;
 
 
 public class ActivitatUnDia extends Activitat{
@@ -33,7 +33,7 @@ public class ActivitatUnDia extends Activitat{
      * @param ciutat Ciudad de la actividad.
      */
     public ActivitatUnDia(String nom, 
-                          String[] collectius, 
+                          Collectius collectiu, 
                           Data dataIniciInscripcio, 
                           Data dataFiInscripcio, 
                           Data dataActivitatIhora,
@@ -41,9 +41,9 @@ public class ActivitatUnDia extends Activitat{
                           int minutosDurada,
                           int places, 
                           double preu, 
-                          String ciutat)throws CollectiuDesconegut, ValorInexistent{
+                          String ciutat)throws CollectiuDesconegut, ValorInexistent {
 
-        super(nom, collectius, dataIniciInscripcio, dataFiInscripcio); 
+        super(nom, collectiu, dataIniciInscripcio, dataFiInscripcio); 
         this.dataActivitatIhora = dataActivitatIhora;
         this.ciutat = ciutat;
 
@@ -147,7 +147,7 @@ public class ActivitatUnDia extends Activitat{
      */
     @Override
     public Data getDataFinal(){    
-        return dataActivitat;      
+        return dataActivitatIhora;      
     }
 
 
@@ -197,7 +197,7 @@ public class ActivitatUnDia extends Activitat{
         ActivitatUnDia copia = null;
         try{
             copia = new ActivitatUnDia(super.nom, 
-                                       super.collectius, 
+                                       super.collectiu, 
                                        super.dataIniciInscripcio, 
                                        super.dataFiInscripcio, 
                                        this.dataActivitatIhora,
@@ -234,11 +234,13 @@ public class ActivitatUnDia extends Activitat{
     public String toCSV(){
         String aux = this.tipusActivitat() + ";" + super.nom + ";";
 
-        for (int i = 0; i < (super.collectius.length - 1); i++){    //-1 para evitar que al poner el ultimo colectivo quede una coma al final
-            aux += super.collectius[i]+",";
+        if (super.collectiu != null) {
+            aux += super.collectiu.name(); 
+        } else {
+            aux += ";"; // si no hi ha collectius
         }
-        aux += super.collectius[super.collectius.length - 1] + ";" +
-               super.dataIniciInscripcio.getDia() + ";" +
+
+        aux += super.dataIniciInscripcio.getDia() + ";" +
                super.dataIniciInscripcio.getMes() + ";" +
                super.dataIniciInscripcio.getAny() + ";" +
                super.dataFiInscripcio.getDia() + ";" +
@@ -258,4 +260,3 @@ public class ActivitatUnDia extends Activitat{
         return aux;
     }
 }
-

@@ -1,14 +1,11 @@
 package extras;
-
-import excepcions.ValorInexistent;
-
 /**
  * Classe per guardar dates.
  *
  * @author Professores de programació.
- * Se han añadido atributos y metodos para guardar y tratar la hora (Alexandra Núñez)
  *
  */
+
 
 public class Data {
     private int dia;
@@ -23,9 +20,8 @@ public class Data {
 	 * @param dia
 	 * @param mes
 	 * @param any
-     * @throws ValorInexistent si la fecha no existe
 	 */
-	public Data(int dia, int mes, int any) throws ValorInexistent{
+	public Data(int dia, int mes, int any){
 		if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
@@ -33,7 +29,7 @@ public class Data {
 			hora = 0;
 			minutos = 0;
         } else {
-            throw new ValorInexistent("Dies, mes, any");
+            //lanzar excepcion
         }
 	}
 
@@ -44,24 +40,20 @@ public class Data {
      * @param dia
      * @param mes
      * @param any
-     * @throws ValorInexistent si la fecha o la hora no existen
      */
-    public Data(int dia, int mes, int any, int hora, int minutos) throws ValorInexistent{
+    public Data(int dia, int mes, int any, int hora, int minutos) {
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         } else {
-            throw new ValorInexistent("Dies, mes, any");
+            //lanzar excepcion
         }
 
         if (horaExisteix(hora, minutos)){
 			this.hora = hora;
 			this.minutos = minutos;
-		} else{
-            throw new ValorInexistent("Hora, minuts");
-        }
-
+		}
     }
 
 
@@ -114,16 +106,15 @@ public class Data {
      * @param dia
      * @param mes
      * @param any
-     * @throws ValorInexistent si la fecha no existe
      */
-    public void setData(int dia, int mes, int any) throws ValorInexistent{
+    public void setData(int dia, int mes, int any) {
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que hi ha una data vàlida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         }
 		else{
-			throw new ValorInexistent("Dies, mes, any");
+			//lanzar excepcion
 		}
     }
 
@@ -133,15 +124,14 @@ public class Data {
      * Només es fa la modificació de l'hora si el que es rep per paràmetre és correcte.
      * @param hora
      * @param minutos
-     * @throws ValorInexistent si la hora no existe
      */
-    public void setHora(int hora, int minutos) throws ValorInexistent{
-        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una hora vàlida
+    public void setHora(int hora, int minutos) {
+        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una data vàlida
             this.hora = hora;
 			this.minutos = minutos;
         }
 		else{
-			throw new ValorInexistent("Hora, minuts");
+			//lanzar excepcion
 		}
     }
 
@@ -164,25 +154,23 @@ public class Data {
      * * @return la data del dia seguent
      */
     public Data diaSeguent() {
-        try{
-            Data novaData=new Data(dia, mes, any, hora, minutos);
-            // també podria haver-se fet de la següent forma:
-            // Data novaData=this.copia();
+        Data novaData=new Data(dia, mes, any, hora, minutos);
 
-            novaData.dia++;
-            if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
-                novaData.dia = 1;
-                novaData.mes++;
-                if (novaData.mes > 12) {
-                    novaData.mes = 1;
-                    novaData.any++;
-                }
+
+        // també podria haver-se fet de la següent forma:
+        // Data novaData=this.copia();
+
+
+        novaData.dia++;
+        if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
+            novaData.dia = 1;
+            novaData.mes++;
+            if (novaData.mes > 12) {
+                novaData.mes = 1;
+                novaData.any++;
             }
-            return novaData;
-        }catch(ValorInexistent e){
-
         }
-        return null;
+        return novaData;
     }
 
 
@@ -221,22 +209,17 @@ public class Data {
         Data dataTemp;
         int contador;
         // és necessari una nova instancia per no modificar la data actual
-        try{
-            dataTemp = new Data(dia, mes, any, hora, minutos);
-            if (dataTemp.esDataInferiorOigual(data)) {
-                contador = 0;
-                // la data rebuda és major que l'actual
-                while (!dataTemp.esIgual(data)) {
-                    dataTemp=dataTemp.diaSeguent(); // augmenta la data actual fins coincidir amb la rebuda per paràmetre
-                    contador++;
-                }
-            } else
-                contador = -1;
-            return contador;
-        }catch(ValorInexistent e){
-
-        }
-        return 0;
+        dataTemp = new Data(dia, mes, any, hora, minutos);
+        if (dataTemp.esDataInferiorOigual(data)) {
+            contador = 0;
+            // la data rebuda és major que l'actual
+            while (!dataTemp.esIgual(data)) {
+                dataTemp=dataTemp.diaSeguent(); // augmenta la data actual fins coincidir amb la rebuda per paràmetre
+                contador++;
+            }
+        } else
+            contador = -1;
+        return contador;
     }
 
 
@@ -292,12 +275,7 @@ public class Data {
      * @return un nou objecte amb el mateix contingut
      */
     public Data copia() {
-        try{
-            return new Data(dia, mes, any, hora, minutos);
-        }catch(ValorInexistent e){
-
-        }
-        return null;
+        return new Data(dia, mes, any, hora, minutos);
     }
 
 
@@ -370,13 +348,19 @@ public class Data {
     private static boolean horaExisteix (int hora, int minutos){
         boolean res = true;
 		if ((hora >= 24) || (hora < 0)){
+            //lanzar una excepcion cuando este creada
             res = false;
         }
 
 		if ((minutos > 59) || (minutos < 0)){
+			//lanzar excepcion cuando este creada
 			res = false;
 		}
         return res;
+    }
+
+    public boolean teHora() {
+        return hora >= 0 && minutos >= 0;
     }
 
     /**
@@ -421,11 +405,11 @@ public class Data {
                 return false;
             }
 
-            if (this.minuts < altra.minuts) {
+            if (this.minutos < altra.minutos) {
                 return true;
             }
 
-            if (this.minuts > altra.minuts) {
+            if (this.minutos > altra.minutos) {
                 return false;
             }
         } return false; // són iguals o aquesta no és inferior

@@ -6,14 +6,14 @@
 
 package activitats;
 
-import excepcions.CollectiuDesconegut;
+import enumeraciones.*;
 import extras.Data;
 
 public abstract class Activitat {
 
     /** Atributs de la classe */
     protected String nom;
-    protected String[] collectius;
+    protected Collectius collectiu;
     protected Data dataIniciInscripcio;
     protected Data dataFiInscripcio;
 
@@ -25,9 +25,9 @@ public abstract class Activitat {
      * @param dataIniciInscripcio data a partir de la qual l'usuari es pot inscriure
      * @param dataFiInscripcio data límit fins a la qual es permet fer inscripcions
      */
-    public Activitat (String nom, Collectius collectius, Data dataIniciInscripcio, Data dataFiInscripcio) {
+    public Activitat (String nom, Collectius collectiu, Data dataIniciInscripcio, Data dataFiInscripcio) {
         this.nom = nom;
-        this.collectius = collectius;
+        this.collectiu = collectiu;
         this.dataIniciInscripcio = dataIniciInscripcio;
         this.dataFiInscripcio = dataFiInscripcio;
     }
@@ -49,7 +49,7 @@ public abstract class Activitat {
      * @return tipus de col·lectius
      */
     public Collectius getCollectius() {   
-        return collectius;  
+        return collectiu;  
         }
 
     /**
@@ -152,36 +152,12 @@ public abstract class Activitat {
      */
     @Override
     public String toString() {
-        String info = "Nom: " + nom + "\nCol·lectius: ";
-
-        for (int i = 0; i < collectius.length; i++) {
-            info += collectius[i];
-            if (i < collectius.length - 1) info += ", ";
-        }
-
-        info += "\nPeríode inscripció: " + dataIniciInscripcio +
-                " fins " + dataFiInscripcio + "\n";
+        String info = "Nom: " + nom +
+                  "\nCol·lectiu: " + collectiu.name() +
+                  "\nPeríode inscripció: " + dataIniciInscripcio +
+                  " fins " + dataFiInscripcio + "\n";
 
         return info;
     }
 
-    /**
-     * Mètode que comprova si el col·lectiu es correcte (dels tipus que hi han)
-     * 
-     * @param cols Collectius que hi han (ESTUDIANT, PDI, PTGAS)
-     * @return true si es correcte, sinó false
-     */
-    private boolean colectiuCorrecte(Collectius cols){
-        boolean res = true;
-        int i = 0;
-
-        while (res && (i < cols.length)){
-            if (!cols[i].equalsIgnoreCase("PDI") && !cols[i].equalsIgnoreCase("PTGAS") && !cols[i].equalsIgnoreCase("Estudiant")){
-                res = false;
-            }
-            i++;
-        }
-
-        return res;
-    }
 }
