@@ -13,13 +13,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import activitats.*;
+import enumeraciones.Collectius;
 import enumeraciones.DiaSetmana;
 import excepcions.ActivitatDuplicada;
 import excepcions.CollectiuDesconegut;
 import excepcions.ValorInexistent;
 import extras.Data;
 
-public class LlistaActivitats implements Llista<Activitat>{        //falta crear llista
+public class LlistaActivitats {        //falta crear llista
     private Activitat llista[];
     private int nElems;
 
@@ -38,7 +39,6 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * Metode que retorna el nombre d'elements actuals a la llista
      * @return el total d'elements a la llista
      */
-    @Override
     public int getNumElements(){
         return this.nElems;
     }
@@ -64,7 +64,6 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * @param act
      * @throws ActivitatDuplicada
      */
-    @Override
     public void afegir(Activitat act)throws ActivitatDuplicada {
         if (this.existeix(act.getNom())){
             throw new ActivitatDuplicada(act.getNom());
@@ -89,7 +88,6 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * @param id Nombre de la actividad
      * @return objeto de esa actividad.
      */
-    @Override
     public Activitat cerca(String id){
         Activitat act = null;
         boolean encontrada = false;
@@ -109,7 +107,6 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * @param nomAct
      * @return
      */
-    @Override
     public boolean existeix(String nomAct){
         boolean trobat = false;
         int i = 0;
@@ -216,7 +213,8 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
                 //Posiciones comunes para todas las actividades.
                 String tipoAct = scanner.next();    //Leo el tipo de actividad.
                 String nom = scanner.next();        //Nombre actividad.
-                String[] collectius = scanner.next().split(",");    //Array con colectivos
+                String collectiuStr = scanner.next().toUpperCase();
+                Collectius collectiu = Collectius.valueOf(collectiuStr);   
 
                 //Fecha de inicio del período de inscripción.
                 int iniciInscripcioDia = scanner.nextInt();         
@@ -249,7 +247,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
                     String ciutat = scanner.next();
 
                     //Creo activitat.
-                    nuevaAct = new ActivitatPeriodica(nom, collectius, iniciInscripcio, fiInscripcio,
+                    nuevaAct = new ActivitatPeriodica(nom, collectiu, iniciInscripcio, fiInscripcio,
                                                             diaSetmana, duracio, diaYHoraInicio, setmanes, 
                                                             places, preu, centre, ciutat);
                         
@@ -268,7 +266,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
                     String ciutat = scanner.next();
 
                     //Creo activitat.
-                    nuevaAct = new ActivitatUnDia(nom, collectius, iniciInscripcio, fiInscripcio, diaYHoraInicio, 
+                    nuevaAct = new ActivitatUnDia(nom, collectiu, iniciInscripcio, fiInscripcio, diaYHoraInicio, 
                                                         horaDurada, minutosDurada, places, preu, ciutat);
                         
                 }else if(tipoAct.equalsIgnoreCase("Online")){   //preguntar de unificar nomeclatura
@@ -281,7 +279,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
                     String enlace = scanner.next();
                     
                     //Creo activitat.
-                    nuevaAct = new ActivitatOnline(nom, collectius, iniciInscripcio, fiInscripcio, 
+                    nuevaAct = new ActivitatOnline(nom, collectiu, iniciInscripcio, fiInscripcio, 
                                                         diaInicio, periodoVisualizacion, enlace);   
                     
                 }
@@ -329,6 +327,7 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
 
 
 //toString
+    @Override
     public String toString(){
         String aux = "";
         

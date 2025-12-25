@@ -1,8 +1,3 @@
-/**
- * Autor: Ikram Hallouz
- * Descripción: Clase que representa la llista d'inscripcions amb un array dinàmic.
- */
-
 package llistes;
 
 import java.io.*;
