@@ -4,7 +4,7 @@
  */
 
 package usuaris;
-import enumeraciones.Collectiu;
+import enumeraciones.Collectius;
 
 public class UsuariEstudiant extends Usuari {
 
@@ -20,9 +20,9 @@ public class UsuariEstudiant extends Usuari {
      * @param ensenyament Sigles de l'ensenyament
      * @param anyInici Any de matriculació
      */
-    public UsuariEstudiant(String alies, String email, String ensenyament, int anyInici) {
+    public UsuariEstudiant(String alies, String email, Collectius collectiu, String ensenyament, int anyInici) {
         // Passem "Estudiant" automàticament al pare
-        super(alies, email, Collectiu.ESTUDIANT);
+        super(alies, email, Collectius.ESTUDIANT);
         this.ensenyament = ensenyament;
         this.anyInici = anyInici;
     }
@@ -67,13 +67,16 @@ public class UsuariEstudiant extends Usuari {
      * Retorna les dades en format CSV per guardar al fitxer.
      * Format: alies;email;collectiu;ensenyament;anyInici
      */
+    @Override
     public String toCSV() {
-        return super.alies + ";" + super.email + ";" + super.collectiu + ";" + this.ensenyament + ";" + this.anyInici;
+        return getAlies() + ";" + getEmailComplet() + ";" + getCollectiu() + ";" + this.ensenyament + ";" +
+           this.anyInici;
     }
+
 
     @Override
     public UsuariEstudiant copia() {
         // Retornem una nova instància amb les mateixes dades (còpia)
-        return new UsuariEstudiant(super.alies, super.email, this.ensenyament, this.anyInici);
+        return new UsuariEstudiant(super.alies, super.email, super.collectiu, this.ensenyament, this.anyInici);
     }
 }

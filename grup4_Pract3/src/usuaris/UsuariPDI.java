@@ -19,11 +19,11 @@ public class UsuariPDI extends Usuari{
      */
     public UsuariPDI(String alies, 
                      String email, 
-                     String collectiu, 
+                     Collectius collectiu, 
                      DepartamentURV departament, 
                      CampusURV campus){
 
-        super(alies, email, Collectiu.PDI);
+        super(alies, email, Collectius.PDI);
         this.departament = departament;
         this.campus = campus;
     }
@@ -70,6 +70,7 @@ public class UsuariPDI extends Usuari{
      * 
      * @return informació específica de la subclasse
      */
+    @Override
     public String dadesExtra(){
         return "\nDepartament: " + departament.getNomDepartament() + 
                "\nCampus: " + campus.getNomCampus();
@@ -80,6 +81,7 @@ public class UsuariPDI extends Usuari{
      * 
      * @return String del tipus d'Usuari
      */
+    @Override
     public String tipusUsuari(){
         return "Usuari PDI";
     }
@@ -88,6 +90,7 @@ public class UsuariPDI extends Usuari{
      * Mètode que retorna un duplicat de la instancia
      * @return duplicado
      */
+    @Override
     public UsuariPDI copia(){
         return new UsuariPDI(super.alies,super.email,super.collectiu,this.departament,this.campus);
     }
@@ -95,7 +98,15 @@ public class UsuariPDI extends Usuari{
     /**
      * Método toString
      */
+    @Override
     public String toString() {
         return super.toString() + this.dadesExtra();
     }
+
+    @Override
+    public String toCSV() {
+        return getAlies() + ";" + getEmailComplet() + ";" + getCollectiu() + ";" +
+           this.departament + ";" + this.campus;
+    }
+
 }

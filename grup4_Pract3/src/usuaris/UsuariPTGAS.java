@@ -12,8 +12,8 @@ public class UsuariPTGAS extends Usuari{
     private CampusURV campus;
 
 
-    public UsuariPTGAS(String alies, String collectiu, String email, CampusURV campus){
-        super(alies, email, Collectiu.PTGAS);
+    public UsuariPTGAS(String alies, String email, Collectius collectiu, CampusURV campus){
+        super(alies, email, Collectius.PTGAS);
         this.campus = campus;
     }
 
@@ -32,6 +32,7 @@ public class UsuariPTGAS extends Usuari{
      * 
      * @return informació específica de la subclasse
      */
+    @Override
     public String dadesExtra(){
         return "\nCampus: "+campus.getNomCampus();
     }
@@ -41,6 +42,7 @@ public class UsuariPTGAS extends Usuari{
      * 
      * @return String del tipus d'Usuari
      */
+    @Override
     public String tipusUsuari(){
         return "Usuari PTGAS";
     }
@@ -49,19 +51,21 @@ public class UsuariPTGAS extends Usuari{
      * Mètode que retorna un duplicat de la instancia
      * @return duplicado
      */
+    @Override
     public UsuariPTGAS copia(){
-        return new UsuariPTGAS(super.alies, super.collectiu, super.email, this.campus);
+        return new UsuariPTGAS(super.alies, super.email, super.collectiu, this.campus);
     }
 
 //toString
+@Override
     public String toString(){
         return super.toString() + this.dadesExtra();
     }
 
 //toCSV
-    public String toCSV(){
-        return super.alies + ";" + super.email + ";" + super.collectiu + ";" + this.campus;
+    @Override
+    public String toCSV() {
+        return getAlies() + ";" + getEmailComplet() + ";" +
+           getCollectiu() + ";" + this.campus;
     }
-
-
 }

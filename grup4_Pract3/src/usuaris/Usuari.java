@@ -17,7 +17,6 @@ public abstract class Usuari {
 
     /**
      * Constructor de la classe Usuari
-     * 
      * @param alies àlies de l'usuari (únic)
      * @param email part inicial del correu institucional (sense @)
      * @param collectiu col·lectiu al qual pertany (PDI, PTGAS o Estudiant)
@@ -28,7 +27,11 @@ public abstract class Usuari {
         this.collectiu = collectiu;
     }
 
-    /**Getters */
+    /**
+     * Retorna la informació comuna de l'usuari en format CSV.
+     *
+     */
+    public abstract String toCSV();
 
     /**
      * Mètode que retorna l'àlies indentificador de l'usuari
@@ -57,14 +60,16 @@ public abstract class Usuari {
 
     /**
      * Metode que retorna el col·lectiu al qual pertany l'usuari
+     * 3 tipus de col·lectius:
+     * - Estudiant
+     * - PDI
+     * - PTGAS
      * 
-     * @return col·lectiu de l'usuari
+     * @return una cadena de text que identifica el col·lectiu del usuari
      */
     public Collectius getCollectiu() {  
         return collectiu;  
     }
-
-    /** Mètodes abstractes */
 
     /**
      * Mètode que retorna informació extra de cada tipus d'usuari

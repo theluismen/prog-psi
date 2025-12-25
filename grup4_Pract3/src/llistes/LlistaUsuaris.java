@@ -10,7 +10,9 @@ package llistes;
 import enumeraciones.*;
 import excepcions.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import usuaris.*;
 
@@ -251,4 +253,36 @@ public class LlistaUsuaris {
         return nova;
     }
 
+
+    /**
+    * Retorna la llista d'usuaris en format CSV.
+     * Cada usuari ocupa una línia del CSV.
+     *
+     * @return cadena amb els usuaris en format CSV
+    */
+    public String toCSV() {
+        String aux = "";
+
+        for (int i = 0; i < compt; i++) {
+            aux += usuaris[i].toCSV() + "\n";
+        }
+
+        return aux;
+    }
+
+    /**
+     * Mètode que guarda la llista d'usuaris en un fitxer CSV
+     * 
+     * @param nomFitxer nom del fitxer csv on es guardaran els usuaris
+     * @throws IOException si hi ha algun error d'escriptura del fitxer
+     */
+    public void guardarLlista (String nomFitxer) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomFitxer))) {
+            
+            for (int i = 0; i < compt; i++) {
+                bw.write(usuaris[i].toCSV());
+                bw.newLine();
+            }
+        }
+    }
 }
