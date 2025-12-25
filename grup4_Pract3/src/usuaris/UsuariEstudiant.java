@@ -4,7 +4,7 @@
  */
 
 package usuaris;
-import enumeraciones.Collectius;
+import enumeracions.Collectius;
 
 public class UsuariEstudiant extends Usuari {
 

@@ -5,7 +5,7 @@
  */
 
 package usuaris;
-import enumeraciones.Collectius;
+import enumeracions.Collectius;
 
 public abstract class Usuari {
     

@@ -6,8 +6,8 @@
 package llistes;
 
 import activitats.*;
-import enumeraciones.Collectius;
-import enumeraciones.DiaSetmana;
+import enumeracions.Collectius;
+import enumeracions.DiaSetmana;
 import excepcions.ActivitatDuplicada;
 import excepcions.CollectiuDesconegut;
 import excepcions.ValorInexistent;

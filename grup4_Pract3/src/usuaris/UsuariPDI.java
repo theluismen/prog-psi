@@ -2,7 +2,7 @@
 
 package usuaris;
 
-import enumeraciones.*;
+import enumeracions.*;
 
 public class UsuariPDI extends Usuari{
 

@@ -6,7 +6,7 @@
 
 package usuaris;
 
-import enumeraciones.*;
+import enumeracions.*;
 
 public class UsuariPTGAS extends Usuari{
     private CampusURV campus;

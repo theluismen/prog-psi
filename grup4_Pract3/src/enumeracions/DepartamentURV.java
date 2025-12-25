@@ -1,4 +1,4 @@
-package enumeraciones;
+package enumeracions;
 
 public enum DepartamentURV {
     DAFITS("Departament d’Antropologia, Filosofia i Treball Social"),
