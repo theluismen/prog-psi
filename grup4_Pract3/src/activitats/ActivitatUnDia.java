@@ -11,12 +11,12 @@ import extras.*;
 
 
 public class ActivitatUnDia extends Activitat{
-    private Data dataActivitatIhora; 
+    private final Data dataActivitatIhora; 
     private int horaDurada;
     private int minutosDurada;              
     private int places;                
     private double preu;               
-    private String ciutat;            
+    private final String ciutat;            
 
 
     /**
@@ -178,23 +178,14 @@ public class ActivitatUnDia extends Activitat{
     }
 
     /**
-     * Método que devuelve el tipo de actividad como String.
-     *
-     * @return Tipo de actividad como String.
-     */
-    @Override
-    public String tipusActivitat() {
-        return "Activitat d'un dia";
-    }
-
-    /**
      * Metodo que devuelve un duplicado de la instancia
      * @return duplicado
      * @throws ValorInexistent
      * @throws CollectiuDesconegut
      */
+    @Override
     public ActivitatUnDia copia(){
-        ActivitatUnDia copia = null;
+        ActivitatUnDia copia;
         try{
             copia = new ActivitatUnDia(super.nom, 
                                        super.collectiu, 
@@ -218,6 +209,7 @@ public class ActivitatUnDia extends Activitat{
     }
 
     //Método para pasar toda la clase por string.
+    @Override
     public String toString(){
         return"--- ACTIVITAT D'UN DIA ---\n" + 
             super.toString()+
@@ -231,8 +223,9 @@ public class ActivitatUnDia extends Activitat{
             "\tPreu: " + preu + " euros";
     }
 
+    @Override
     public String toCSV(){
-        String aux = this.tipusActivitat() + ";" + super.nom + ";";
+        String aux = "Activitat d'un dia;" + super.nom + ";";
 
         if (super.collectiu != null) {
             aux += super.collectiu.name(); 

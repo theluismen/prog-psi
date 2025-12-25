@@ -5,13 +5,6 @@
  */
 package llistes;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
-
 import activitats.*;
 import enumeraciones.Collectius;
 import enumeraciones.DiaSetmana;
@@ -19,6 +12,12 @@ import excepcions.ActivitatDuplicada;
 import excepcions.CollectiuDesconegut;
 import excepcions.ValorInexistent;
 import extras.Data;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class LlistaActivitats {        //falta crear llista
     private Activitat llista[];
@@ -158,11 +157,21 @@ public class LlistaActivitats {        //falta crear llista
         LlistaActivitats nova = new LlistaActivitats(1);
 
         for (int i = 0; i < this.nElems; i++){
-            if (tipus.equalsIgnoreCase(this.llista[i].tipusActivitat())){
+            boolean coincideix = false;
+
+            if (tipus.equalsIgnoreCase("periodica") && this.llista[i] instanceof ActivitatPeriodica) {
+                coincideix = true;
+            } else if (tipus.equalsIgnoreCase("online") && this.llista[i] instanceof ActivitatOnline) {
+                coincideix = true;
+            } else if (tipus.equalsIgnoreCase("un dia") && this.llista[i] instanceof ActivitatUnDia) {
+                coincideix = true;
+            }
+
+            if (coincideix){
                 try{
                     nova.afegir(this.llista[i]);
-                }catch(ActivitatDuplicada e){
-                    //nunca dará este error porque la lista de la que se copian las actividades ya lo ha verificado
+                } catch(ActivitatDuplicada e){
+
                 }
             }
         }
@@ -365,6 +374,4 @@ public class LlistaActivitats {        //falta crear llista
         }
         this.llista = aux;
     }
-    
-
 }

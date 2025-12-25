@@ -264,13 +264,10 @@ public class ActivitatPeriodica extends Activitat {
      * setter para cambiar la fecha de inicio de la actividad, la hora mantiene la anterior
      * @param nouDataHoraIni
      */
-    public void setDataIni(Data nouDataHoraIni){    
-        try{
-            nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
-            this.dataHoraIni = nouDataHoraIni;
-        }catch(ValorInexistent e) {
-            
-        }
+    public void setDataIni(Data nouDataHoraIni) throws ValorInexistent {    
+        nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
+        this.dataHoraIni = nouDataHoraIni;
+        
     }
 
 
@@ -372,8 +369,7 @@ public class ActivitatPeriodica extends Activitat {
      */
     @Override
     public String toCSV(){
-        String aux = this.tipusActivitat() +";"+ super.nom+";";
-
+        String aux = "Activitat periodica;" + super.nom + ";";
 
         if (super.collectiu != null) {
             aux += super.collectiu.name(); 
@@ -444,16 +440,6 @@ public class ActivitatPeriodica extends Activitat {
         Data dataFi = getDataFinal();
    
         return hoy.esDataInferiorOigual(dataFi) && dataHoraIni.esDataInferiorOigual(hoy);
-    }
-
-    /**
-     * Metode que retorna el tipus d'activitat
-     *
-     * @return una cadena que indica el tipus d'activitat
-     */
-    @Override
-    public String tipusActivitat(){
-        return "Activitat periodica";
     }
 
 

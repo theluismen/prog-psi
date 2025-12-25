@@ -124,13 +124,6 @@ public abstract class Activitat {
     public abstract boolean avuiHiHaClase (Data avui);
 
     /**
-     * Metode que retorna el tipus d'activitat
-     * 
-     * @return una cadena que indica el tipus d'activitat
-     */
-    public abstract String tipusActivitat();
-
-    /**
      * Metode que retorna una còpia de l'activitat
      * 
      * @return una nova instància d'activitat
@@ -159,5 +152,4 @@ public abstract class Activitat {
 
         return info;
     }
-
 }

@@ -59,11 +59,6 @@ public class ActivitatOnline extends Activitat {
 
     // --- Implementació dels mètodes abstractes del pare ---
 
-    @Override
-    public String tipusActivitat() {
-        return "Online";
-    }
-
     /**
      * Metode que retorna quantes places té una activitat -
      * en aquest cas en té il·limitades
@@ -123,20 +118,20 @@ public class ActivitatOnline extends Activitat {
      */
     @Override
     public String toCSV() {
-        // Construïm la part dels col·lectius separats per comes dins del CSV
-        String col = "";
-        if (super.collectiu != null) {
-            col = super.collectiu.name(); 
-        }
-
-        return tipusActivitat() + ";" + 
-               super.nom + ";" + 
-               col + ";" +
-               super.dataIniciInscripcio.getDia() + ";" + super.dataIniciInscripcio.getMes() + ";" + super.dataIniciInscripcio.getAny() + ";" +
-               super.dataFiInscripcio.getDia() + ";" + super.dataFiInscripcio.getMes() + ";" + super.dataFiInscripcio.getAny() + ";" +
-               this.dataInici.getDia() + ";" + this.dataInici.getMes() + ";" + this.dataInici.getAny() + ";" +
-               this.periodeVisualitzacio + ";" + 
-               this.enllac;
+        return "Online;" +
+               nom + ";" +
+               collectiu.name() + ";" +
+               dataIniciInscripcio.getDia() + ";" +
+               dataIniciInscripcio.getMes() + ";" +
+               dataIniciInscripcio.getAny() + ";" +
+               dataFiInscripcio.getDia() + ";" +
+               dataFiInscripcio.getMes() + ";" +
+               dataFiInscripcio.getAny() + ";" +
+               dataInici.getDia() + ";" +
+               dataInici.getMes() + ";" +
+               dataInici.getAny() + ";" +
+               periodeVisualitzacio + ";" +
+               enllac;
     }
 
     @Override
