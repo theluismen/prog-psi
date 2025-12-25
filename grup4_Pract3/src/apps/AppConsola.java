@@ -1,6 +1,6 @@
 /**
  * Autor(@s):   Ainara Sofia Cabrera Robles
-                Ikram Kheira Hallouz Safa
+                Ikram Hallouz Safa
                 Aesha Naz Mahmood Bibi
                 Alexandra Núñez González
  * Descripción:
@@ -17,12 +17,11 @@ import javax.xml.bind.ValidationException;
 import java.io.*;
 
 
-// Imports de les teves classes
 import llistes.*;
 import inscripcions.*;
 import usuaris.*;
 import activitats.*;
-import enumeraciones.*;
+import enumeracions.*;
 import excepcions.*;
 import extras.Data;
 
@@ -37,7 +36,7 @@ public class AppConsola {
 
 
     // 2. VARIABLES GLOBALS (LLISTES)
-    private static LlistaInscripcio llistaInscripcions;
+    private static LlistaInscripcions llistaInscripcions;
     private static LlistaUsuaris llistaUsuaris;
     private static LlistaActivitats llistaActivitats;
    
@@ -221,7 +220,7 @@ public class AppConsola {
     private static void carregarDadesSistema(){
         System.out.println("Carregant dades...");
         // Inicialització segura per evitar errors si els fitxers no existeixen
-        llistaInscripcions = LlistaInscripcio.carregarFitxer(FITXER_INSCRIPCIONS);
+        llistaInscripcions = LlistaInscripcions.carregarFitxer(FITXER_INSCRIPCIONS);
         llistaUsuaris = new LlistaUsuaris();
         // llistaUsuaris.carregarFitxer(FITXER_USUARIS);
         llistaActivitats = new LlistaActivitats(100);
