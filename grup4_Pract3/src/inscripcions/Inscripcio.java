@@ -13,9 +13,8 @@ import excepcions.ValoracioIncorrecta;
  * Implementa Serializable per poder guardar-se en fitxers binaris (.dat).
  */
 public class Inscripcio implements Serializable {
-
-    private String idUsuari;      // Guardem l'àlies de l'usuari 
-    private String idActivitat;   // Guardem el nom de l'activitat 
+    private final String idUsuari;      // Guardem l'àlies de l'usuari 
+    private final String idActivitat;   // Guardem el nom de l'activitat 
     private Integer valoracio;    // Nota de 0 a 10. Fem servir Integer (objecte) per permetre null
 
     /**
@@ -52,7 +51,7 @@ public class Inscripcio implements Serializable {
      * @param nota Valor entre 0 i 10
      * @throws IllegalArgumentException si la nota no és vàlida
      */
-    public void setValoracio(int nota) {
+    public void setValoracio(int nota) throws ValoracioIncorrecta {
         if (nota < 0 || nota > 10) {
             throw new ValoracioIncorrecta("La valoració ha de ser entre 0 i 10.");
         }
