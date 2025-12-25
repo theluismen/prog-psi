@@ -1,9 +1,13 @@
 /**
  * Autor(@s):   Ainara Sofia Cabrera Robles
-                Ikram Hallouz Safa
+                Ikram Hallouz Safa 
                 Aesha Naz Mahmood Bibi
                 Alexandra Núñez González
- * Descripción:
+ * Descripción: Aplicación de consola para gestionar actividades, usuarios e inscripciones.
+                Ainara: cas 1, 5, 7, 13 i 19
+                Ikram: cas 10, 11, 12, 15 i 16
+                Aesha: cas 3, 6, 9, 17, 18 i 21
+                Alexandra: cas 2, 4, 8, 14, 20 i 22
  */
 package apps;
 
@@ -126,7 +130,7 @@ public class AppConsola {
 
                 // --- GESTIÓ D'INSCRIPCIONS ---
                 case 10:
-                    // TODO: Inscriure's a una activitat
+                    // Inscriure's a una activitat
                     case10();
                     break;
 
@@ -222,9 +226,9 @@ public class AppConsola {
         // Inicialització segura per evitar errors si els fitxers no existeixen
         llistaInscripcions = LlistaInscripcions.carregarFitxer(FITXER_INSCRIPCIONS);
         llistaUsuaris = new LlistaUsuaris();
-        // llistaUsuaris.carregarFitxer(FITXER_USUARIS);
+        llistaUsuaris.carregarFitxer(FITXER_USUARIS);
         llistaActivitats = new LlistaActivitats(100);
-        // llistaActivitats.carregarFitxer(FITXER_ACTIVITATS);
+        llistaActivitats.carregarFitxer(FITXER_ACTIVITATS);
        
         System.out.println("Sistema inicialitzat correctament.");
     }
@@ -520,18 +524,189 @@ public class AppConsola {
     }
 
 
-    private static void case10(){
-       
+    private static void case10() {
+        try {
+            System.out.println("\n--- Inscripció a una activitat ---");
+            
+            // 1. Demanar i validar l'usuari
+            System.out.print("Introdueix l'àlies de l'usuari: ");
+            String alias = teclat.nextLine();
+            Usuari u = llistaUsuaris.cerca(alias);
+
+            if (u == null) {
+                System.out.println("Error: No existeix cap usuari amb l'àlies \"" + alias + "\".");
+                return;
+            }
+
+            // 2. Demanar i validar l'activitat
+            System.out.print("Introdueix el nom de l'activitat: ");
+            String nomAct = teclat.nextLine();
+            Activitat act = llistaActivitats.cerca(nomAct);
+
+            if (act == null) {
+                System.out.println("Error: No existeix cap activitat amb el nom \"" + nomAct + "\".");
+                return;
+            }
+            
+            // 4. Intentar fer la inscripció
+            Inscripcio novaInscripcio = new Inscripcio(alias, nomAct);
+            llistaInscripcions.afegirInscripcio(novaInscripcio);
+
+            // 5. Informar l'usuari del seu estat (Admès o Llista d'Espera)
+            int placesMax = act.getPlacesMaximes();
+            
+            // Si placesMax és MAX_VALUE (Online), sempre entra.
+            if (placesMax == Integer.MAX_VALUE) {
+                System.out.println("Inscripció realitzada amb èxit! (Activitat Online sense límit).");
+            } else {
+                // Comprovem quants n'hi ha ara mateix
+                int totalInscrits = llistaInscripcions.comptarInscripcionsActivitat(nomAct);
+                
+                if (totalInscrits <= placesMax) {
+                    System.out.println("Inscripció realitzada amb èxit! Tens plaça assignada.");
+                } else {
+                    int posicioEspera = totalInscrits - placesMax;
+                    System.out.println("L'activitat està plena. Has quedat inscrit en la LLISTA D'ESPERA.");
+                    System.out.println("La teva posició a la cua és: " + posicioEspera);
+                }
+            }
+
+        } catch (InscripcioDuplicada e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("S'ha produït un error inesperat: " + e.getMessage());
+        }
     }
 
 
-    private static void case11(){
-       
+    private static void case11() {
+        System.out.println("\n--- Consulta d'inscrits i llista d'espera ---");
+        System.out.print("Introdueix el nom de l'activitat: ");
+        String nomAct = teclat.nextLine();
+
+        // 1. Busquem l'activitat per saber les seves places màximes
+        Activitat act = llistaActivitats.cerca(nomAct);
+
+        if (act == null) {
+            System.out.println("Error: No existeix cap activitat amb el nom \"" + nomAct + "\".");
+            return;
+        }
+
+        int placesMax = act.getPlacesMaximes();
+
+        // 2. Recuperem les llistes d'admesos i d'espera
+        // Aquests mètodes retornen objectes LlistaInscripcio (segons els últims canvis)
+        LlistaInscripcio llistaAdmesos = llistaInscripcions.getAdmesos(nomAct, placesMax);
+        LlistaInscripcio llistaEspera = llistaInscripcions.getLlistaEspera(nomAct, placesMax);
+
+        // 3. Mostrem els ADMESOS
+        System.out.println("\n=== USUARIS ADMESOS (" + llistaAdmesos.getNumElements() + " / " + 
+                           (placesMax == Integer.MAX_VALUE ? "Il·limitades" : placesMax) + ") ===");
+        
+        if (llistaAdmesos.getNumElements() == 0) {
+            System.out.println("   (Cap usuari inscrit)");
+        } else {
+            for (int i = 0; i < llistaAdmesos.getNumElements(); i++) {
+                // Recuperem la inscripció i després l'usuari complet per mostrar dades
+                Inscripcio ins = llistaAdmesos.getInscripcioIesima(i);
+                Usuari u = llistaUsuaris.cerca(ins.getIdUsuari());
+                
+                if (u != null) {
+                    // Mostrem l'àlies i el tipus (o toString reduït)
+                    System.out.println("   - " + u.getAlies());
+                } else {
+                    System.out.println("   - " + ins.getIdUsuari() + " (Usuari no trobat a la llista)");
+                }
+            }
+        }
+
+        // 4. Mostrem la LLISTA D'ESPERA
+        System.out.println("\n=== LLISTA D'ESPERA (" + llistaEspera.getNumElements() + ") ===");
+        
+        if (llistaEspera.getNumElements() == 0) {
+            System.out.println("   (La llista d'espera és buida)");
+        } else {
+            for (int i = 0; i < llistaEspera.getNumElements(); i++) {
+                Inscripcio ins = llistaEspera.getInscripcioIesima(i);
+                Usuari u = llistaUsuaris.cerca(ins.getIdUsuari());
+
+                // Mostrem la posició (i+1) perquè és una cua ordenada
+                if (u != null) {
+                    System.out.println("   " + (i + 1) + ". " + u.getAlies());
+                } else {
+                    System.out.println("   " + (i + 1) + ". " + ins.getIdUsuari());
+                }
+            }
+        }
     }
 
 
-    private static void case12(){
-       
+    private static void case12() {
+        System.out.println("\n--- Cancel·lar inscripció (Eliminar usuari d'una activitat) ---");
+
+        // 1. Demanar l'usuari
+        System.out.print("Introdueix l'àlies de l'usuari: ");
+        String alias = teclat.nextLine();
+        Usuari u = llistaUsuaris.cerca(alias);
+
+        if (u == null) {
+            System.out.println("Error: No existeix cap usuari amb l'àlies \"" + alias + "\".");
+            return;
+        }
+
+        // 2. Demanar l'activitat
+        System.out.print("Introdueix el nom de l'activitat: ");
+        String nomAct = teclat.nextLine();
+        Activitat act = llistaActivitats.cerca(nomAct);
+
+        if (act == null) {
+            System.out.println("Error: No existeix cap activitat amb el nom \"" + nomAct + "\".");
+            return;
+        }
+
+        try {
+            // 3. Preparació per gestionar la Llista d'Espera (Requisit PDF)
+            // Abans d'esborrar, mirem si hi ha algú esperant que pugui entrar.
+            int placesMax = act.getPlacesMaximes();
+            String candidatEntrar = null;
+
+            // Si hi ha llista d'espera, el primer de la cua és el candidat
+            if (llistaInscripcions.getNumEnEspera(nomAct, placesMax) > 0) {
+                LlistaInscripcio espera = llistaInscripcions.getLlistaEspera(nomAct, placesMax);
+                // El primer de la llista d'espera (posició 0)
+                candidatEntrar = espera.getInscripcioIesima(0).getIdUsuari();
+            }
+
+            // 4. ELIMINACIÓ
+            llistaInscripcions.eliminarInscripcio(alias, nomAct);
+            System.out.println("S'ha eliminat la inscripció correctament.");
+
+            // 5. Comprovació post-eliminació (Gestió automàtica de la cua)
+            // Si teníem un candidat i ara resulta que està a la llista d'ADMESOS, ho notifiquem.
+            if (candidatEntrar != null) {
+                // Obtenim la nova llista d'admesos
+                LlistaInscripcio admesos = llistaInscripcions.getAdmesos(nomAct, placesMax);
+                boolean haEntrat = false;
+                
+                // Busquem si el candidat ara està admès
+                for (int i = 0; i < admesos.getNumElements(); i++) {
+                    if (admesos.getInscripcioIesima(i).getIdUsuari().equals(candidatEntrar)) {
+                        haEntrat = true;
+                        break;
+                    }
+                }
+
+                if (haEntrat) {
+                    System.out.println("AVÍS AUTOMÀTIC: En alliberar-se una plaça, l'usuari de la llista d'espera \"" 
+                                       + candidatEntrar + "\" ha passat a estar ADMÈS.");
+                }
+            }
+
+        } catch (InscripcioNoTrobada e) {
+            System.out.println("Error: Aquest usuari no estava inscrit a l'activitat.");
+        } catch (Exception e) {
+            System.out.println("S'ha produït un error inesperat: " + e.getMessage());
+        }
     }
 
 
