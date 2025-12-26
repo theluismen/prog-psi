@@ -5,7 +5,7 @@ import llistes.LlistaInscripcions;
 import excepcions.InscripcioDuplicada;
 import excepcions.InscripcioNoTrobada;
 
-public class UsaLlistaInscripcio {
+public class UsaLlistaInscripcions {
     public static void main(String[] args) {
         System.out.println("-------------------------------------------------");
         System.out.println(" INICI TEST LLISTA INSCRIPCIONS (AMB OBJECTES LLISTA)");
