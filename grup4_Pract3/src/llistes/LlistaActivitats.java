@@ -205,7 +205,7 @@ public class LlistaActivitats {        //falta crear llista
      * @param nomFichero    Nombre del fichero a leer.
      * @throws IOException
      */
-    public void fromCSV(String nomFichero) throws IOException{
+    public void carregarFitxer(String nomFichero) throws IOException{
         BufferedReader archivo = null;
         String linea;   //Variable almacena cada linea leida del fichero
         int nLinea = 1; //Contador de line apara indicar el error
@@ -374,4 +374,6 @@ public class LlistaActivitats {        //falta crear llista
         }
         this.llista = aux;
     }
+    
+
 }
