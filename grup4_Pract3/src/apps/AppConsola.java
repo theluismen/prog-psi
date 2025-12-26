@@ -14,10 +14,6 @@ package apps;
 
 import java.util.Scanner;
 
-
-import javax.xml.bind.ValidationException;
-
-
 import java.io.*;
 
 
@@ -49,7 +45,7 @@ public class AppConsola {
     private static Data dataActual;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ValorInexistent {
        
         // --- INICIALITZACIÓ ---
         boolean sortir = false;
@@ -221,7 +217,7 @@ public class AppConsola {
     // MÈTODES AUXILIARS BÀSICS
 
 
-    private static void carregarDadesSistema(){
+    private static void carregarDadesSistema() throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat {
         System.out.println("Carregant dades...");
         // Inicialització segura per evitar errors si els fitxers no existeixen
         llistaInscripcions = LlistaInscripcions.carregarFitxer(FITXER_INSCRIPCIONS);
@@ -1027,9 +1023,10 @@ public class AppConsola {
         boolean res = false;
         String aux;
         int op;
-        LlistaUsuaris llista = new LlistaUsuaris();
+        LlistaUsuaris llista;
 
         while (!res){
+
             System.out.println("\nVols mostrar tots els usuaris? (S/N): ");
             aux = teclat.nextLine();
 
@@ -1038,26 +1035,41 @@ public class AppConsola {
                 res = true;
 
             }else if (aux.equalsIgnoreCase("N")){
-                while (!res){
+                
+                boolean opCorrecta = false;
+                Collectius col = null;
+
+                while (!opCorrecta) {
+                
                     System.out.println("De quin colectiu vols veure els usuaris?");
                     System.out.println("\t(opció 1: PDI)\n\t(opció 2: PTGAS)\n\t(opció 3: Estudiant)");
                     op = llegirEnter();
 
-                    if (op == 1){
-                        llista = llistaUsuaris.tipusLlista("PDI");
-                        res = true;
-                    }else if (op == 2){
-                        llista = llistaUsuaris.tipusLlista("PTGAS");
-                        res = true;
-                    }else if (op == 3){
-                        llista = llistaUsuaris.tipusLlista("Estudiant");
-                        res = true;
-                    }else{
-                        System.out.println("L'opció introduida no existeix, prova una diferent");
+                    switch (op) {
+                        case 1:
+                            col = Collectius.PDI;
+                            opCorrecta = true;
+                            break;
+
+                        case 2:
+                            col = Collectius.PTGAS;
+                            opCorrecta = true;
+                            break;
+
+                     
+                        case 3:
+                            col = Collectius.ESTUDIANT;
+                            opCorrecta = true;
+                            break;
+
+                        default:
+                            System.out.println("L'opció introduïda no existeix, prova una altra.");
                     }
                 }
+                
+                llista = llistaUsuaris.tipusLlista(col);
                 System.out.println(llista);
-
+                res = true;
             }else{
                 System.out.println("L'opció introduida no es valida, escull una diferent");
             }
@@ -1066,7 +1078,7 @@ public class AppConsola {
 
 
     //metodo para pedir una fecha y comprobar que sea correcta
-    private static Data demanarData(){
+    private static Data demanarData() throws ValorInexistent {
         boolean res = false;
         int diaAux, mesAux, anyAux;
         Data aux = null;
@@ -1120,12 +1132,13 @@ public class AppConsola {
 
 
     //metodo para pedir el dia y la hora de la actividad
-    private static Data demanarDiaYHora(){
+    private static Data demanarDiaYHora() {
         boolean res = false;
         int dia, mes, any, hora, min;
         Data data = null;
        
         System.out.println("\nEscull l'horari setmanal de l'activitat i el primer dia que es farà");
+        
         while (!res){
             System.out.println("Dia inici de l'activitat?");
             dia = llegirEnter();
@@ -1139,18 +1152,16 @@ public class AppConsola {
             min = llegirEnter();
 
 
-        try{
+            try {
                 data = new Data(dia, mes, any, hora, min);
                 res = true;
-            }catch(ValorInexistent e){
+            }catch (ValorInexistent e){
                 System.out.println("La data o l'hora no existeixen, proba amb una altra\n");
             }
    
         }
 
-
         return data;
     }
-
 
 }

@@ -5,7 +5,7 @@
 
 package activitats;
 
-import enumeraciones.Collectius;
+import enumeracions.Collectius;
 import excepcions.*;
 import extras.*;
 
@@ -89,7 +89,7 @@ public class ActivitatUnDia extends Activitat{
      * @return minuto de la actividad.
      */
     public int getMinuto(){
-        return dataActivitatIhora.getMinutos();
+        return dataActivitatIhora.getMinuts();
     }
 
     /**
@@ -216,7 +216,7 @@ public class ActivitatUnDia extends Activitat{
             "\tData d'inici de període de l'inscripció: " + dataIniciInscripcio.getDia() + "/" + dataIniciInscripcio.getMes() + "/" + dataIniciInscripcio.getAny() + "\n" +
             "\tData de fi de període de l'inscripció: " + dataFiInscripcio.getDia() + "/" + dataFiInscripcio.getMes() + "/" + dataFiInscripcio.getAny() + "\n" +
             "\tData: " + dataActivitatIhora.getDia() + "/" + dataActivitatIhora.getMes() + "/" + dataActivitatIhora.getAny() + 
-            " a les " + String.format("%02d", dataActivitatIhora.getHora()) + ":" + String.format("%02d", dataActivitatIhora.getMinutos()) + "\n" + 
+            " a les " + String.format("%02d", dataActivitatIhora.getHora()) + ":" + String.format("%02d", dataActivitatIhora.getMinuts()) + "\n" + 
             "\tDurada: " + String.format("%02d", horaDurada) +  ":" + String.format("%02d", minutosDurada) + "\n" +
             "\tCiutat: " + ciutat + "\n" +
             "\tPlaces disponibles: " + places + "\n" +
@@ -243,7 +243,7 @@ public class ActivitatUnDia extends Activitat{
                this.dataActivitatIhora.getMes() + ";" +
                this.dataActivitatIhora.getAny() + ";" +
                this.dataActivitatIhora.getHora() + ";" +
-               this.dataActivitatIhora.getMinutos() + ";" +
+               this.dataActivitatIhora.getMinuts() + ";" +
                this.horaDurada + ";" +
                this.minutosDurada + ";" +
                this.places + ";" +

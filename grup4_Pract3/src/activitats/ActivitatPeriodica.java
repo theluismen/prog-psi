@@ -12,7 +12,7 @@
 package activitats;
 
 
-import enumeraciones.*;
+import enumeracions.*;
 import excepcions.*;
 import extras.*;
 
@@ -265,7 +265,7 @@ public class ActivitatPeriodica extends Activitat {
      * @param nouDataHoraIni
      */
     public void setDataIni(Data nouDataHoraIni) throws ValorInexistent {    
-        nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinutos());
+        nouDataHoraIni.setHora(this.dataHoraIni.getHora(), this.dataHoraIni.getMinuts());
         this.dataHoraIni = nouDataHoraIni;
         
     }
@@ -290,13 +290,13 @@ public class ActivitatPeriodica extends Activitat {
      * @return String con el horario
      */
     public String getHorari(){
-        String aux = "Horari: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinutos()+
+        String aux = "Horari: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinuts()+
         " a ";
 
 
         //tratar excepcion hora no existe
         int hora = (int)(this.durada) + this.dataHoraIni.getHora();
-        int minutos = (int)((this.durada - hora) * 60) + this.dataHoraIni.getMinutos();
+        int minutos = (int)((this.durada - hora) * 60) + this.dataHoraIni.getMinuts();
         aux = aux + hora+":"+minutos+" pm";
 
 
@@ -389,7 +389,7 @@ public class ActivitatPeriodica extends Activitat {
             this.dataHoraIni.getMes()+";"+
             this.dataHoraIni.getAny()+";"+
             this.dataHoraIni.getHora()+";"+
-            this.dataHoraIni.getMinutos()+";"+
+            this.dataHoraIni.getMinuts()+";"+
             this.setmanes+";"+
             this.places+";"+
             this.preu+";"+

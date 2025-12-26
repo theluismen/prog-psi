@@ -1,4 +1,7 @@
 package extras;
+
+import excepcions.ValorInexistent;
+
 /**
  * Classe per guardar dates.
  *
@@ -12,7 +15,7 @@ public class Data {
     private int mes;
     private int any;
     private int hora;
-    private int minutos;
+    private int minuts;
 
 
 	/**
@@ -21,15 +24,15 @@ public class Data {
 	 * @param mes
 	 * @param any
 	 */
-	public Data(int dia, int mes, int any){
+	public Data(int dia, int mes, int any) throws ValorInexistent {
 		if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
 			hora = 0;
-			minutos = 0;
+			minuts = 0;
         } else {
-            //lanzar excepcion
+            throw new ValorInexistent("Data incorrecta");
         }
 	}
 
@@ -41,18 +44,18 @@ public class Data {
      * @param mes
      * @param any
      */
-    public Data(int dia, int mes, int any, int hora, int minutos) {
+    public Data(int dia, int mes, int any, int hora, int minuts) throws ValorInexistent {
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         } else {
-            //lanzar excepcion
+            throw new ValorInexistent("Data o hora incorrecta");
         }
 
-        if (horaExisteix(hora, minutos)){
+        if (horaExisteix(hora, minuts)){
 			this.hora = hora;
-			this.minutos = minutos;
+			this.minuts = minuts;
 		}
     }
 
@@ -95,8 +98,8 @@ public class Data {
      * Getter
      * @return minutos de la hora de la data
      */
-    public int getMinutos() {
-        return minutos;
+    public int getMinuts() {
+        return minuts;
     }
 
 
@@ -125,10 +128,10 @@ public class Data {
      * @param hora
      * @param minutos
      */
-    public void setHora(int hora, int minutos) {
-        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una data vàlida
+    public void setHora(int hora, int minuts) {
+        if (horaExisteix(hora, minuts)) { // ens asegurem que hi ha una data vàlida
             this.hora = hora;
-			this.minutos = minutos;
+			this.minuts = minuts;
         }
 		else{
 			//lanzar excepcion
@@ -145,6 +148,7 @@ public class Data {
         if (this.dia == data.getDia() && this.mes == data.getMes() && this.any == data.getAny()) {
             return true;
         }
+        
         return false;
     }
 
@@ -154,12 +158,7 @@ public class Data {
      * * @return la data del dia seguent
      */
     public Data diaSeguent() {
-        Data novaData=new Data(dia, mes, any, hora, minutos);
-
-
-        // també podria haver-se fet de la següent forma:
-        // Data novaData=this.copia();
-
+        Data novaData = this.copia();
 
         novaData.dia++;
         if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
@@ -205,11 +204,11 @@ public class Data {
      *         la instància sobre la que es crida el mètode es retorna el número de
      *         dies. Si la data que es rep per paràmetre és inferior es retorna -1.
      */
-    public int numDiesAData(Data data) { // compta el nombre de dies entre dos dates
+    public int numDiesAData(Data data) throws ValorInexistent { // compta el nombre de dies entre dos dates
         Data dataTemp;
         int contador;
         // és necessari una nova instancia per no modificar la data actual
-        dataTemp = new Data(dia, mes, any, hora, minutos);
+        dataTemp = new Data(dia, mes, any, hora, minuts);
         if (dataTemp.esDataInferiorOigual(data)) {
             contador = 0;
             // la data rebuda és major que l'actual
@@ -265,8 +264,9 @@ public class Data {
      * Mètode que transforma el contingut d'un objecte en una cadena de caracters per ser
      * mostrat per pantalla
      */
+    @Override
     public String toString() {
-        return("\tDATA => dia "+dia+" mes "+mes+" any "+any+" hora "+hora+":"+minutos);
+        return("\tDATA => dia "+dia+" mes "+mes+" any "+any+" hora "+hora+":"+minuts);
     }
 
 
@@ -275,7 +275,12 @@ public class Data {
      * @return un nou objecte amb el mateix contingut
      */
     public Data copia() {
-        return new Data(dia, mes, any, hora, minutos);
+        try {
+            return new Data(dia, mes, any, hora, minuts);
+        } catch (ValorInexistent e) {
+            // No hauria de passar mai
+            return null;
+        }
     }
 
 
@@ -285,7 +290,7 @@ public class Data {
 	 * @param dias
 	 * @return nueva instancia con la fecha actual mas los dias pasados
 	 */
-	public Data dataPlusDies(int dias){
+	public Data dataPlusDies(int dias) {
 		Data res = this.copia();
 		
 		for (int i = 0; i < dias; i++){
@@ -360,7 +365,7 @@ public class Data {
     }
 
     public boolean teHora() {
-        return hora >= 0 && minutos >= 0;
+        return hora >= 0 && minuts >= 0;
     }
 
     /**
@@ -405,11 +410,11 @@ public class Data {
                 return false;
             }
 
-            if (this.minutos < altra.minutos) {
+            if (this.minuts < altra.minuts) {
                 return true;
             }
 
-            if (this.minutos > altra.minutos) {
+            if (this.minuts > altra.minuts) {
                 return false;
             }
         } return false; // són iguals o aquesta no és inferior

@@ -7,13 +7,14 @@
 
 package llistes;
 
-import enumeraciones.*;
 import excepcions.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import enumeracions.*;
 import usuaris.*;
 
 public class LlistaUsuaris {
@@ -153,7 +154,7 @@ public class LlistaUsuaris {
      * @throws CollectiuDesconegut excepcio si el col·lectiu no és reconegut
      * @throws UsuariDuplicat excepcio si un àlies ja existeix
      */
-    public void carregaFitxer(String nomFitxer) throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat  {
+    public void carregarFitxer(String nomFitxer) throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat  {
 
         try (BufferedReader br = new BufferedReader(new FileReader(nomFitxer))) {
             String linia;
