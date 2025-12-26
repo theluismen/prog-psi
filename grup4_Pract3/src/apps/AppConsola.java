@@ -152,11 +152,13 @@ public class AppConsola {
         System.out.println("3. Consultar les activitats en període d'inscripció | 4. Consultar les activitats amb clase avui");
         System.out.println("5.  | 6. Consultar les activitats amb places disponibles");
         System.out.println("7.  | 8. Buscar la informació d'un usuari");
-        System.out.println("9.  | 10. Inscriure");
+        System.out.println("9. Consultar les activitats on està apuntat un usuari ");
+        System.out.println("10. Inscriure"); 
         System.out.println("11. | 12. ");
         System.out.println("13. Afegir activitat d'un dia | 14. Afegir activitat periodica");
         System.out.println("15. | 16. ");
-        System.out.println("17. | 18. ");
+        System.out.println("17. Consultar valoracions d'activitats acabades ");
+        System.out.println("18. Consultar valoracions fetes per un usuari"); 
         System.out.println("19. | 20. Consultar l'usuari més actiu");
         System.out.println("21. | 22. Sortir");
         System.out.print("Opció: ");
