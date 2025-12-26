@@ -21,7 +21,6 @@ import llistes.*;
 import inscripcions.*;
 import usuaris.*;
 import activitats.*;
-import enumeracions.*;
 import excepcions.*;
 import extras.Data;
 
@@ -41,7 +40,7 @@ public class AppConsola {
     private static LlistaActivitats llistaActivitats;
    
     // Eines globals
-    private static Scanner teclat = new Scanner(System.in);
+    private static final Scanner teclat = new Scanner(System.in);
     private static Data dataActual;
 
 
@@ -58,7 +57,11 @@ public class AppConsola {
 
 
         // --- CÀRREGA DE DADES ---
-        carregarDadesSistema();
+        try {
+            carregarDadesSistema();
+        } catch (IOException | FormatInvalid | CollectiuDesconegut | UsuariDuplicat e) {
+            System.out.println("Error carregant dades del sistema: " + e.getMessage());
+        }
 
 
         // --- BUCLE PRINCIPAL ---
@@ -66,147 +69,60 @@ public class AppConsola {
             mostrarMenu();
             opcio = llegirEnter();
 
-
             switch (opcio) {
-                // --- GESTIÓ BÀSICA ---
-                case 1:
-                    // Indicar/Canviar la data del sistema
-                    case1();
-                    break;
-
-
-                case 2:
-                    // Mostrar les dades de les llistes
-                    case2();
-                    break;
-
-
-                // --- CONSULTES ---
-                case 3:
-                    // Activitats en període d'inscripció amb places disponibles
-                    case3();
-                    break;
-
-
-                case 4:
-                    // Activitats que tenen classe AVUI
-                    case4();
-                    break;
-
-
-                case 5:
-                    // Activitats actives AVUI (dins període)
-                    case5();
-                    break;
-
-
-                case 6:
-                    // Activitats amb places disponibles (qualsevol data)
-                    case6();
-                    break;
-
-
-                case 7:
-                    // Detall d'una activitat pel seu nom
-                    case7();
-                    break;
-
-
-                case 8:
-                    // Detall d'un usuari pel seu àlies
-                    case8();
-                    break;
-
-
-                case 9:
-                    // TODO: Activitats on està apuntat un usuari
-                    case9();
-                    break;
-
-
-                // --- GESTIÓ D'INSCRIPCIONS ---
-                case 10:
-                    // Inscriure's a una activitat
-                    case10();
-                    break;
-
-
-                case 11:
-                    // TODO: Mostrar usuaris apuntats a una activitat i llista d'espera
-                    case11();
-                    break;
-
-
-                case 12:
-                    // TODO: Eliminar un usuari d'una activitat
-                    case12();
-                    break;
-
-
-                // --- ALTES D'ACTIVITATS ---
-                case 13:
-                    // TODO: Afegir nova activitat d'un dia
-                    case13();
-                    break;
-
-
-                case 14:
-                    // Afegir nova activitat periòdica
-                    case14();
-                    break;
-
-
-                case 15:
-                    // TODO: Afegir nova activitat online
-                    case15();
-                    break;
-
-
-                // --- VALORACIONS I ESTADÍSTIQUES ---
-                case 16:
-                    // TODO: Valorar una activitat
-                    case16();
-                    break;
-
-
-                case 17:
-                    // TODO: Resum de valoracions d'activitats acabades
-                    case17();
-                    break;
-
-
-                case 18:
-                    // TODO: Resum valoracions fetes per un usuari
-                    case18();
-                    break;
-
-
-                case 19:
-                    // TODO: Mitjana valoracions per col·lectiu
-                    case19();
-                    break;
-
-
-                case 20:
-                    // Usuari més actiu d'un col·lectiu
-                    case20();
-                    break;
-
-
-                // --- MANTENIMENT ---
-                case 21:
-                    // TODO: Donar de baixa activitats amb poca participació
-                    case21();
-                    break;
-
-
-                // --- SORTIDA ---
-                case 22:
-                    sortir = true;
-                    case22();     // --- TANCAMENT I GUARDAT ---
-                    break;
-
-
+            // --- GESTIÓ BÀSICA ---
+                             
+                // Indicar/Canviar la data del sistema
+                case 1:  case1();  break;
+                // Mostrar les dades de les llistes
+                case 2:  case2();  break;
+            // --- CONSULTES ---
+                // Activitats en període d'inscripció amb places disponibles
+                case 3:  case3();  break;
+                // Activitats que tenen classe AVUI
+                case 4:  case4();  break;
+                // Activitats actives AVUI (dins període)
+                case 5:  case5();  break;
+                // Activitats amb places disponibles (qualsevol data)
+                case 6:  case6();  break;
+                // Detall d'una activitat pel seu nom
+                case 7:  case7();  break;
+                // Detall d'un usuari pel seu àlies
+                case 8:  case8();  break;
+                // TODO: Activitats on està apuntat un usuari
+                case 9:  case9();  break;
+            // --- GESTIÓ D'INSCRIPCIONS ---
+                // Inscriure's a una activitat
+                case 10:  case10();  break;
+                // TODO: Mostrar usuaris apuntats a una activitat i llista d'espera
+                case 11:  case11();  break;
+                // TODO: Eliminar un usuari d'una activitat
+                case 12:  case12();  break;
+            // --- ALTES D'ACTIVITATS ---
+                // TODO: Afegir nova activitat d'un dia
+                case 13:  case13();  break;
+                // Afegir nova activitat periòdica
+                case 14:  case14();  break;
+                // TODO: Afegir nova activitat online
+                case 15:  case15();  break;
+            // --- VALORACIONS I ESTADÍSTIQUES ---
+                // TODO: Valorar una activitat
+                case 16:  case16();  break;
+                // TODO: Resum de valoracions d'activitats acabades
+                case 17:  case17();  break;
+                // TODO: Resum valoracions fetes per un usuari
+                case 18:  case18();  break;
+                // TODO: Mitjana valoracions per col·lectiu
+                case 19:  case19();  break;
+                // Usuari més actiu d'un col·lectiu
+                case 20:  case20();  break;
+            // --- MANTENIMENT ---
+                // TODO: Donar de baixa activitats amb poca participació
+                case 21:  case21();  break;
+            // --- SORTIDA ---
+                // --- TANCAMENT I GUARDAT ---
+                case 22:  sortir = true;  case22();  break;
+                
                 default:
                     System.out.println("Opció no vàlida.");
             }
@@ -488,29 +404,30 @@ public class AppConsola {
     }
 
 
-    private static void case9(){
+    private static void case9() {
         System.out.println("\n--- Activitats on està apuntat un usuari ---");
         System.out.println("Introdueix l'àlies de l'usuari: ");
 
         String alies = teclat.nextLine();
 
-        Usuari u = llistaUsuaris(cerca(alies));
+        Usuari u = llistaUsuaris.cerca(alies);
 
         if (u == null) {
             System.out.println("No existeix cap usuari amb aquest àlies. ");
             return;
         }
 
-        Inscripcio[] ins = llistaInscripcions.getInscripcionsUsuari(alies);
+        LlistaInscripcions ins = llistaInscripcions.getInscripcionsUsuari(alies);
 
-        if(ins.length == 0) {
+        if(ins.getNumElements() == 0) {
             System.out.println("Aquest usuari no està inscrit a cap activitat.");
             return;
         }
 
+        Activitat act = null;
         System.out.println("\nActivitats on està inscrit" + alies + ":");
-        for (int i = 0; i < ins.length; i++) {
-            Activitat act = llistaActivitats.cerca(ins[i].getIdActivitat());
+        for (int i = 0; i < ins.getNumElements(); i++) {
+            act = llistaActivitats.cerca(ins.getInscripcioIesima(i).getIdActivitat());
             if(act != null){
                 System.out.println("-" + act.getNom());
             }
@@ -518,6 +435,7 @@ public class AppConsola {
        
 
     }
+       
 
 
     private static void case10() {
@@ -943,27 +861,29 @@ public class AppConsola {
     }
 
 
-    private static void case17(){
+    private static void case17(){  
         boolean hiHa = false;
 
         System.out.println("\n--- Resum valoracions d'activitats acabades ---");
 
         for (int i = 0; i < llistaActivitats.getNumElements(); i++) {
-            Activitat act;
+            Activitat act = null;
             try {
                 act = llistaActivitats.getActivitatIesima(i);
             } catch (ValorInexistent e) {
-                continue;
+                
             }
 
             if (act.getDataFinal().esDataInferiorOigual(dataActual)) {
-                Inscripcio[] ins = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+                LlistaInscripcions llistaIns = llistaInscripcions.getInscripcionsActivitat(act.getNom());
 
                 int suma = 0;
                 int comptador = 0;
 
-                for(int j = 0; j < ins.length; j++) {
-                    if(ins[j].esValorada()) {
+                for(int j = 0; j < llistaIns.getNumElements(); j++) {
+                    Inscripcio ins = llistaIns.getInscripcioIesima(j);
+                    
+                    if(ins.esValorada()) {
                         suma += ins.getValoracio();
                         comptador++;
                     }
@@ -971,7 +891,7 @@ public class AppConsola {
 
                 if (comptador > 0) {
                     double mitjana = (double) suma / comptador;
-                    System.out.println("Activitat: %s | Mitjana: %.2f\n", act.getNom(), mitjana);                
+                    System.out.printf("Activitat: %s | Mitjana: %.2f\n", act.getNom(), mitjana);                
                 } else {
                     System.out.println("Activitat: " + act.getNom() + " | Sense valoracions");
                 }
@@ -986,26 +906,27 @@ public class AppConsola {
        
     }
 
-
-    private static void case18(){
+    private static void case18(){ 
         System.out.println("\n--- Resum de valoracions fetes per un usuari ---");
         System.out.println("Introdueix l'àlies de l'usuari: ");
 
         String alies = teclat.nextLine();
 
-        Usuari u = llistaUsuaris(cerca(alies));
+        Usuari u = llistaUsuaris.cerca(alies);
 
         if (u == null) {
             System.out.println("No existeix cap usuari amb aquest àlies. ");
             return;
         }
 
-        Inscripcio[] ins = llistaInscripcions.getInscripcionsUsuari(alies);
+        LlistaInscripcions ins = llistaInscripcions.getInscripcionsUsuari(alies);
 
         boolean hiHa = false;
-        for(int i = 0; i < ins.length; i++) {
-            if(ins[i].esValorada()) {
-                System.out.println("- Activitat: " + ins[i].getIdActivitat() + " | Valoració: " + ins[i].getValoracio());
+        for(int i = 0; i < ins.getNumElements(); i++) {
+            Inscripcio inscripcio = ins.getInscripcioIesima(i);
+
+            if(inscripcio.esValorada()) {
+                System.out.println("- Activitat: " + inscripcio.getIdActivitat() + " | Valoració: " + inscripcio.getValoracio());
                 hiHa = true;
             }
         }
@@ -1013,6 +934,7 @@ public class AppConsola {
         if(!hiHa) {
             System.out.println("Aquest usuari encara no ha fet cap valoracó.");
         }
+            
     }
 
 
