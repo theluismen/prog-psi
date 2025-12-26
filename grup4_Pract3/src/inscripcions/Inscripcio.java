@@ -13,8 +13,11 @@ import excepcions.ValoracioIncorrecta;
  * Implementa Serializable per poder guardar-se en fitxers binaris (.dat).
  */
 public class Inscripcio implements Serializable {
-    private final String idUsuari;      // Guardem l'àlies de l'usuari 
-    private final String idActivitat;   // Guardem el nom de l'activitat 
+
+    private static final long serialVersionUID = 1L;
+
+    private String idUsuari;      // Guardem l'àlies de l'usuari 
+    private String idActivitat;   // Guardem el nom de l'activitat 
     private Integer valoracio;    // Nota de 0 a 10. Fem servir Integer (objecte) per permetre null
 
     /**
@@ -49,7 +52,7 @@ public class Inscripcio implements Serializable {
     /**
      * Assigna una valoració a l'activitat un cop finalitzada.
      * @param nota Valor entre 0 i 10
-     * @throws IllegalArgumentException si la nota no és vàlida
+     * @throws ValoracioIncorrecta si la nota no és vàlida
      */
     public void setValoracio(int nota) throws ValoracioIncorrecta {
         if (nota < 0 || nota > 10) {
@@ -88,11 +91,5 @@ public class Inscripcio implements Serializable {
     public String toString() {
         String valText = (valoracio == null) ? "Pendent de valoració" : valoracio.toString();
         return "Inscripció [Usuari: " + idUsuari + " | Activitat: " + idActivitat + " | Nota: " + valText + "]";
-    }
-
-    public void metodeQueLanzaExcepcion() throws ValoracioIncorrecta {
-        // ...existing code...
-        throw new ValoracioIncorrecta("La valoració ha de ser entre 0 i 10.");
-        // ...existing code...
     }
 }

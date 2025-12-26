@@ -693,7 +693,7 @@ public class AppConsola {
                 }
 
                 if (haEntrat) {
-                    System.out.println("AVÍS AUTOMÀTIC: En alliberar-se una plaça, l'usuari de la llista d'espera \"" 
+                    System.out.println("En alliberar-se una plaça, l'usuari de la llista d'espera \"" 
                                        + candidatEntrar + "\" ha passat a estar ADMÈS.");
                 }
             }
@@ -701,7 +701,7 @@ public class AppConsola {
         } catch (InscripcioNoTrobada e) {
             System.out.println("Error: Aquest usuari no estava inscrit a l'activitat.");
         } catch (Exception e) {
-            System.out.println("S'ha produït un error inesperat: " + e.getMessage());
+            System.out.println("S'ha produït un error " + e.getMessage());
         }
     }
 
@@ -812,13 +812,134 @@ public class AppConsola {
     }
 
 
-    private static void case15(){
-       
+    private static void case15() {
+        System.out.println("\n--- Afegir nova Activitat Online ---");
+
+        try {
+            // 1. Dades bàsiques
+            System.out.print("Nom de l'activitat: ");
+            String nom = teclat.nextLine();
+
+            // 2. Dates
+            System.out.println(">> Data d'INICI d'inscripcions:");
+            Data dIniInsc = demanarData();
+
+            System.out.println(">> Data de FI d'inscripcions:");
+            Data dFiInsc = demanarData();
+
+            System.out.println(">> Data d'INICI de l'activitat:");
+            Data dIniAct = demanarData();
+
+            // 3. Durada
+            System.out.print("Dies de visualització (durada): ");
+            int dies = llegirEnter();
+
+            // 4. Enllaç (Validació: Sense espais en blanc)
+            String enllac = "";
+            boolean enllacValid = false;
+            while (!enllacValid) {
+                System.out.print("Enllaç (URL) de l'activitat: ");
+                enllac = teclat.nextLine();
+                
+                if (enllac.contains(" ")) {
+                    System.out.println("Error: L'enllaç no pot contenir espais en blanc. Torna-ho a intentar.");
+                } else if (enllac.isEmpty()) {
+                    System.out.println("Error: L'enllaç no pot estar buit.");
+                } else {
+                    enllacValid = true;
+                }
+            }
+
+            // 5. Col·lectiu
+            // Demanem un únic col·lectiu perquè el constructor d'ActivitatOnline accepta només un
+            System.out.print("A quin col·lectiu va dirigida? (ESTUDIANT, PDI, PTGAS): ");
+            String colStr = teclat.nextLine().toUpperCase();
+            Collectius col = Collectius.valueOf(colStr); // Converteix String a Enum
+
+            // 6. Creació i Inserció
+            ActivitatOnline novaAct = new ActivitatOnline(
+                nom, 
+                col, 
+                dIniInsc, 
+                dFiInsc, 
+                dIniAct, 
+                dies, 
+                enllac
+            );
+
+            llistaActivitats.afegir(novaAct);
+            System.out.println("Activitat Online \"" + nom + "\" afegida correctament!");
+
+        } catch (ActivitatDuplicada e) {
+            System.out.println("Error: Ja existeix una activitat amb aquest nom.");
+        } catch (CollectiuDesconegut e) {
+            System.out.println("Error: El col·lectiu indicat no és vàlid.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: Col·lectiu desconegut o dades incorrectes.");
+        } catch (Exception e) {
+            System.out.println("Error inesperat creant l'activitat: " + e.getMessage());
+        }
     }
 
 
-    private static void case16(){
-       
+    private static void case16() {
+        System.out.println("\n--- Valorar una activitat ---");
+
+        // 1. Demanar dades
+        System.out.print("Introdueix l'àlies de l'usuari: ");
+        String alias = teclat.nextLine();
+        Usuari u = llistaUsuaris.cerca(alias);
+
+        if (u == null) {
+            System.out.println("Error: L'usuari no existeix.");
+            return;
+        }
+
+        System.out.print("Introdueix el nom de l'activitat: ");
+        String nomAct = teclat.nextLine();
+        Activitat act = llistaActivitats.cerca(nomAct);
+
+        if (act == null) {
+            System.out.println("Error: L'activitat no existeix.");
+            return;
+        }
+
+        // 2. Comprovar si està inscrit
+        // Fem servir el mètode getInscripcio que retorna l'objecte únic per poder modificar-lo
+        Inscripcio ins = llistaInscripcions.getInscripcio(alias, nomAct);
+
+        if (ins == null) {
+            System.out.println("Error: Aquest usuari no està inscrit a aquesta activitat (o està en llista d'espera).");
+            return;
+        }
+
+        // 3. Comprovar si l'activitat ha acabat
+        // Requisit: "l'activitat ha d'haver acabat" -> dataFinal < dataActual
+        if (!act.getDataFinal().esDataInferior(dataActual)) {
+            System.out.println("Error: No pots valorar l'activitat perquè encara no ha finalitzat.");
+            System.out.println("       Data fi activitat: " + act.getDataFinal());
+            System.out.println("       Data actual sistema: " + dataActual);
+            return;
+        }
+        
+        // Comprovar si ja estava valorada (Opcional, però recomanable)
+        if (ins.esValorada()) {
+            System.out.println("Avís: Aquesta activitat ja té una valoració de: " + ins.getValoracio());
+            System.out.println("Si continues, la sobreescriuràs.");
+        }
+
+        // 4. Demanar i assignar la nota
+        System.out.print("Introdueix la teva valoració (0 - 10): ");
+        int nota = llegirEnter();
+
+        try {
+            ins.setValoracio(nota);
+            System.out.println("Valoració registrada correctament!");
+        } catch (ValoracioIncorrecta e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error inesperat: " + e.getMessage());
+        }
     }
 
 
