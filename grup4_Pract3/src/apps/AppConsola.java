@@ -187,7 +187,12 @@ public class AppConsola {
 
         if(respuesta.equalsIgnoreCase("S")){
             System.out.println("\n\tIntrodueix la nova data: ");
-            dataActual = demanarData();
+            try{
+                dataActual = demanarData();
+            }catch(ValorInexistent e){
+                System.out.println("ERROR" + e.getMessage());
+            }
+            
             System.out.println("\n\tLa nova data actual del systema és: " + dataActual);
 
         }else if(respuesta.equalsIgnoreCase("N")){
