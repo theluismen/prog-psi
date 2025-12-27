@@ -989,7 +989,51 @@ public class AppConsola {
 
 
     private static void case21(){
-       
+       boolean algunaEliminada = false;
+
+        System.out.println("\n--- Donar de baixa activitats ---");
+
+        // recorrem de final cap a davant perquè eliminem elements
+        for (int i = llistaActivitats.getNumElements() - 1; i >= 0; i--) {
+
+            Activitat act = null;
+
+            try {
+                act = llistaActivitats.getActivitatReal(i);
+            } catch (ValorInexistent e) {
+                // no hauria de passar, però és correcte
+            }
+
+            int inscrits = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+
+            if (act instanceof ActivitatOnline) {
+
+                if (inscrits < 20) {
+                    llistaActivitats.eliminar(act.getNom());
+                    System.out.println("Eliminada activitat online: " + act.getNom());
+                    algunaEliminada = true;
+                }
+
+            // ALTRES ACTIVITATS
+            } else {
+
+                if (act.getDataFiInscripcio().esDataInferior(dataActual)) {
+
+                    int placesMax = act.getPlacesMaximes();
+                    double percentatge = (double) inscrits / placesMax;
+
+                    if (percentatge < 0.10) {
+                        llistaActivitats.eliminar(act.getNom());
+                        System.out.println("Eliminada activitat: " + act.getNom());
+                        algunaEliminada = true;
+                    }
+                }
+            }
+        }
+
+        if (!algunaEliminada) {
+            System.out.println("No hi ha activitats per donar de baixa");
+        }
     }
 
 
