@@ -25,7 +25,7 @@ public class ActivitatOnline extends Activitat {
      * @param periodeVisualitzacio Durada en dies
      * @param enllac URL de l'activitat
      */
-    public ActivitatOnline(String nom, Collectius collectiu, Data dataIniInscripcio, 
+    public ActivitatOnline(String nom, Collectius[] collectiu, Data dataIniInscripcio, 
                            Data dataFiInscripcio, Data dataInici, 
                            int periodeVisualitzacio, String enllac) throws CollectiuDesconegut { // <--- 2. AFEGIR THROWS
         
@@ -58,11 +58,6 @@ public class ActivitatOnline extends Activitat {
 
 
     // --- Implementació dels mètodes abstractes del pare ---
-
-    @Override
-    public String tipusActivitat() {
-        return "Online";
-    }
 
     /**
      * Metode que retorna quantes places té una activitat -
@@ -126,10 +121,13 @@ public class ActivitatOnline extends Activitat {
         // Construïm la part dels col·lectius separats per comes dins del CSV
         String col = "";
         if (super.collectiu != null) {
-            col = super.collectiu.name(); 
+            for (int i = 0; i < super.collectiu.length; i++){
+                col += super.collectiu[i].name();
+            }
         }
+           
 
-        return tipusActivitat() + ";" + 
+        return "Online;" + 
                super.nom + ";" + 
                col + ";" +
                super.dataIniciInscripcio.getDia() + ";" + super.dataIniciInscripcio.getMes() + ";" + super.dataIniciInscripcio.getAny() + ";" +

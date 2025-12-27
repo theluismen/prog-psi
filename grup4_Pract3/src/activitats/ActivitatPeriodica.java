@@ -8,7 +8,6 @@
  */
 //falta añadir todas las excepciones y cambiar los print por excepciones
 
-
 package activitats;
 
 
@@ -28,7 +27,6 @@ public class ActivitatPeriodica extends Activitat {
     private String ciutat;
 
 
-
     /**
      * Metodo constructor. Devolvera errores si un valor no es posible
      * @param nom
@@ -44,11 +42,10 @@ public class ActivitatPeriodica extends Activitat {
      * @param centre lugar en que se lleva a cabo la actividad
      * @param ciutat
      * @throws ValorInexistent
-     * @throws CollectiuDesconegut
      */
-    public ActivitatPeriodica (String nom, Collectius collectiu, Data dataIniInscripcio, Data dataFiInscripcio,
+    public ActivitatPeriodica (String nom, Collectius[] collectiu, Data dataIniInscripcio, Data dataFiInscripcio,
                                 DiaSetmana dia, double durada, Data diaYHoraInicio, int setmanes,
-                                int places, double preu, String centre, String ciutat)throws ValorInexistent, CollectiuDesconegut{
+                                int places, double preu, String centre, String ciutat)throws ValorInexistent{
        
         super(nom, collectiu, dataIniInscripcio, dataFiInscripcio);
         this.dia = dia;
@@ -65,7 +62,7 @@ public class ActivitatPeriodica extends Activitat {
        
         //el preu de l'activitat no pot ser negatiu
         if (preu >= 0){
-            this.preu = preu;       //controlar excepciones
+            this.preu = preu;
         }else{
             throw new ValorInexistent("Preu negatiu");
         }
@@ -76,7 +73,6 @@ public class ActivitatPeriodica extends Activitat {
         }else{
             throw new ValorInexistent("Places");
         }
-
 
         //la duración de una actividad no puede ser 0 o inferior
         if (durada > 0)
@@ -206,7 +202,7 @@ public class ActivitatPeriodica extends Activitat {
     public void setPreu(double nouPreu)throws ValorInexistent{    
         //el preu de l'activitat no pot ser negatiu
         if (nouPreu >= 0){
-            this.preu = nouPreu;       //controlar excepciones
+            this.preu = nouPreu;
         }else{
             throw new ValorInexistent("Preu negatiu");
         }    
@@ -293,12 +289,10 @@ public class ActivitatPeriodica extends Activitat {
         String aux = "Horari: "+this.dia+" de "+this.dataHoraIni.getHora()+":"+this.dataHoraIni.getMinuts()+
         " a ";
 
-
-        //tratar excepcion hora no existe
-        int hora = (int)(this.durada) + this.dataHoraIni.getHora();
+        int hora = (int)(this.durada);
         int minutos = (int)((this.durada - hora) * 60) + this.dataHoraIni.getMinuts();
-        aux = aux + hora+":"+minutos+" pm";
-
+        Data fi = this.dataHoraIni.sumarTemps(hora, minutos);
+        aux = aux + fi.getHora()+":"+fi.getMinuts()+" pm";
 
         return aux;
     }
@@ -317,11 +311,9 @@ public class ActivitatPeriodica extends Activitat {
             return new ActivitatPeriodica(super.nom, super.collectiu, super.dataIniciInscripcio, super.dataFiInscripcio,
             this.dia, this.durada, this.dataHoraIni, this.setmanes, this.places, this.preu, this.centre, this.ciutat);
         }catch(ValorInexistent e){
-
-
-        }catch(CollectiuDesconegut e){
-           
+            System.out.println("ERROR INESPERAT EN COPIA");     //mai hauria de donar aquests errors perque son una copia d'un valor ja comprobat
         }
+        
         return null;
     }
 
@@ -372,8 +364,10 @@ public class ActivitatPeriodica extends Activitat {
         String aux = "Activitat periodica;" + super.nom + ";";
 
         if (super.collectiu != null) {
-            aux += super.collectiu.name(); 
-        } else {
+            for (int i = 0; i < super.collectiu.length; i++){
+                aux += super.collectiu[i].name();
+            }
+        }else {
             aux += ";"; // si no hi ha collectius
         }
 
@@ -396,11 +390,8 @@ public class ActivitatPeriodica extends Activitat {
             this.centre+";"+
             this.ciutat;
 
-
         return aux;
     }
-
-
 
 
 //metodos propios

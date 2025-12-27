@@ -8,12 +8,11 @@ package llistes;
 import activitats.*;
 import enumeracions.Collectius;
 import enumeracions.DiaSetmana;
-import excepcions.ActivitatDuplicada;
-import excepcions.CollectiuDesconegut;
-import excepcions.ValorInexistent;
+import excepcions.*;
 import extras.Data;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -86,17 +85,25 @@ public class LlistaActivitats {        //falta crear llista
      * Método que busca una actividad por el id de esta.
      * @param id Nombre de la actividad
      * @return objeto de esa actividad.
+     * @throws ActivitatDesconeguda
      */
-    public Activitat cerca(String id){
+    public Activitat cerca(String id)throws ActivitatDesconeguda{
         Activitat act = null;
         boolean encontrada = false;
+        int i = 0;
 
-        for(int i = 0; i < nElems && !encontrada; i++){
+        while(i < nElems && !encontrada){
             if(this.llista[i].getNom().equalsIgnoreCase(id)){
                 act = this.llista[i];
                 encontrada = true;
             }
+            i++;
         }
+
+        if (!encontrada){
+            throw new ActivitatDesconeguda(id);
+        }
+
         return act.copia();
     }
 
@@ -151,9 +158,10 @@ public class LlistaActivitats {        //falta crear llista
     /**
      * Metodo que devuelve una nueva lista de actividades con solo las actividades de un tipo
      * @param tipus tipo de actividades de la nueva lista (periodicas, online o de un dia)
-     * @return
+     * @return una llista amb el tipus d'activitat demanada
+     * @throws ActivitatDesconeguda
      */
-    public LlistaActivitats tipusLlista(String tipus){  //tratar excepcion
+    public LlistaActivitats tipusLlista(String tipus)throws ActivitatDesconeguda{
         LlistaActivitats nova = new LlistaActivitats(1);
 
         for (int i = 0; i < this.nElems; i++){
@@ -165,6 +173,8 @@ public class LlistaActivitats {        //falta crear llista
                 coincideix = true;
             } else if (tipus.equalsIgnoreCase("un dia") && this.llista[i] instanceof ActivitatUnDia) {
                 coincideix = true;
+            } else{
+                throw new ActivitatDesconeguda(tipus);
             }
 
             if (coincideix){
@@ -194,6 +204,7 @@ public class LlistaActivitats {        //falta crear llista
             }
         }catch(ActivitatDuplicada e){
             //no puede dar nunca este error porque la lista de la que esta copiando la informacion ya lo ha comprobado
+            System.out.println("ERROR INESPERAT EN CLASEAVUI");
         }
         
         return act;
@@ -223,7 +234,7 @@ public class LlistaActivitats {        //falta crear llista
                 String tipoAct = scanner.next();    //Leo el tipo de actividad.
                 String nom = scanner.next();        //Nombre actividad.
                 String collectiuStr = scanner.next().toUpperCase();
-                Collectius collectiu = Collectius.valueOf(collectiuStr);   
+                Collectius[] collectiu = Collectius.valueOf(collectiuStr);   
 
                 //Fecha de inicio del período de inscripción.
                 int iniciInscripcioDia = scanner.nextInt();         
@@ -322,16 +333,24 @@ public class LlistaActivitats {        //falta crear llista
      * @param fitxer nombre del fichero en el que se guardan los datos
      * @throws IOException
      */
-    public void guardarLlista(String fitxer) throws IOException{       //tratar excepciones (no estan bien tratadas, es solo temporal para probar que funciona)
-        BufferedWriter f = new BufferedWriter(new FileWriter(fitxer));
-        
-        for (int i = 0; i < this.nElems; i++){
-            String linea = this.llista[i].toCSV();
-            f.write(linea);
-            f.newLine();
-        }
+    public void guardarLlista(String fitxer) {
+        try{
+            BufferedWriter f = new BufferedWriter(new FileWriter(fitxer));
 
-        f.close();
+            for (int i = 0; i < this.nElems; i++){
+                String linea = this.llista[i].toCSV();
+                f.write(linea);
+                f.newLine();
+            }
+
+            f.close();
+        }catch(FileNotFoundException e){
+            System.out.println("La referencia del fichero es incorrecta o no existe: "+fitxer);
+            System.out.println(super.toString());
+
+        }catch(IOException e){
+            System.out.println("Ha habido un error en la apertura del fichero" + super.toString());
+        }
     }
 
 
@@ -341,7 +360,7 @@ public class LlistaActivitats {        //falta crear llista
         String aux = "";
         
         for (int i = 0; i < nElems; i++){
-            aux += this.llista[i]+"\n";
+            aux += this.llista[i]+"\n\n";
         }
 
         return aux;

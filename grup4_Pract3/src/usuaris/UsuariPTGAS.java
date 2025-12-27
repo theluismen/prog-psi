@@ -18,8 +18,12 @@ public class UsuariPTGAS extends Usuari{
     }
 
 //getter y setter
-    public String getCampus(){  return campus.getNomCampus();    }
-    public void setCampus(CampusURV nouCampus){     this.campus = nouCampus;    }
+    public String getCampus(){  
+        return campus.getNomCampus();    
+    }
+    public void setCampus(CampusURV nouCampus){     
+        this.campus = nouCampus;    
+    }
 
 
 //metodos abstractos del padre

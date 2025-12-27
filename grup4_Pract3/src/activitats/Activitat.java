@@ -6,14 +6,14 @@
 
 package activitats;
 
-import enumeraciones.*;
+import enumeracions.*;
 import extras.Data;
 
 public abstract class Activitat {
 
     /** Atributs de la classe */
     protected String nom;
-    protected Collectius collectiu;
+    protected Collectius[] collectiu;
     protected Data dataIniciInscripcio;
     protected Data dataFiInscripcio;
 
@@ -25,7 +25,7 @@ public abstract class Activitat {
      * @param dataIniciInscripcio data a partir de la qual l'usuari es pot inscriure
      * @param dataFiInscripcio data límit fins a la qual es permet fer inscripcions
      */
-    public Activitat (String nom, Collectius collectiu, Data dataIniciInscripcio, Data dataFiInscripcio) {
+    public Activitat (String nom, Collectius[] collectiu, Data dataIniciInscripcio, Data dataFiInscripcio) {
         this.nom = nom;
         this.collectiu = collectiu;
         this.dataIniciInscripcio = dataIniciInscripcio;
@@ -48,7 +48,7 @@ public abstract class Activitat {
      * 
      * @return tipus de col·lectius
      */
-    public Collectius getCollectius() {   
+    public Collectius[] getCollectius() {   
         return collectiu;  
         }
 
@@ -145,10 +145,14 @@ public abstract class Activitat {
      */
     @Override
     public String toString() {
-        String info = "Nom: " + nom +
-                  "\nCol·lectiu: " + collectiu.name() +
-                  "\nPeríode inscripció: " + dataIniciInscripcio +
-                  " fins " + dataFiInscripcio + "\n";
+        String info = "Nom: " + nom + "\nCol·lectiu: ";
+                  
+        for (int i = 0; i < this.collectiu.length; i++){
+            info += collectiu[i].name()+", ";
+        }
+
+        info += "\nPeríode inscripció: " + dataIniciInscripcio +
+                " fins " + dataFiInscripcio + "\n";
 
         return info;
     }

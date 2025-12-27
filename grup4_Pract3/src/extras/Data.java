@@ -172,7 +172,6 @@ public class Data {
         return novaData;
     }
 
-
    
     /**
      * FIXAR-SE AMB LA FORMA DIFERENT COM S'HA IMPLEMENTAT EL MÈTODE RESPECTE AL diaSeguent
@@ -192,7 +191,6 @@ public class Data {
             this.dia = diesMes(this.mes, this.any);
         }
     }
-
 
    
     /**
@@ -229,23 +227,22 @@ public class Data {
      * @return
      */
     public boolean esDataInferiorOigual(Data nova) {
-          boolean esInferior;
-          if (any<nova.any) esInferior=true;
-          else if (any>nova.any) esInferior=false;
-          else {
-              // cas anys iguals
-             if (mes<nova.mes) esInferior=true;
-             else if (mes>nova.mes) esInferior=false;
-             else {
-                 // anys i mes iguals
-                 if (dia<=nova.dia) esInferior=true;
-                 else esInferior=false;
-             }      
-          }
-          return esInferior;
+        boolean esInferior;
+        if (any<nova.any) esInferior=true;
+        else if (any>nova.any) esInferior=false;
+        else {
+            // cas anys iguals
+            if (mes<nova.mes) esInferior=true;
+            else if (mes>nova.mes) esInferior=false;
+            else {
+                // anys i mes iguals
+                if (dia<=nova.dia) esInferior=true;
+                else esInferior=false;
+            }      
+        }
+        return esInferior;
+    }
 
-
-      }
    
     /**
      * Mètode que comprova si la data actual correspon a un any de traspas
@@ -419,5 +416,30 @@ public class Data {
             }
         } return false; // són iguals o aquesta no és inferior
     
+    }
+
+
+    /**
+     * Metodo para sumar una cantidad de tiempo a la hora, devuelve una nueva instancia con la hora cambiada
+     * @param hora
+     * @param min
+     * @return nova data
+     */
+    public Data sumarTemps(int hora, int min){
+        Data nova = this.copia();
+
+        nova.minuts = this.minuts + min;
+        if (nova.minuts >= 60){
+            nova.minuts -= 60;
+            nova.hora += 1;
+        }
+
+        nova.hora = this.hora + hora;
+        if (nova.hora >= 24){
+            nova.hora -= 24;
+            nova.dia += 1;
+        }
+
+        return nova;
     }
 }

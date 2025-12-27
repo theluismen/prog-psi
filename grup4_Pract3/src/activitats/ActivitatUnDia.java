@@ -33,7 +33,7 @@ public class ActivitatUnDia extends Activitat{
      * @param ciutat Ciudad de la actividad.
      */
     public ActivitatUnDia(String nom, 
-                          Collectius collectiu, 
+                          Collectius[] collectiu, 
                           Data dataIniciInscripcio, 
                           Data dataFiInscripcio, 
                           Data dataActivitatIhora,
@@ -228,7 +228,9 @@ public class ActivitatUnDia extends Activitat{
         String aux = "Activitat d'un dia;" + super.nom + ";";
 
         if (super.collectiu != null) {
-            aux += super.collectiu.name(); 
+            for (int i = 0; i < super.collectiu.length; i++){
+                aux += super.collectiu[i].name();
+            } 
         } else {
             aux += ";"; // si no hi ha collectius
         }
