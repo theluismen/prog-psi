@@ -635,7 +635,88 @@ public class AppConsola {
 
 
     private static void case13(){
+        String nom, ciutat;
+        Collectius[] collectiu;
+        Data dataIniciInscripcio = null, dataFiInscripcio = null, dataActivitatIhora;
+        double preu;
+        int horaDurada, minutosDurada, places;
+        boolean res = false;
+        ActivitatUnDia act = null;
+
+
+        System.out.println("\nNom de l'activitat?");  
+        nom = teclat.nextLine();
        
+        System.out.println("\nCol·lectius permesos en l'activitat: ");
+        collectiu = demanarColectius();
+
+        System.out.println("\nEscull la data d'inici d'inscripcions:");   
+        dataIniciInscripcio = demanarData();
+
+        System.out.println("\nEscull la data de fi d'inscripcions");   
+        dataFiInscripcio = demanarData();
+       
+        System.out.println("\nEscull la data de l'activitat: ");
+        dataActivitatIhora = demanarDiaYHora();     
+
+        System.out.println("\nHora de durada, si dura 1 hora i 30, indicar 1: ");
+        horaDurada = llegirEnter();     
+
+        System.out.println("\nMinuts de durada, si dura 1 hora i 30, indicar 30: ");
+        minutosDurada = llegirEnter(); 
+
+        System.out.println("\nQuantes places tè?");      
+        places = llegirEnter();
+
+        System.out.println("\nQuin preu tè l'activitat?");     
+        preu = Double.parseDouble(teclat.nextLine().replace(",", "."));
+
+        System.out.println("\nCiutat on es farà l'activitat?");
+        ciutat = teclat.nextLine();
+
+
+        while (!res){
+            try{
+                act = new ActivitatUnDia(nom, 
+                                        collectiu, 
+                                        dataIniciInscripcio, 
+                                        dataFiInscripcio, 
+                                        dataActivitatIhora, 
+                                        horaDurada, 
+                                        minutosDurada, 
+                                        places, 
+                                        preu, 
+                                        ciutat);
+                res = true;
+
+            }catch(ValorInexistent e){
+                System.out.println("Un dels valors es incorrecte."+ e);
+
+
+                System.out.println("Quantes places tè?");
+                places = llegirEnter();
+
+
+                System.out.println("Quin preu tè l'activitat?");
+                preu = Double.parseDouble(teclat.nextLine().replace(",", "."));
+                
+            }catch(CollectiuDesconegut e){
+                System.out.println("ERROR: " + e.getLocalizedMessage());
+
+                System.out.println("\nCol·lectius permesos en l'activitat: ");
+                collectiu = demanarColectius();
+            }
+        }
+        res = false;
+
+        while (!res){
+            try{
+                llistaActivitats.afegir(act);
+                res = true;
+            }catch(ActivitatDuplicada e){
+                System.out.println(e + "\nEscull un nom diferent");
+            }
+        }
     }
 
 
