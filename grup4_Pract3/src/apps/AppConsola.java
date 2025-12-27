@@ -330,9 +330,8 @@ public class AppConsola {
                     actActiva = true;
                 }
 
-            } catch (ValorInexistent e) {
-                
-                System.out.println("ERROR INESPERAT EN CASE5");
+            } catch (ValorInexistent e) {  
+                System.out.println("ERROR: " + e.getMessage());
             }
         }
 
