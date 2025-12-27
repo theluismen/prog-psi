@@ -157,15 +157,27 @@ public class LlistaActivitats implements Llista<Activitat>{        //falta crear
      * @param tipus tipo de actividades de la nueva lista (periodicas, online o de un dia)
      * @return
      */
-    public LlistaActivitats tipusLlista(String tipus){
+    public LlistaActivitats tipusLlista(String tipus){  //tratar excepcion
         LlistaActivitats nova = new LlistaActivitats(1);
 
-        for (int i = 0; i < this.nElems; i++){
-            if (tipus.equalsIgnoreCase(this.llista[i].tipusActivitat())){
+        for (int i = 0; i < this.nElems; i++){//nunca dará este error porque la lista de la que se copian las actividades ya lo ha verificado
+            if (tipus.equalsIgnoreCase("Activitat Periodica")){
                 try{
                     nova.afegir(this.llista[i]);
                 }catch(ActivitatDuplicada e){
-                    //nunca dará este error porque la lista de la que se copian las actividades ya lo ha verificado
+                    System.out.println("ERROR INESPERADO EN TIPUSLLISTA");
+                }
+            }else if(tipus.equalsIgnoreCase("Activitat Online")){
+                try{
+                    nova.afegir(this.llista[i]);
+                }catch(ActivitatDuplicada e){
+                    System.out.println("ERROR INESPERADO EN TIPUSLLISTA");
+                }
+            }else if (tipus.equalsIgnoreCase("Activitat Periodica")){
+                try{
+                    nova.afegir(this.llista[i]);
+                }catch(ActivitatDuplicada e){
+                    System.out.println("ERROR INESPERADO EN TIPUSLLISTA");
                 }
             }
         }

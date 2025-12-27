@@ -151,7 +151,7 @@ public class LlistaInscripcio implements Serializable {
         // 1. Comptem quantes en té per saber la mida de l'array a retornar
         int total = 0;
         for (int i = 0; i < nElems; i++) {
-            if (llista[i].getIdUsuari().equals(idUsuari)) {
+            if (llista[i].getIdUsuari().equalsIgnoreCase(idUsuari)) {
                 total++;
             }
         }
@@ -160,7 +160,7 @@ public class LlistaInscripcio implements Serializable {
         Inscripcio[] resultat = new Inscripcio[total];
         int j = 0;
         for (int i = 0; i < nElems; i++) {
-            if (llista[i].getIdUsuari().equals(idUsuari)) {
+            if (llista[i].getIdUsuari().equalsIgnoreCase(idUsuari)) {
                 resultat[j] = llista[i].copia(); // Fem servir copia() per seguretat
                 j++;
             }

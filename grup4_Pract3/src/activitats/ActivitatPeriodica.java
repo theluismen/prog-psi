@@ -370,7 +370,7 @@ public class ActivitatPeriodica extends Activitat {
      * @return
      */
     public String toCSV(){
-        String aux = this.tipusActivitat() +";"+ super.nom+";";
+        String aux = "Activitat periodica" +";"+ super.nom+";";
 
 
         for (int i = 0; i < (super.collectius.length - 1); i++){    //-1 para evitar que al poner el ultimo colectivo quede una coma al final
@@ -441,16 +441,6 @@ public class ActivitatPeriodica extends Activitat {
         Data dataFi = getDataFinal();
    
         return hoy.esDataInferiorOigual(dataFi) && dataHoraIni.esDataInferiorOigual(hoy);
-    }
-
-    /**
-     * Metode que retorna el tipus d'activitat
-     *
-     * @return una cadena que indica el tipus d'activitat
-     */
-    @Override
-    public String tipusActivitat(){
-        return "Activitat periodica";
     }
 
 
