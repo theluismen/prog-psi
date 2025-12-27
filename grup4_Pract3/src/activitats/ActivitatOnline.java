@@ -24,7 +24,7 @@ public class ActivitatOnline extends Activitat {
      * @param periodeVisualitzacio Durada en dies de l'activitat
      * @param enllac URL de l'activitat
      */
-    public ActivitatOnline(String nom, Collectius collectiu, Data dataIniInscripcio, 
+    public ActivitatOnline(String nom, Collectius[] collectiu, Data dataIniInscripcio, 
                            Data dataFiInscripcio, Data dataInici, 
                            int periodeVisualitzacio, String enllac) { 
         
@@ -159,10 +159,18 @@ public class ActivitatOnline extends Activitat {
      */
     @Override
     public String toCSV() {
+        // Construir la cadena de col·lectius separats per comes
+        String cols = "";
+        for (int i = 0; i < super.collectiu.length; i++) {
+            cols += super.collectiu[i].name();
+            if (i < super.collectiu.length - 1) {
+                cols += ",";
+            }
+        }
         // Accedim directament a super.collectiu (singular) perquè ara és un sol Enum
         return "Online;" + 
                super.nom + ";" + 
-               super.collectiu.name() + ";" + 
+               cols + ";" + 
                super.dataIniciInscripcio.getDia() + ";" + super.dataIniciInscripcio.getMes() + ";" + super.dataIniciInscripcio.getAny() + ";" +
                super.dataFiInscripcio.getDia() + ";" + super.dataFiInscripcio.getMes() + ";" + super.dataFiInscripcio.getAny() + ";" +
                this.dataInici.getDia() + ";" + this.dataInici.getMes() + ";" + this.dataInici.getAny() + ";" +

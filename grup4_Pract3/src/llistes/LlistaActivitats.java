@@ -233,9 +233,15 @@ public class LlistaActivitats {        //falta crear llista
                 //Posiciones comunes para todas las actividades.
                 String tipoAct = scanner.next();    //Leo el tipo de actividad.
                 String nom = scanner.next();        //Nombre actividad.
-                String collectiuStr = scanner.next().toUpperCase();
-                Collectius[] collectiu = Collectius.valueOf(collectiuStr);   
 
+                //Lectura y tratamiento de collectius
+                String collectiusStr = scanner.next();                                              //Lectura de string.
+                String[] strCollectiusSplit = collectiusStr.split(",");                             //Separación de colectivos por comas.
+                Collectius[] collectius = new Collectius[strCollectiusSplit.length];                //Creamos instancia del enum.
+                for(int i = 0; i < strCollectiusSplit.length; i++){                                 //Colocar cada colectivo en array de tipo enum.
+                    collectius[i] = Collectius.valueOf(strCollectiusSplit[i].trim().toUpperCase());
+                }
+                
                 //Fecha de inicio del período de inscripción.
                 int iniciInscripcioDia = scanner.nextInt();         
                 int iniciInscripcioMes = scanner.nextInt();         
@@ -267,7 +273,7 @@ public class LlistaActivitats {        //falta crear llista
                     String ciutat = scanner.next();
 
                     //Creo activitat.
-                    nuevaAct = new ActivitatPeriodica(nom, collectiu, iniciInscripcio, fiInscripcio,
+                    nuevaAct = new ActivitatPeriodica(nom, collectius, iniciInscripcio, fiInscripcio,
                                                             diaSetmana, duracio, diaYHoraInicio, setmanes, 
                                                             places, preu, centre, ciutat);
                         
@@ -286,7 +292,7 @@ public class LlistaActivitats {        //falta crear llista
                     String ciutat = scanner.next();
 
                     //Creo activitat.
-                    nuevaAct = new ActivitatUnDia(nom, collectiu, iniciInscripcio, fiInscripcio, diaYHoraInicio, 
+                    nuevaAct = new ActivitatUnDia(nom, collectius, iniciInscripcio, fiInscripcio, diaYHoraInicio, 
                                                         horaDurada, minutosDurada, places, preu, ciutat);
                         
                 }else if(tipoAct.equalsIgnoreCase("Online")){   //preguntar de unificar nomeclatura
@@ -299,7 +305,7 @@ public class LlistaActivitats {        //falta crear llista
                     String enlace = scanner.next();
                     
                     //Creo activitat.
-                    nuevaAct = new ActivitatOnline(nom, collectiu, iniciInscripcio, fiInscripcio, 
+                    nuevaAct = new ActivitatOnline(nom, collectius, iniciInscripcio, fiInscripcio, 
                                                         diaInicio, periodoVisualizacion, enlace);   
                     
                 }
