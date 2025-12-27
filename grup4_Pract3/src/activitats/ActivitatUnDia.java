@@ -48,13 +48,13 @@ public class ActivitatUnDia extends Activitat{
         this.ciutat = ciutat;
 
         //La hora ha de ser 0 <= hora <= 24.
-        if (horaDurada>=0 && horaDurada <=24){
+        if (horaDurada >= 0 && horaDurada <= 24){
             this.horaDurada = horaDurada;
         }else{
             throw new ValorInexistent("Valor de hora inexistent");
         }
         //Los minutos han de ser 0 < minutos <= 59.
-        if (minutosDurada>=0 && minutosDurada <=24){
+        if (minutosDurada >= 0 && minutosDurada <= 59){
             this.minutosDurada = minutosDurada;
         }else{
             throw new ValorInexistent("Valor de minuts inexistent");
