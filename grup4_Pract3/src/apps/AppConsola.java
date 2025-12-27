@@ -771,7 +771,8 @@ public class AppConsola {
             // 5. Col·lectiu
             // Demanem un únic col·lectiu perquè el constructor d'ActivitatOnline accepta només un
             System.out.print("A quin col·lectiu va dirigida? (ESTUDIANT, PDI, PTGAS): ");
-            Collectius[] col = demanarColectius(); // Demana y converteix String a Enum
+            String colStr = teclat.nextLine().toUpperCase();
+            Collectius col = Collectius.valueOf(colStr);
 
             // 6. Creació i Inserció
             ActivitatOnline novaAct = new ActivitatOnline(nom, col, dIniInsc, dFiInsc, dIniAct, dies, enllac);
@@ -781,8 +782,6 @@ public class AppConsola {
 
         } catch (ActivitatDuplicada e) {
             System.out.println("Error: Ja existeix una activitat amb aquest nom.");
-        } catch (CollectiuDesconegut e) {
-            System.out.println("Error: El col·lectiu indicat no és vàlid.");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: Col·lectiu desconegut o dades incorrectes.");
         } catch (Exception e) {
