@@ -100,7 +100,7 @@ public class AppConsola {
                 // TODO: Eliminar un usuari d'una activitat
                 case 12:  case12();  break;
             // --- ALTES D'ACTIVITATS ---
-                // TODO: Afegir nova activitat d'un dia
+                // Afegir nova activitat d'un dia
                 case 13:  case13();  break;
                 // Afegir nova activitat periòdica
                 case 14:  case14();  break;
