@@ -1,18 +1,18 @@
 package tests;
 
 import inscripcions.Inscripcio;
-import llistes.LlistaInscripcio;
+import llistes.LlistaInscripcions;
 import excepcions.InscripcioDuplicada;
 import excepcions.InscripcioNoTrobada;
 
-public class UsaLlistaInscripcio {
+public class UsaLlistaInscripcions {
     public static void main(String[] args) {
         System.out.println("-------------------------------------------------");
-        System.out.println(" INICI TEST LLISTA INSCRIPCIONS (AMB LLISTA D'ESPERA)");
+        System.out.println(" INICI TEST LLISTA INSCRIPCIONS (AMB OBJECTES LLISTA)");
         System.out.println("-------------------------------------------------");
 
         // 1. CREACIÓ
-        LlistaInscripcio llista = new LlistaInscripcio();
+        LlistaInscripcions llista = new LlistaInscripcions();
         System.out.println("Llista creada correctament.");
 
         // 2. AFEGIR (Happy Path)
@@ -40,9 +40,13 @@ public class UsaLlistaInscripcio {
         System.out.println("Quants inscrits a 'Python'? (Esperat: 2) -> " + llista.comptarInscripcionsActivitat("Python"));
         
         System.out.println("Inscripcions de 'mar.garcia':");
-        Inscripcio[] deLaMar = llista.getInscripcionsUsuari("mar.garcia");
-        for (Inscripcio i : deLaMar) {
-            System.out.println(" - " + i.getIdActivitat());
+        // CANVI: Ara retorna un objecte LlistaInscripcions, no un array
+        LlistaInscripcions deLaMar = llista.getInscripcionsUsuari("mar.garcia");
+        
+        // CANVI: Bucle usant mètodes de la classe llista
+        for (int i = 0; i < deLaMar.getNumElements(); i++) {
+            Inscripcio ins = deLaMar.getInscripcioIesima(i);
+            System.out.println(" - " + ins.getIdActivitat());
         }
 
         // 5. ELIMINAR
@@ -96,16 +100,22 @@ public class UsaLlistaInscripcio {
 
             // 7.3 Recuperar i mostrar la llista d'ADMESOS
             System.out.println("\n--- LLISTA D'ADMESOS (Haurien de ser u1 i u2) ---");
-            Inscripcio[] admesos = llista.getAdmesos(nomActivitat, placesMaximes);
-            for (Inscripcio i : admesos) {
-                System.out.println(" ✅ ADMÈS: " + i.getIdUsuari());
+            // CANVI: Tipus de retorn LlistaInscripcio
+            LlistaInscripcions admesos = llista.getAdmesos(nomActivitat, placesMaximes);
+            
+            for (int i = 0; i < admesos.getNumElements(); i++) {
+                Inscripcio ins = admesos.getInscripcioIesima(i);
+                System.out.println("ADMÈS: " + ins.getIdUsuari());
             }
 
             // 7.4 Recuperar i mostrar la llista d'ESPERA
             System.out.println("\n--- LLISTA D'ESPERA (Hauria de ser u3) ---");
-            Inscripcio[] espera = llista.getLlistaEspera(nomActivitat, placesMaximes);
-            for (Inscripcio i : espera) {
-                System.out.println(" ⏳ ESPERA: " + i.getIdUsuari());
+            // CANVI: Tipus de retorn LlistaInscripcio
+            LlistaInscripcions espera = llista.getLlistaEspera(nomActivitat, placesMaximes);
+            
+            for (int i = 0; i < espera.getNumElements(); i++) {
+                Inscripcio ins = espera.getInscripcioIesima(i);
+                System.out.println("ESPERA: " + ins.getIdUsuari());
             }
 
         } catch (Exception e) {

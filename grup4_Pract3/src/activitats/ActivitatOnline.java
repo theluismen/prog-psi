@@ -5,8 +5,9 @@
 
 package activitats;
 
-import extras.Data;
+import enumeracions.Collectius;
 import excepcions.CollectiuDesconegut;
+import extras.Data;
 
 public class ActivitatOnline extends Activitat {
 
@@ -24,12 +25,12 @@ public class ActivitatOnline extends Activitat {
      * @param periodeVisualitzacio Durada en dies
      * @param enllac URL de l'activitat
      */
-    public ActivitatOnline(String nom, String[] collectius, Data dataIniInscripcio, 
+    public ActivitatOnline(String nom, Collectius collectiu, Data dataIniInscripcio, 
                            Data dataFiInscripcio, Data dataInici, 
                            int periodeVisualitzacio, String enllac) throws CollectiuDesconegut { // <--- 2. AFEGIR THROWS
         
         // Cridem al pare. Ara ja podem propagar l'error si el col·lectiu no és vàlid
-        super(nom, collectius, dataIniInscripcio, dataFiInscripcio);
+        super(nom, collectiu, dataIniInscripcio, dataFiInscripcio);
         
         this.dataInici = dataInici;
         this.periodeVisualitzacio = periodeVisualitzacio;
@@ -120,13 +121,17 @@ public class ActivitatOnline extends Activitat {
      * Format pare + propis: 
      * Tipus;Nom;Colectius;IniciIns;FiIns;DataIniciAct;Periode;Enllac
      */
+    @Override
     public String toCSV() {
         // Construïm la part dels col·lectius separats per comes dins del CSV
-        String cols = String.join(",", super.collectius);
+        String col = "";
+        if (super.collectiu != null) {
+            col = super.collectiu.name(); 
+        }
 
         return tipusActivitat() + ";" + 
                super.nom + ";" + 
-               cols + ";" +
+               col + ";" +
                super.dataIniciInscripcio.getDia() + ";" + super.dataIniciInscripcio.getMes() + ";" + super.dataIniciInscripcio.getAny() + ";" +
                super.dataFiInscripcio.getDia() + ";" + super.dataFiInscripcio.getMes() + ";" + super.dataFiInscripcio.getAny() + ";" +
                this.dataInici.getDia() + ";" + this.dataInici.getMes() + ";" + this.dataInici.getAny() + ";" +
@@ -139,7 +144,7 @@ public class ActivitatOnline extends Activitat {
         try {
             return new ActivitatOnline(
                 super.nom,
-                super.collectius,
+                super.collectiu,
                 super.dataIniciInscripcio.copia(),
                 super.dataFiInscripcio.copia(),
                 this.dataInici.copia(),

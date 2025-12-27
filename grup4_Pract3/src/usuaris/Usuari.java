@@ -1,12 +1,19 @@
-//Aesha Naz
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * Descripció: Classe abstracta que representa un usuari del sistema
+ * Defineix els atributs i mètodes comuns a tots els tipus d'usuaris.
+ */
 
 package usuaris;
+import enumeracions.Collectius;
 
 public abstract class Usuari {
     
-    protected String alies;           //Identificador del usuari
-    protected String collectiu;      // PDI / PTGAS / Estudiant
-    protected String email;          // Part principal del correu (sense @)
+    /** Atributs de la classe */
+
+    protected String alies;              //Identificador del usuari
+    protected Collectius collectiu;
+    protected String email;              // Part principal del correu (sense @)
 
     /**
      * Constructor de la classe Usuari
@@ -14,11 +21,17 @@ public abstract class Usuari {
      * @param email part inicial del correu institucional (sense @)
      * @param collectiu col·lectiu al qual pertany (PDI, PTGAS o Estudiant)
      */
-    public Usuari (String alies, String email, String collectiu) {
+    public Usuari (String alies, String email, Collectius collectiu) {
         this.alies = alies;
         this.email = email;
         this.collectiu = collectiu;
     }
+
+    /**
+     * Retorna la informació comuna de l'usuari en format CSV.
+     *
+     */
+    public abstract String toCSV();
 
     /**
      * Mètode que retorna l'àlies indentificador de l'usuari
@@ -38,7 +51,7 @@ public abstract class Usuari {
      */
     public String getEmailComplet() {
         //Segons el tipus de col·lectiu: URV o PDI i PTGAS
-        if (collectiu.equalsIgnoreCase("Estudiant")) {
+        if (collectiu == Collectius.ESTUDIANT) {
             return email + "@estudiants.urv.cat";
         } else {
             return email + "@urv.cat";  //PDI i PTGAS
@@ -54,7 +67,7 @@ public abstract class Usuari {
      * 
      * @return una cadena de text que identifica el col·lectiu del usuari
      */
-    public String getCollectiu() {  
+    public Collectius getCollectiu() {  
         return collectiu;  
     }
 
@@ -93,8 +106,7 @@ public abstract class Usuari {
     public String toString() {
         return "Àlies: " + alies + 
                 "\nCorreu: " + getEmailComplet() + 
-                "\nCol·lectiu: " + collectiu;
+                "\nCol·lectiu: " + collectiu.name();
     }
-
     
 }

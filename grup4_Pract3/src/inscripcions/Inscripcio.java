@@ -6,6 +6,7 @@
 package inscripcions;
 
 import java.io.Serializable;
+import excepcions.ValoracioIncorrecta;
 
 /**
  * Classe que representa la inscripció d'un usuari a una activitat.
@@ -13,8 +14,10 @@ import java.io.Serializable;
  */
 public class Inscripcio implements Serializable {
 
-    private String idUsuari;      // Guardem l'àlies de l'usuari (Clau forana)
-    private String idActivitat;   // Guardem el nom de l'activitat (Clau forana)
+    private static final long serialVersionUID = 1L;
+
+    private String idUsuari;      // Guardem l'àlies de l'usuari 
+    private String idActivitat;   // Guardem el nom de l'activitat 
     private Integer valoracio;    // Nota de 0 a 10. Fem servir Integer (objecte) per permetre null
 
     /**
@@ -49,11 +52,11 @@ public class Inscripcio implements Serializable {
     /**
      * Assigna una valoració a l'activitat un cop finalitzada.
      * @param nota Valor entre 0 i 10
-     * @throws IllegalArgumentException si la nota no és vàlida
+     * @throws ValoracioIncorrecta si la nota no és vàlida
      */
-    public void setValoracio(int nota) {
+    public void setValoracio(int nota) throws ValoracioIncorrecta {
         if (nota < 0 || nota > 10) {
-            throw new IllegalArgumentException("La valoració ha de ser entre 0 i 10.");
+            throw new ValoracioIncorrecta("La valoració ha de ser entre 0 i 10.");
         }
         this.valoracio = nota;
     }
@@ -72,9 +75,14 @@ public class Inscripcio implements Serializable {
      */
     public Inscripcio copia() {
         Inscripcio nova = new Inscripcio(this.idUsuari, this.idActivitat);
-        // Si té valoració, la copiem també. Si és null, es queda null al constructor.
         if (this.valoracio != null) {
-            nova.setValoracio(this.valoracio);
+            // Com que és una còpia interna d'un valor ja validat, 
+            // podem capturar l'excepció aquí per evitar propagar-la al mètode copia()
+            try {
+                nova.setValoracio(this.valoracio);
+            } catch (ValoracioIncorrecta e) {
+                // No hauria de passar mai si l'objecte original és consistent
+            }
         }
         return nova;
     }

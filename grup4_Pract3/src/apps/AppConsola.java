@@ -1,28 +1,26 @@
 /**
  * Autor(@s):   Ainara Sofia Cabrera Robles
-                Ikram Kheira Hallouz Safa
+                Ikram Hallouz Safa 
                 Aesha Naz Mahmood Bibi
                 Alexandra Núñez González
- * Descripción:
+ * Descripción: Aplicación de consola para gestionar actividades, usuarios e inscripciones.
+                Ainara: cas 1, 5, 7, 13 i 19
+                Ikram: cas 10, 11, 12, 15 i 16
+                Aesha: cas 3, 6, 9, 17, 18 i 21
+                Alexandra: cas 2, 4, 8, 14, 20 i 22
  */
 package apps;
 
 
 import java.util.Scanner;
 
-
-import javax.xml.bind.ValidationException;
-
-
 import java.io.*;
 
 
-// Imports de les teves classes
 import llistes.*;
 import inscripcions.*;
 import usuaris.*;
 import activitats.*;
-import enumeraciones.*;
 import excepcions.*;
 import extras.Data;
 
@@ -37,20 +35,20 @@ public class AppConsola {
 
 
     // 2. VARIABLES GLOBALS (LLISTES)
-    private static LlistaInscripcio llistaInscripcions;
+    private static LlistaInscripcions llistaInscripcions;
     private static LlistaUsuaris llistaUsuaris;
     private static LlistaActivitats llistaActivitats;
    
     // Eines globals
-    private static Scanner teclat = new Scanner(System.in);
+    private static final Scanner teclat = new Scanner(System.in);
     private static Data dataActual;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ValorInexistent {
        
         // --- INICIALITZACIÓ ---
         boolean sortir = false;
-        int opcio = 0;
+        int opcio;
         try{
             dataActual = new Data(1, 9, 2025); // Data inicial per defecte
         }catch(ValorInexistent e){  //es obligatori tractar l'excepció, però com que es un valor per defecte no donarà error
@@ -59,7 +57,11 @@ public class AppConsola {
 
 
         // --- CÀRREGA DE DADES ---
-        carregarDadesSistema();
+        try {
+            carregarDadesSistema();
+        } catch (IOException | FormatInvalid | CollectiuDesconegut | UsuariDuplicat e) {
+            System.out.println("Error carregant dades del sistema: " + e.getMessage());
+        }
 
 
         // --- BUCLE PRINCIPAL ---
@@ -67,147 +69,60 @@ public class AppConsola {
             mostrarMenu();
             opcio = llegirEnter();
 
-
             switch (opcio) {
-                // --- GESTIÓ BÀSICA ---
-                case 1:
-                    // Indicar/Canviar la data del sistema
-                    case1();
-                    break;
-
-
-                case 2:
-                    // Mostrar les dades de les llistes
-                    case2();
-                    break;
-
-
-                // --- CONSULTES ---
-                case 3:
-                    // Activitats en període d'inscripció amb places disponibles
-                    case3();
-                    break;
-
-
-                case 4:
-                    // Activitats que tenen classe AVUI
-                    case4();
-                    break;
-
-
-                case 5:
-                    // Activitats actives AVUI (dins període)
-                    case5();
-                    break;
-
-
-                case 6:
-                    // Activitats amb places disponibles (qualsevol data)
-                    case6();
-                    break;
-
-
-                case 7:
-                    // Detall d'una activitat pel seu nom
-                    case7();
-                    break;
-
-
-                case 8:
-                    // Detall d'un usuari pel seu àlies
-                    case8();
-                    break;
-
-
-                case 9:
-                    // TODO: Activitats on està apuntat un usuari
-                    case9();
-                    break;
-
-
-                // --- GESTIÓ D'INSCRIPCIONS ---
-                case 10:
-                    // TODO: Inscriure's a una activitat
-                    case10();
-                    break;
-
-
-                case 11:
-                    // TODO: Mostrar usuaris apuntats a una activitat i llista d'espera
-                    case11();
-                    break;
-
-
-                case 12:
-                    // TODO: Eliminar un usuari d'una activitat
-                    case12();
-                    break;
-
-
-                // --- ALTES D'ACTIVITATS ---
-                case 13:
-                    // TODO: Afegir nova activitat d'un dia
-                    case13();
-                    break;
-
-
-                case 14:
-                    // Afegir nova activitat periòdica
-                    case14();
-                    break;
-
-
-                case 15:
-                    // TODO: Afegir nova activitat online
-                    case15();
-                    break;
-
-
-                // --- VALORACIONS I ESTADÍSTIQUES ---
-                case 16:
-                    // TODO: Valorar una activitat
-                    case16();
-                    break;
-
-
-                case 17:
-                    // TODO: Resum de valoracions d'activitats acabades
-                    case17();
-                    break;
-
-
-                case 18:
-                    // TODO: Resum valoracions fetes per un usuari
-                    case18();
-                    break;
-
-
-                case 19:
-                    // TODO: Mitjana valoracions per col·lectiu
-                    case19();
-                    break;
-
-
-                case 20:
-                    // Usuari més actiu d'un col·lectiu
-                    case20();
-                    break;
-
-
-                // --- MANTENIMENT ---
-                case 21:
-                    // TODO: Donar de baixa activitats amb poca participació
-                    case21();
-                    break;
-
-
-                // --- SORTIDA ---
-                case 22:
-                    sortir = true;
-                    case22();     // --- TANCAMENT I GUARDAT ---
-                    break;
-
-
+            // --- GESTIÓ BÀSICA ---
+                             
+                // Indicar/Canviar la data del sistema
+                case 1:  case1();  break;
+                // Mostrar les dades de les llistes
+                case 2:  case2();  break;
+            // --- CONSULTES ---
+                // Activitats en període d'inscripció amb places disponibles
+                case 3:  case3();  break;
+                // Activitats que tenen classe AVUI
+                case 4:  case4();  break;
+                // Activitats actives AVUI (dins període)
+                case 5:  case5();  break;
+                // Activitats amb places disponibles (qualsevol data)
+                case 6:  case6();  break;
+                // Detall d'una activitat pel seu nom
+                case 7:  case7();  break;
+                // Detall d'un usuari pel seu àlies
+                case 8:  case8();  break;
+                // TODO: Activitats on està apuntat un usuari
+                case 9:  case9();  break;
+            // --- GESTIÓ D'INSCRIPCIONS ---
+                // Inscriure's a una activitat
+                case 10:  case10();  break;
+                // TODO: Mostrar usuaris apuntats a una activitat i llista d'espera
+                case 11:  case11();  break;
+                // TODO: Eliminar un usuari d'una activitat
+                case 12:  case12();  break;
+            // --- ALTES D'ACTIVITATS ---
+                // TODO: Afegir nova activitat d'un dia
+                case 13:  case13();  break;
+                // Afegir nova activitat periòdica
+                case 14:  case14();  break;
+                // TODO: Afegir nova activitat online
+                case 15:  case15();  break;
+            // --- VALORACIONS I ESTADÍSTIQUES ---
+                // TODO: Valorar una activitat
+                case 16:  case16();  break;
+                // TODO: Resum de valoracions d'activitats acabades
+                case 17:  case17();  break;
+                // TODO: Resum valoracions fetes per un usuari
+                case 18:  case18();  break;
+                // TODO: Mitjana valoracions per col·lectiu
+                case 19:  case19();  break;
+                // Usuari més actiu d'un col·lectiu
+                case 20:  case20();  break;
+            // --- MANTENIMENT ---
+                // TODO: Donar de baixa activitats amb poca participació
+                case 21:  case21();  break;
+            // --- SORTIDA ---
+                // --- TANCAMENT I GUARDAT ---
+                case 22:  sortir = true;  case22();  break;
+                
                 default:
                     System.out.println("Opció no vàlida.");
             }
@@ -218,14 +133,14 @@ public class AppConsola {
     // MÈTODES AUXILIARS BÀSICS
 
 
-    private static void carregarDadesSistema(){
+    private static void carregarDadesSistema() throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat {
         System.out.println("Carregant dades...");
         // Inicialització segura per evitar errors si els fitxers no existeixen
-        llistaInscripcions = LlistaInscripcio.carregarFitxer(FITXER_INSCRIPCIONS);
+        llistaInscripcions = LlistaInscripcions.carregarFitxer(FITXER_INSCRIPCIONS);
         llistaUsuaris = new LlistaUsuaris();
-        // llistaUsuaris.carregarFitxer(FITXER_USUARIS);
+        llistaUsuaris.carregarFitxer(FITXER_USUARIS);
         llistaActivitats = new LlistaActivitats(100);
-        // llistaActivitats.carregarFitxer(FITXER_ACTIVITATS);
+        llistaActivitats.carregarFitxer(FITXER_ACTIVITATS);
        
         System.out.println("Sistema inicialitzat correctament.");
     }
@@ -233,17 +148,28 @@ public class AppConsola {
 
     private static void mostrarMenu() {
         System.out.println("\n--- MENÚ PRINCIPAL ---");
-        System.out.println("1. Consulta la data d'avui | 2. Mostrar les llistes");
-        System.out.println("3. Consultar les activitats en període d'inscripció | 4. Consultar les activitats amb clase avui");
-        System.out.println("5.  | 6. Consultar les activitats amb places disponibles");
-        System.out.println("7.  | 8. Buscar la informació d'un usuari");
-        System.out.println("9.  | 10. Inscriure");
-        System.out.println("11. | 12. ");
-        System.out.println("13. Afegir activitat d'un dia | 14. Afegir activitat periodica");
-        System.out.println("15. | 16. ");
-        System.out.println("17. | 18. ");
-        System.out.println("19. | 20. Consultar l'usuari més actiu");
-        System.out.println("21. | 22. Sortir");
+        System.out.println("1. Consulta la data d'avui");
+        System.out.println("2. Mostrar les llistes");
+        System.out.println("3. Consultar les activitats en període d'inscripció");
+        System.out.println("4. Consultar les activitats amb clase avui");
+        System.out.println("5. ");
+        System.out.println("6. Consultar les activitats amb places disponibles");
+        System.out.println("7. ");
+        System.out.println("8. Buscar la informació d'un usuari");
+        System.out.println("9. Consultar les activitats on està apuntat un usuari ");
+        System.out.println("10. Inscriure"); 
+        System.out.println("11. ");
+        System.out.println("12. ");
+        System.out.println("13. Afegir activitat d'un dia");
+        System.out.println("14. Afegir activitat periodica");
+        System.out.println("15. ");
+        System.out.println("16. ");
+        System.out.println("17. Consultar valoracions d'activitats acabades ");
+        System.out.println("18. Consultar valoracions fetes per un usuari"); 
+        System.out.println("19. ");
+        System.out.println("20. Consultar l'usuari més actiu");
+        System.out.println("21. Donar de baixa alguna activitat"); 
+        System.out.println("22. Sortir");
         System.out.print("Opció: ");
     }
 
@@ -270,7 +196,12 @@ public class AppConsola {
 
         if(respuesta.equalsIgnoreCase("S")){
             System.out.println("\n\tIntrodueix la nova data: ");
-            dataActual = demanarData();
+            try{
+                dataActual = demanarData();
+            }catch(ValorInexistent e){
+                System.out.println("ERROR" + e.getMessage());
+            }
+            
             System.out.println("\n\tLa nova data actual del systema és: " + dataActual);
 
         }else if(respuesta.equalsIgnoreCase("N")){
@@ -408,9 +339,8 @@ public class AppConsola {
                     actActiva = true;
                 }
 
-            } catch (ValorInexistent e) {
-                
-                System.out.println("ERROR INESPERAT EN CASE5");
+            } catch (ValorInexistent e) {  
+                System.out.println("ERROR: " + e.getMessage());
             }
         }
 
@@ -489,29 +419,30 @@ public class AppConsola {
     }
 
 
-    private static void case9(){
+    private static void case9() {
         System.out.println("\n--- Activitats on està apuntat un usuari ---");
         System.out.println("Introdueix l'àlies de l'usuari: ");
 
         String alies = teclat.nextLine();
 
-        Usuari u = llistaUsuaris(cerca(alies));
+        Usuari u = llistaUsuaris.cerca(alies);
 
         if (u == null) {
             System.out.println("No existeix cap usuari amb aquest àlies. ");
             return;
         }
 
-        Inscripcio[] ins = llistaInscripcions.getInscripcionsUsuari(alies);
+        LlistaInscripcions ins = llistaInscripcions.getInscripcionsUsuari(alies);
 
-        if(ins.length == 0) {
+        if(ins.getNumElements() == 0) {
             System.out.println("Aquest usuari no està inscrit a cap activitat.");
             return;
         }
 
+        Activitat act = null;
         System.out.println("\nActivitats on està inscrit" + alies + ":");
-        for (int i = 0; i < ins.length; i++) {
-            Activitat act = llistaActivitats.cerca(ins[i].getIdActivitat());
+        for (int i = 0; i < ins.getNumElements(); i++) {
+            act = llistaActivitats.cerca(ins.getInscripcioIesima(i).getIdActivitat());
             if(act != null){
                 System.out.println("-" + act.getNom());
             }
@@ -519,20 +450,192 @@ public class AppConsola {
        
 
     }
-
-
-    private static void case10(){
        
+
+
+    private static void case10() {
+        try {
+            System.out.println("\n--- Inscripció a una activitat ---");
+            
+            // 1. Demanar i validar l'usuari
+            System.out.print("Introdueix l'àlies de l'usuari: ");
+            String alias = teclat.nextLine();
+            Usuari u = llistaUsuaris.cerca(alias);
+
+            if (u == null) {
+                System.out.println("Error: No existeix cap usuari amb l'àlies \"" + alias + "\".");
+                return;
+            }
+
+            // 2. Demanar i validar l'activitat
+            System.out.print("Introdueix el nom de l'activitat: ");
+            String nomAct = teclat.nextLine();
+            Activitat act = llistaActivitats.cerca(nomAct);
+
+            if (act == null) {
+                System.out.println("Error: No existeix cap activitat amb el nom \"" + nomAct + "\".");
+                return;
+            }
+            
+            // 4. Intentar fer la inscripció
+            Inscripcio novaInscripcio = new Inscripcio(alias, nomAct);
+            llistaInscripcions.afegirInscripcio(novaInscripcio);
+
+            // 5. Informar l'usuari del seu estat (Admès o Llista d'Espera)
+            int placesMax = act.getPlacesMaximes();
+            
+            // Si placesMax és MAX_VALUE (Online), sempre entra.
+            if (placesMax == Integer.MAX_VALUE) {
+                System.out.println("Inscripció realitzada amb èxit! (Activitat Online sense límit).");
+            } else {
+                // Comprovem quants n'hi ha ara mateix
+                int totalInscrits = llistaInscripcions.comptarInscripcionsActivitat(nomAct);
+                
+                if (totalInscrits <= placesMax) {
+                    System.out.println("Inscripció realitzada amb èxit! Tens plaça assignada.");
+                } else {
+                    int posicioEspera = totalInscrits - placesMax;
+                    System.out.println("L'activitat està plena. Has quedat inscrit en la LLISTA D'ESPERA.");
+                    System.out.println("La teva posició a la cua és: " + posicioEspera);
+                }
+            }
+
+        } catch (InscripcioDuplicada e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("S'ha produït un error inesperat: " + e.getMessage());
+        }
     }
 
 
-    private static void case11(){
-       
+    private static void case11() {
+        System.out.println("\n--- Consulta d'inscrits i llista d'espera ---");
+        System.out.print("Introdueix el nom de l'activitat: ");
+        String nomAct = teclat.nextLine();
+
+        // 1. Busquem l'activitat per saber les seves places màximes
+        Activitat act = llistaActivitats.cerca(nomAct);
+
+        if (act == null) {
+            System.out.println("Error: No existeix cap activitat amb el nom \"" + nomAct + "\".");
+            return;
+        }
+
+        int placesMax = act.getPlacesMaximes();
+
+        // 2. Recuperem les llistes d'admesos i d'espera
+        // Aquests mètodes retornen objectes LlistaInscripcio (segons els últims canvis)
+        LlistaInscripcio llistaAdmesos = llistaInscripcions.getAdmesos(nomAct, placesMax);
+        LlistaInscripcio llistaEspera = llistaInscripcions.getLlistaEspera(nomAct, placesMax);
+
+        // 3. Mostrem els ADMESOS
+        System.out.println("\n=== USUARIS ADMESOS (" + llistaAdmesos.getNumElements() + " / " + 
+                           (placesMax == Integer.MAX_VALUE ? "Il·limitades" : placesMax) + ") ===");
+        
+        if (llistaAdmesos.getNumElements() == 0) {
+            System.out.println("   (Cap usuari inscrit)");
+        } else {
+            for (int i = 0; i < llistaAdmesos.getNumElements(); i++) {
+                // Recuperem la inscripció i després l'usuari complet per mostrar dades
+                Inscripcio ins = llistaAdmesos.getInscripcioIesima(i);
+                Usuari u = llistaUsuaris.cerca(ins.getIdUsuari());
+                
+                if (u != null) {
+                    // Mostrem l'àlies i el tipus (o toString reduït)
+                    System.out.println("   - " + u.getAlies());
+                } else {
+                    System.out.println("   - " + ins.getIdUsuari() + " (Usuari no trobat a la llista)");
+                }
+            }
+        }
+
+        // 4. Mostrem la LLISTA D'ESPERA
+        System.out.println("\n=== LLISTA D'ESPERA (" + llistaEspera.getNumElements() + ") ===");
+        
+        if (llistaEspera.getNumElements() == 0) {
+            System.out.println("   (La llista d'espera és buida)");
+        } else {
+            for (int i = 0; i < llistaEspera.getNumElements(); i++) {
+                Inscripcio ins = llistaEspera.getInscripcioIesima(i);
+                Usuari u = llistaUsuaris.cerca(ins.getIdUsuari());
+
+                // Mostrem la posició (i+1) perquè és una cua ordenada
+                if (u != null) {
+                    System.out.println("   " + (i + 1) + ". " + u.getAlies());
+                } else {
+                    System.out.println("   " + (i + 1) + ". " + ins.getIdUsuari());
+                }
+            }
+        }
     }
 
 
-    private static void case12(){
-       
+    private static void case12() {
+        System.out.println("\n--- Cancel·lar inscripció (Eliminar usuari d'una activitat) ---");
+
+        // 1. Demanar l'usuari
+        System.out.print("Introdueix l'àlies de l'usuari: ");
+        String alias = teclat.nextLine();
+        Usuari u = llistaUsuaris.cerca(alias);
+
+        if (u == null) {
+            System.out.println("Error: No existeix cap usuari amb l'àlies \"" + alias + "\".");
+            return;
+        }
+
+        // 2. Demanar l'activitat
+        System.out.print("Introdueix el nom de l'activitat: ");
+        String nomAct = teclat.nextLine();
+        Activitat act = llistaActivitats.cerca(nomAct);
+
+        if (act == null) {
+            System.out.println("Error: No existeix cap activitat amb el nom \"" + nomAct + "\".");
+            return;
+        }
+
+        try {
+            // 3. Preparació per gestionar la Llista d'Espera (Requisit PDF)
+            // Abans d'esborrar, mirem si hi ha algú esperant que pugui entrar.
+            int placesMax = act.getPlacesMaximes();
+            String candidatEntrar = null;
+
+            // Si hi ha llista d'espera, el primer de la cua és el candidat
+            if (llistaInscripcions.getNumEnEspera(nomAct, placesMax) > 0) {
+                LlistaInscripcio espera = llistaInscripcions.getLlistaEspera(nomAct, placesMax);
+                // El primer de la llista d'espera (posició 0)
+                candidatEntrar = espera.getInscripcioIesima(0).getIdUsuari();
+            }
+
+            // 4. ELIMINACIÓ
+            llistaInscripcions.eliminarInscripcio(alias, nomAct);
+            System.out.println("S'ha eliminat la inscripció correctament.");
+
+            // 5. Comprovació post-eliminació (Gestió automàtica de la cua)
+            // Si teníem un candidat i ara resulta que està a la llista d'ADMESOS, ho notifiquem.
+            if (candidatEntrar != null) {
+                // Obtenim la nova llista d'admesos
+                LlistaInscripcio admesos = llistaInscripcions.getAdmesos(nomAct, placesMax);
+                boolean haEntrat = false;
+                
+                // Busquem si el candidat ara està admès
+                for (int i = 0; i < admesos.getNumElements(); i++) {
+                    if (admesos.getInscripcioIesima(i).getIdUsuari().equals(candidatEntrar)) {
+                        haEntrat = true;
+                        break;
+                    }
+                }
+
+                if (haEntrat) {
+                    System.out.println("En alliberar-se una plaça, l'usuari de la llista d'espera \"" 
+                                       + candidatEntrar + "\" ha passat a estar ADMÈS.");
+                }
+            }
+
+        } catch (InscripcioNoTrobada e) {
+            System.out.println("Error: Aquest usuari no estava inscrit a l'activitat.");
+        } catch (Exception e) {
+            System.out.println("S'ha produït un error " + e.getMessage());
+        }
     }
 
 
@@ -642,37 +745,160 @@ public class AppConsola {
     }
 
 
-    private static void case15(){
-       
+    private static void case15() {
+        System.out.println("\n--- Afegir nova Activitat Online ---");
+
+        try {
+            // 1. Dades bàsiques
+            System.out.print("Nom de l'activitat: ");
+            String nom = teclat.nextLine();
+
+            // 2. Dates
+            System.out.println(">> Data d'INICI d'inscripcions:");
+            Data dIniInsc = demanarData();
+
+            System.out.println(">> Data de FI d'inscripcions:");
+            Data dFiInsc = demanarData();
+
+            System.out.println(">> Data d'INICI de l'activitat:");
+            Data dIniAct = demanarData();
+
+            // 3. Durada
+            System.out.print("Dies de visualització (durada): ");
+            int dies = llegirEnter();
+
+            // 4. Enllaç (Validació: Sense espais en blanc)
+            String enllac = "";
+            boolean enllacValid = false;
+            while (!enllacValid) {
+                System.out.print("Enllaç (URL) de l'activitat: ");
+                enllac = teclat.nextLine();
+                
+                if (enllac.contains(" ")) {
+                    System.out.println("Error: L'enllaç no pot contenir espais en blanc. Torna-ho a intentar.");
+                } else if (enllac.isEmpty()) {
+                    System.out.println("Error: L'enllaç no pot estar buit.");
+                } else {
+                    enllacValid = true;
+                }
+            }
+
+            // 5. Col·lectiu
+            // Demanem un únic col·lectiu perquè el constructor d'ActivitatOnline accepta només un
+            System.out.print("A quin col·lectiu va dirigida? (ESTUDIANT, PDI, PTGAS): ");
+            String colStr = teclat.nextLine().toUpperCase();
+            Collectius col = Collectius.valueOf(colStr); // Converteix String a Enum
+
+            // 6. Creació i Inserció
+            ActivitatOnline novaAct = new ActivitatOnline(
+                nom, 
+                col, 
+                dIniInsc, 
+                dFiInsc, 
+                dIniAct, 
+                dies, 
+                enllac
+            );
+
+            llistaActivitats.afegir(novaAct);
+            System.out.println("Activitat Online \"" + nom + "\" afegida correctament!");
+
+        } catch (ActivitatDuplicada e) {
+            System.out.println("Error: Ja existeix una activitat amb aquest nom.");
+        } catch (CollectiuDesconegut e) {
+            System.out.println("Error: El col·lectiu indicat no és vàlid.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: Col·lectiu desconegut o dades incorrectes.");
+        } catch (Exception e) {
+            System.out.println("Error inesperat creant l'activitat: " + e.getMessage());
+        }
     }
 
 
-    private static void case16(){
-       
+    private static void case16() {
+        System.out.println("\n--- Valorar una activitat ---");
+
+        // 1. Demanar dades
+        System.out.print("Introdueix l'àlies de l'usuari: ");
+        String alias = teclat.nextLine();
+        Usuari u = llistaUsuaris.cerca(alias);
+
+        if (u == null) {
+            System.out.println("Error: L'usuari no existeix.");
+            return;
+        }
+
+        System.out.print("Introdueix el nom de l'activitat: ");
+        String nomAct = teclat.nextLine();
+        Activitat act = llistaActivitats.cerca(nomAct);
+
+        if (act == null) {
+            System.out.println("Error: L'activitat no existeix.");
+            return;
+        }
+
+        // 2. Comprovar si està inscrit
+        // Fem servir el mètode getInscripcio que retorna l'objecte únic per poder modificar-lo
+        Inscripcio ins = llistaInscripcions.getInscripcio(alias, nomAct);
+
+        if (ins == null) {
+            System.out.println("Error: Aquest usuari no està inscrit a aquesta activitat (o està en llista d'espera).");
+            return;
+        }
+
+        // 3. Comprovar si l'activitat ha acabat
+        // Requisit: "l'activitat ha d'haver acabat" -> dataFinal < dataActual
+        if (!act.getDataFinal().esDataInferior(dataActual)) {
+            System.out.println("Error: No pots valorar l'activitat perquè encara no ha finalitzat.");
+            System.out.println("       Data fi activitat: " + act.getDataFinal());
+            System.out.println("       Data actual sistema: " + dataActual);
+            return;
+        }
+        
+        // Comprovar si ja estava valorada (Opcional, però recomanable)
+        if (ins.esValorada()) {
+            System.out.println("Avís: Aquesta activitat ja té una valoració de: " + ins.getValoracio());
+            System.out.println("Si continues, la sobreescriuràs.");
+        }
+
+        // 4. Demanar i assignar la nota
+        System.out.print("Introdueix la teva valoració (0 - 10): ");
+        int nota = llegirEnter();
+
+        try {
+            ins.setValoracio(nota);
+            System.out.println("Valoració registrada correctament!");
+        } catch (ValoracioIncorrecta e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error inesperat: " + e.getMessage());
+        }
     }
 
 
-    private static void case17(){
+    private static void case17(){  
         boolean hiHa = false;
 
         System.out.println("\n--- Resum valoracions d'activitats acabades ---");
 
         for (int i = 0; i < llistaActivitats.getNumElements(); i++) {
-            Activitat act;
+            Activitat act = null;
             try {
                 act = llistaActivitats.getActivitatIesima(i);
             } catch (ValorInexistent e) {
-                continue;
+                
             }
 
             if (act.getDataFinal().esDataInferiorOigual(dataActual)) {
-                Inscripcio[] ins = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+                LlistaInscripcions llistaIns = llistaInscripcions.getInscripcionsActivitat(act.getNom());
 
                 int suma = 0;
                 int comptador = 0;
 
-                for(int j = 0; j < ins.length; j++) {
-                    if(ins[j].esValorada()) {
+                for(int j = 0; j < llistaIns.getNumElements(); j++) {
+                    Inscripcio ins = llistaIns.getInscripcioIesima(j);
+                    
+                    if(ins.esValorada()) {
                         suma += ins.getValoracio();
                         comptador++;
                     }
@@ -680,7 +906,7 @@ public class AppConsola {
 
                 if (comptador > 0) {
                     double mitjana = (double) suma / comptador;
-                    System.out.println("Activitat: %s | Mitjana: %.2f\n", act.getNom(), mitjana);                
+                    System.out.printf("Activitat: %s | Mitjana: %.2f\n", act.getNom(), mitjana);                
                 } else {
                     System.out.println("Activitat: " + act.getNom() + " | Sense valoracions");
                 }
@@ -695,26 +921,27 @@ public class AppConsola {
        
     }
 
-
-    private static void case18(){
+    private static void case18(){ 
         System.out.println("\n--- Resum de valoracions fetes per un usuari ---");
         System.out.println("Introdueix l'àlies de l'usuari: ");
 
         String alies = teclat.nextLine();
 
-        Usuari u = llistaUsuaris(cerca(alies));
+        Usuari u = llistaUsuaris.cerca(alies);
 
         if (u == null) {
             System.out.println("No existeix cap usuari amb aquest àlies. ");
             return;
         }
 
-        Inscripcio[] ins = llistaInscripcions.getInscripcionsUsuari(alies);
+        LlistaInscripcions ins = llistaInscripcions.getInscripcionsUsuari(alies);
 
         boolean hiHa = false;
-        for(int i = 0; i < ins.length; i++) {
-            if(ins[i].esValorada()) {
-                System.out.println("- Activitat: " + ins[i].getIdActivitat() + " | Valoració: " + ins[i].getValoracio());
+        for(int i = 0; i < ins.getNumElements(); i++) {
+            Inscripcio inscripcio = ins.getInscripcioIesima(i);
+
+            if(inscripcio.esValorada()) {
+                System.out.println("- Activitat: " + inscripcio.getIdActivitat() + " | Valoració: " + inscripcio.getValoracio());
                 hiHa = true;
             }
         }
@@ -722,6 +949,7 @@ public class AppConsola {
         if(!hiHa) {
             System.out.println("Aquest usuari encara no ha fet cap valoracó.");
         }
+            
     }
 
 
@@ -770,7 +998,51 @@ public class AppConsola {
 
 
     private static void case21(){
-       
+       boolean algunaEliminada = false;
+
+        System.out.println("\n--- Donar de baixa activitats ---");
+
+        // recorrem de final cap a davant perquè eliminem elements
+        for (int i = llistaActivitats.getNumElements() - 1; i >= 0; i--) {
+
+            Activitat act = null;
+
+            try {
+                act = llistaActivitats.getActivitatReal(i);
+            } catch (ValorInexistent e) {
+                // no hauria de passar, però és correcte
+            }
+
+            int inscrits = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+
+            if (act instanceof ActivitatOnline) {
+
+                if (inscrits < 20) {
+                    llistaActivitats.eliminar(act.getNom());
+                    System.out.println("Eliminada activitat online: " + act.getNom());
+                    algunaEliminada = true;
+                }
+
+            // ALTRES ACTIVITATS
+            } else {
+
+                if (act.getDataFiInscripcio().esDataInferior(dataActual)) {
+
+                    int placesMax = act.getPlacesMaximes();
+                    double percentatge = (double) inscrits / placesMax;
+
+                    if (percentatge < 0.10) {
+                        llistaActivitats.eliminar(act.getNom());
+                        System.out.println("Eliminada activitat: " + act.getNom());
+                        algunaEliminada = true;
+                    }
+                }
+            }
+        }
+
+        if (!algunaEliminada) {
+            System.out.println("No hi ha activitats per donar de baixa");
+        }
     }
 
 
@@ -853,9 +1125,10 @@ public class AppConsola {
         boolean res = false;
         String aux;
         int op;
-        LlistaUsuaris llista = new LlistaUsuaris();
+        LlistaUsuaris llista;
 
         while (!res){
+
             System.out.println("\nVols mostrar tots els usuaris? (S/N): ");
             aux = teclat.nextLine();
 
@@ -864,26 +1137,41 @@ public class AppConsola {
                 res = true;
 
             }else if (aux.equalsIgnoreCase("N")){
-                while (!res){
+                
+                boolean opCorrecta = false;
+                Collectius col = null;
+
+                while (!opCorrecta) {
+                
                     System.out.println("De quin colectiu vols veure els usuaris?");
                     System.out.println("\t(opció 1: PDI)\n\t(opció 2: PTGAS)\n\t(opció 3: Estudiant)");
                     op = llegirEnter();
 
-                    if (op == 1){
-                        llista = llistaUsuaris.tipusLlista("PDI");
-                        res = true;
-                    }else if (op == 2){
-                        llista = llistaUsuaris.tipusLlista("PTGAS");
-                        res = true;
-                    }else if (op == 3){
-                        llista = llistaUsuaris.tipusLlista("Estudiant");
-                        res = true;
-                    }else{
-                        System.out.println("L'opció introduida no existeix, prova una diferent");
+                    switch (op) {
+                        case 1:
+                            col = Collectius.PDI;
+                            opCorrecta = true;
+                            break;
+
+                        case 2:
+                            col = Collectius.PTGAS;
+                            opCorrecta = true;
+                            break;
+
+                     
+                        case 3:
+                            col = Collectius.ESTUDIANT;
+                            opCorrecta = true;
+                            break;
+
+                        default:
+                            System.out.println("L'opció introduïda no existeix, prova una altra.");
                     }
                 }
+                
+                llista = llistaUsuaris.tipusLlista(col);
                 System.out.println(llista);
-
+                res = true;
             }else{
                 System.out.println("L'opció introduida no es valida, escull una diferent");
             }
@@ -892,7 +1180,7 @@ public class AppConsola {
 
 
     //metodo para pedir una fecha y comprobar que sea correcta
-    private static Data demanarData(){
+    private static Data demanarData() throws ValorInexistent {
         boolean res = false;
         int diaAux, mesAux, anyAux;
         Data aux = null;
@@ -946,12 +1234,13 @@ public class AppConsola {
 
 
     //metodo para pedir el dia y la hora de la actividad
-    private static Data demanarDiaYHora(){
+    private static Data demanarDiaYHora() {
         boolean res = false;
         int dia, mes, any, hora, min;
         Data data = null;
        
         System.out.println("\nEscull l'horari setmanal de l'activitat i el primer dia que es farà");
+        
         while (!res){
             System.out.println("Dia inici de l'activitat?");
             dia = llegirEnter();
@@ -965,18 +1254,16 @@ public class AppConsola {
             min = llegirEnter();
 
 
-        try{
+            try {
                 data = new Data(dia, mes, any, hora, min);
                 res = true;
-            }catch(ValorInexistent e){
+            }catch (ValorInexistent e){
                 System.out.println("La data o l'hora no existeixen, proba amb una altra\n");
             }
    
         }
 
-
         return data;
     }
-
 
 }

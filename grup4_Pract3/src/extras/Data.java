@@ -6,16 +6,16 @@ import excepcions.ValorInexistent;
  * Classe per guardar dates.
  *
  * @author Professores de programació.
- * Se han añadido atributos y metodos para guardar y tratar la hora (Alexandra Núñez)
  *
  */
+
 
 public class Data {
     private int dia;
     private int mes;
     private int any;
     private int hora;
-    private int minutos;
+    private int minuts;
 
 
 	/**
@@ -23,17 +23,16 @@ public class Data {
 	 * @param dia
 	 * @param mes
 	 * @param any
-     * @throws ValorInexistent si la fecha no existe
 	 */
-	public Data(int dia, int mes, int any) throws ValorInexistent{
+	public Data(int dia, int mes, int any) throws ValorInexistent {
 		if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
 			hora = 0;
-			minutos = 0;
+			minuts = 0;
         } else {
-            throw new ValorInexistent("Dies, mes, any");
+            throw new ValorInexistent("Data incorrecta");
         }
 	}
 
@@ -44,24 +43,20 @@ public class Data {
      * @param dia
      * @param mes
      * @param any
-     * @throws ValorInexistent si la fecha o la hora no existen
      */
-    public Data(int dia, int mes, int any, int hora, int minutos) throws ValorInexistent{
+    public Data(int dia, int mes, int any, int hora, int minuts) throws ValorInexistent {
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que és una data valida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         } else {
-            throw new ValorInexistent("Dies, mes, any");
+            throw new ValorInexistent("Data o hora incorrecta");
         }
 
-        if (horaExisteix(hora, minutos)){
+        if (horaExisteix(hora, minuts)){
 			this.hora = hora;
-			this.minutos = minutos;
-		} else{
-            throw new ValorInexistent("Hora, minuts");
-        }
-
+			this.minuts = minuts;
+		}
     }
 
 
@@ -103,8 +98,8 @@ public class Data {
      * Getter
      * @return minutos de la hora de la data
      */
-    public int getMinutos() {
-        return minutos;
+    public int getMinuts() {
+        return minuts;
     }
 
 
@@ -114,16 +109,15 @@ public class Data {
      * @param dia
      * @param mes
      * @param any
-     * @throws ValorInexistent si la fecha no existe
      */
-    public void setData(int dia, int mes, int any) throws ValorInexistent{
+    public void setData(int dia, int mes, int any) {
         if (esDataCorrecta(dia, mes, any)) { // ens asegurem que hi ha una data vàlida
             this.dia = dia;
             this.mes = mes;
             this.any = any;
         }
 		else{
-			throw new ValorInexistent("Dies, mes, any");
+			//lanzar excepcion
 		}
     }
 
@@ -133,15 +127,14 @@ public class Data {
      * Només es fa la modificació de l'hora si el que es rep per paràmetre és correcte.
      * @param hora
      * @param minutos
-     * @throws ValorInexistent si la hora no existe
      */
-    public void setHora(int hora, int minutos) throws ValorInexistent{
-        if (horaExisteix(hora, minutos)) { // ens asegurem que hi ha una hora vàlida
+    public void setHora(int hora, int minuts) {
+        if (horaExisteix(hora, minuts)) { // ens asegurem que hi ha una data vàlida
             this.hora = hora;
-			this.minutos = minutos;
+			this.minuts = minuts;
         }
 		else{
-			throw new ValorInexistent("Hora, minuts");
+			//lanzar excepcion
 		}
     }
 
@@ -155,6 +148,7 @@ public class Data {
         if (this.dia == data.getDia() && this.mes == data.getMes() && this.any == data.getAny()) {
             return true;
         }
+        
         return false;
     }
 
@@ -164,25 +158,18 @@ public class Data {
      * * @return la data del dia seguent
      */
     public Data diaSeguent() {
-        try{
-            Data novaData=new Data(dia, mes, any, hora, minutos);
-            // també podria haver-se fet de la següent forma:
-            // Data novaData=this.copia();
+        Data novaData = this.copia();
 
-            novaData.dia++;
-            if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
-                novaData.dia = 1;
-                novaData.mes++;
-                if (novaData.mes > 12) {
-                    novaData.mes = 1;
-                    novaData.any++;
-                }
+        novaData.dia++;
+        if (novaData.dia > diesMes(novaData.mes, novaData.any)) {
+            novaData.dia = 1;
+            novaData.mes++;
+            if (novaData.mes > 12) {
+                novaData.mes = 1;
+                novaData.any++;
             }
-            return novaData;
-        }catch(ValorInexistent e){
-
         }
-        return null;
+        return novaData;
     }
 
 
@@ -217,26 +204,21 @@ public class Data {
      *         la instància sobre la que es crida el mètode es retorna el número de
      *         dies. Si la data que es rep per paràmetre és inferior es retorna -1.
      */
-    public int numDiesAData(Data data) { // compta el nombre de dies entre dos dates
+    public int numDiesAData(Data data) throws ValorInexistent { // compta el nombre de dies entre dos dates
         Data dataTemp;
         int contador;
         // és necessari una nova instancia per no modificar la data actual
-        try{
-            dataTemp = new Data(dia, mes, any, hora, minutos);
-            if (dataTemp.esDataInferiorOigual(data)) {
-                contador = 0;
-                // la data rebuda és major que l'actual
-                while (!dataTemp.esIgual(data)) {
-                    dataTemp=dataTemp.diaSeguent(); // augmenta la data actual fins coincidir amb la rebuda per paràmetre
-                    contador++;
-                }
-            } else
-                contador = -1;
-            return contador;
-        }catch(ValorInexistent e){
-
-        }
-        return 0;
+        dataTemp = new Data(dia, mes, any, hora, minuts);
+        if (dataTemp.esDataInferiorOigual(data)) {
+            contador = 0;
+            // la data rebuda és major que l'actual
+            while (!dataTemp.esIgual(data)) {
+                dataTemp=dataTemp.diaSeguent(); // augmenta la data actual fins coincidir amb la rebuda per paràmetre
+                contador++;
+            }
+        } else
+            contador = -1;
+        return contador;
     }
 
 
@@ -282,8 +264,9 @@ public class Data {
      * Mètode que transforma el contingut d'un objecte en una cadena de caracters per ser
      * mostrat per pantalla
      */
+    @Override
     public String toString() {
-        return("\tDATA => dia "+dia+" mes "+mes+" any "+any+" hora "+hora+":"+minutos);
+        return("\tDATA => dia "+dia+" mes "+mes+" any "+any+" hora "+hora+":"+minuts);
     }
 
 
@@ -292,12 +275,12 @@ public class Data {
      * @return un nou objecte amb el mateix contingut
      */
     public Data copia() {
-        try{
-            return new Data(dia, mes, any, hora, minutos);
-        }catch(ValorInexistent e){
-
+        try {
+            return new Data(dia, mes, any, hora, minuts);
+        } catch (ValorInexistent e) {
+            // No hauria de passar mai
+            return null;
         }
-        return null;
     }
 
 
@@ -307,7 +290,7 @@ public class Data {
 	 * @param dias
 	 * @return nueva instancia con la fecha actual mas los dias pasados
 	 */
-	public Data dataPlusDies(int dias){
+	public Data dataPlusDies(int dias) {
 		Data res = this.copia();
 		
 		for (int i = 0; i < dias; i++){
@@ -370,13 +353,19 @@ public class Data {
     private static boolean horaExisteix (int hora, int minutos){
         boolean res = true;
 		if ((hora >= 24) || (hora < 0)){
+            //lanzar una excepcion cuando este creada
             res = false;
         }
 
 		if ((minutos > 59) || (minutos < 0)){
+			//lanzar excepcion cuando este creada
 			res = false;
 		}
         return res;
+    }
+
+    public boolean teHora() {
+        return hora >= 0 && minuts >= 0;
     }
 
     /**

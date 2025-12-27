@@ -1,4 +1,4 @@
-package enumeraciones;
+package enumeracions;
 
 public enum CampusURV {
     CATALUNYA("Catalunya"),

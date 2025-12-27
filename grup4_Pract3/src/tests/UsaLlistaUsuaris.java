@@ -23,7 +23,7 @@ public class UsaLlistaUsuaris {
 
             // Mostrar col·lectiu Estudiant
             System.out.println("\n--- Usuaris del col·lectiu Estudiant ---");
-            llista.mostrarUCollectiu("Estudiant");
+            llista.mostrarUCollectiu(Collectiu.ESTUDIANT);
 
             // Cerca d'un usuari
             System.out.println("\n--- Cercant usuari `marta` ---");
