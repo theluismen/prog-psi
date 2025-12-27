@@ -148,19 +148,28 @@ public class AppConsola {
 
     private static void mostrarMenu() {
         System.out.println("\n--- MENÚ PRINCIPAL ---");
-        System.out.println("1. Consulta la data d'avui | 2. Mostrar les llistes");
-        System.out.println("3. Consultar les activitats en període d'inscripció | 4. Consultar les activitats amb clase avui");
-        System.out.println("5.  | 6. Consultar les activitats amb places disponibles");
-        System.out.println("7.  | 8. Buscar la informació d'un usuari");
+        System.out.println("1. Consulta la data d'avui");
+        System.out.println("2. Mostrar les llistes");
+        System.out.println("3. Consultar les activitats en període d'inscripció");
+        System.out.println("4. Consultar les activitats amb clase avui");
+        System.out.println("5. ");
+        System.out.println("6. Consultar les activitats amb places disponibles");
+        System.out.println("7. ");
+        System.out.println("8. Buscar la informació d'un usuari");
         System.out.println("9. Consultar les activitats on està apuntat un usuari ");
         System.out.println("10. Inscriure"); 
-        System.out.println("11. | 12. ");
-        System.out.println("13. Afegir activitat d'un dia | 14. Afegir activitat periodica");
-        System.out.println("15. | 16. ");
+        System.out.println("11. ");
+        System.out.println("12. ");
+        System.out.println("13. Afegir activitat d'un dia");
+        System.out.println("14. Afegir activitat periodica");
+        System.out.println("15. ");
+        System.out.println("16. ");
         System.out.println("17. Consultar valoracions d'activitats acabades ");
         System.out.println("18. Consultar valoracions fetes per un usuari"); 
-        System.out.println("19. | 20. Consultar l'usuari més actiu");
-        System.out.println("21. | 22. Sortir");
+        System.out.println("19. ");
+        System.out.println("20. Consultar l'usuari més actiu");
+        System.out.println("21. Donar de baixa alguna activitat"); 
+        System.out.println("22. Sortir");
         System.out.print("Opció: ");
     }
 
