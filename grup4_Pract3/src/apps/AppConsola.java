@@ -448,7 +448,6 @@ public class AppConsola {
     }
        
 
-
     private static void case10() {
         try {
             System.out.println("\n--- Inscripció a una activitat ---");
@@ -699,7 +698,7 @@ public class AppConsola {
 
                 System.out.println("Quin preu tè l'activitat?");
                 preu = Double.parseDouble(teclat.nextLine().replace(",", "."));
-                
+
             }catch(CollectiuDesconegut e){
                 System.out.println("ERROR: " + e.getLocalizedMessage());
 
@@ -1012,7 +1011,57 @@ public class AppConsola {
 
 
     private static void case19(){
-       
+        double sumaPDI = 0, sumaPTGAS = 0, sumaEst = 0;
+        int contPDI = 0, contPTGAS = 0, contEst = 0;
+
+        for (int i = 0; i < llistaInscripcions.getNumElements(); i++) { //Recorro todas las inscripciones.
+
+            Inscripcio ins = llistaInscripcions.getInscripcioIesima(i);
+
+            if (ins.esValorada()) { //Solo cuento las que están valoradas.
+
+                // Buscamos el usuario asociado a la inscripción
+                Usuari u = llistaUsuaris.cerca(ins.getIdUsuari());
+
+                if (u != null) {
+                    switch (u.getCollectiu()) {
+
+                        case PDI:
+                            sumaPDI += ins.getValoracio();
+                            contPDI++;
+                            break;
+
+                        case PTGAS:
+                            sumaPTGAS += ins.getValoracio();
+                            contPTGAS++;
+                            break;
+
+                        case ESTUDIANT:
+                            sumaEst += ins.getValoracio();
+                            contEst++;
+                            break;
+                    }
+                }
+            }
+        }
+
+        System.out.println("\n---Mitha de valoracions per collectiu---");
+
+        if (contPDI > 0){
+            System.out.println("PDI: " + (sumaPDI / contPDI));
+        }else{
+            System.out.println("PDI: sense valoracions");
+        }
+        if (contPTGAS > 0){
+            System.out.println("PTGAS: " + (sumaPTGAS / contPTGAS));
+        }else{
+            System.out.println("PTGAS: sense valoracions");
+        }
+        if (contEst > 0){
+            System.out.println("Estudiant: " + (sumaEst / contEst));
+        }else{
+            System.out.println("Estudiant: sense valoracions");
+        }
     }
 
 
