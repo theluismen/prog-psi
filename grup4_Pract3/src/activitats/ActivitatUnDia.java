@@ -1,6 +1,6 @@
 /**
  * Autor(@s): Ainara Sofía Cabrera Robles
- * Descripción: Esta clase crea instancias de actividad de un día y la gestiona.
+ * Descripción: Clase crea instancias de actividad de un día y la gestiona.
  */
 
 package activitats;
