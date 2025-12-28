@@ -425,4 +425,19 @@ public class LlistaActivitats {        //falta crear llista
         }
         this.llista = aux;
     }
+
+    /**
+     * Mètode que retorna un objecte i no una copia de l'activitat
+     * 
+     * @param n 
+     * @return la llista d'activitats (no una còpia)
+     * @throws ValorInexistent excepcio 
+     */
+    public Activitat getActivitatReal(int n) throws ValorInexistent {
+        if (n < 0 || n >= nElems) {
+            throw new ValorInexistent("Índex fora de rang");
+        }
+        return llista[n]; // Objecte real
+    }
+
 }
