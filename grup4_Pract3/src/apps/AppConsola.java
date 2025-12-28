@@ -12,18 +12,15 @@
 package apps;
 
 
-import java.util.Scanner;
-
-import java.io.*;
-
-
-import llistes.*;
-import inscripcions.*;
-import usuaris.*;
 import activitats.*;
+import enumeracions.*;
 import excepcions.*;
 import extras.Data;
-import enumeracions.*;
+import inscripcions.*;
+import java.io.*;
+import java.util.Scanner;
+import llistes.*;
+import usuaris.*;
 
 
 public class AppConsola {
@@ -291,7 +288,7 @@ public class AppConsola {
 
     private static void case4(){
         LlistaActivitats claseAvui = llistaActivitats.claseAvui(dataActual);
-        String aux = "";
+        String aux = "" ;
         System.out.println("\n-- A continuació es mostrarà el detall d'informació de cada activitat, seguit de les places ocupades y de la gent en espera,"+
                                 "amb clase en la data: "+dataActual+" --");
         
@@ -852,8 +849,8 @@ public class AppConsola {
             // Demanem un únic col·lectiu perquè el constructor d'ActivitatOnline accepta només un
             System.out.print("A quin col·lectiu va dirigida? (ESTUDIANT, PDI, PTGAS): ");
             String colStr = teclat.nextLine().toUpperCase();
-            Collectius col = Collectius.valueOf(colStr);
-            
+            Collectius colEnum = Collectius.valueOf(colStr);
+            Collectius[] col = { colEnum };
 
             // 6. Creació i Inserció
             ActivitatOnline novaAct = new ActivitatOnline(nom, col, dIniInsc, dFiInsc, dIniAct, dies, enllac);
@@ -1118,34 +1115,37 @@ public class AppConsola {
 
             try {
                 act = llistaActivitats.getActivitatReal(i);
-            } catch (ValorInexistent e) {
-                // no hauria de passar, però és correcte
-            }
+            
+                int inscrits = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
 
-            int inscrits = llistaInscripcions.comptarInscripcionsActivitat(act.getNom());
+                if (act instanceof ActivitatOnline) {
 
-            if (act instanceof ActivitatOnline) {
-
-                if (inscrits < 20) {
-                    llistaActivitats.eliminar(act.getNom());
-                    System.out.println("Eliminada activitat online: " + act.getNom());
-                    algunaEliminada = true;
-                }
-
-            // ALTRES ACTIVITATS
-            } else {
-
-                if (act.getDataFiInscripcio().esDataInferior(dataActual)) {
-
-                    int placesMax = act.getPlacesMaximes();
-                    double percentatge = (double) inscrits / placesMax;
-
-                    if (percentatge < 0.10) {
+                    if (inscrits < 20) {
                         llistaActivitats.eliminar(act.getNom());
-                        System.out.println("Eliminada activitat: " + act.getNom());
+                    
+                        System.out.println("Eliminada activitat online: " + act.getNom());
                         algunaEliminada = true;
                     }
+
+            // ALTRES ACTIVITATS
+                } else {
+
+                    if (act.getDataFiInscripcio().esDataInferior(dataActual)) {
+
+                        int placesMax = act.getPlacesMaximes();
+                        double percentatge = (double) inscrits / placesMax;
+
+                        if (percentatge < 0.10) {
+                            llistaActivitats.eliminar(act.getNom());
+                            System.out.println("Eliminada activitat: " + act.getNom());
+                            algunaEliminada = true;
+                        }
+                    }
                 }
+            } catch (ValorInexistent e) {
+                // no hauria de passar, però és correcte
+            } catch (ActivitatDesconeguda e) {
+                System.out.println("Error eliminant activitat: " + e.getMessage());
             }
         }
 
