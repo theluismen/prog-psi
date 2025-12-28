@@ -1,14 +1,19 @@
-//Ainara Sofia
+/**
+ * Autor(@s): Ainara Sofía Cabrera Robles
+ * Descripción: Clase que crea y gestiona el usuario de tipo PDI.
+ */
 
 package usuaris;
-
 import enumeracions.*;
 
 public class UsuariPDI extends Usuari{
 
+    /* Atributos de la Clase */
     private DepartamentURV departament;
     private CampusURV campus;
 
+
+    /* Constructor */
     /**
      * Constructor UsuariPDI.
      * @param alies Alias de la persona.
@@ -29,8 +34,7 @@ public class UsuariPDI extends Usuari{
     }
 
 
-    //Getters 
-
+    /* Getters y Setters */
     /**
      * Getter de departamento.
      * @return nombre del departammento.
@@ -46,9 +50,6 @@ public class UsuariPDI extends Usuari{
     public String getCampus(){
         return campus.getNomCampus();
     }
-    
-
-    //Setters
 
     public void setCampus(CampusURV noCampusURV){
         this.campus = noCampusURV;
@@ -59,8 +60,7 @@ public class UsuariPDI extends Usuari{
     }
 
 
-    //Métodos abstractos del padre.
-    
+    /* Métodos */
     /**
      * Mètode que retorna informació extra de cada tipus d'usuari
      * 
