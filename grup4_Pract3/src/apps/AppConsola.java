@@ -90,30 +90,30 @@ public class AppConsola {
                 case 7:  case7();  break;
                 // Detall d'un usuari pel seu àlies
                 case 8:  case8();  break;
-                // TODO: Activitats on està apuntat un usuari
+                // Activitats on està apuntat un usuari
                 case 9:  case9();  break;
             // --- GESTIÓ D'INSCRIPCIONS ---
                 // Inscriure's a una activitat
                 case 10:  case10();  break;
-                // TODO: Mostrar usuaris apuntats a una activitat i llista d'espera
+                // Mostrar usuaris apuntats a una activitat i llista d'espera
                 case 11:  case11();  break;
-                // TODO: Eliminar un usuari d'una activitat
+                // Eliminar un usuari d'una activitat
                 case 12:  case12();  break;
             // --- ALTES D'ACTIVITATS ---
                 // Afegir nova activitat d'un dia
                 case 13:  case13();  break;
                 // Afegir nova activitat periòdica
                 case 14:  case14();  break;
-                // TODO: Afegir nova activitat online
+                //  Afegir nova activitat online
                 case 15:  case15();  break;
             // --- VALORACIONS I ESTADÍSTIQUES ---
                 // TODO: Valorar una activitat
                 case 16:  case16();  break;
-                // TODO: Resum de valoracions d'activitats acabades
+                // Resum de valoracions d'activitats acabades
                 case 17:  case17();  break;
-                // TODO: Resum valoracions fetes per un usuari
+                // Resum valoracions fetes per un usuari
                 case 18:  case18();  break;
-                // TODO: Mitjana valoracions per col·lectiu
+                // Mitjana valoracions per col·lectiu
                 case 19:  case19();  break;
                 // Usuari més actiu d'un col·lectiu
                 case 20:  case20();  break;
