@@ -99,15 +99,6 @@ public class ActivitatOnline extends Activitat {
     // --- Implementació dels mètodes abstractes ---
 
     /**
-     * Retorna el tipus d'activitat en format text.
-     * @return "Online"
-     */
-    @Override
-    public String tipusActivitat() {
-        return "Online";
-    }
-
-    /**
      * Retorna el nombre màxim de places.
      * @return Integer.MAX_VALUE (il·limitades per a online)
      */
