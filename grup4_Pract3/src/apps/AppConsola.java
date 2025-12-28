@@ -116,7 +116,7 @@ public class AppConsola {
                 case 20:  case20();  break;
             // --- MANTENIMENT ---
                 // TODO: Donar de baixa activitats amb poca participació
-                case 21:  //case21();  break;
+                case 21:  case21();  break;
             // --- SORTIDA ---
                 // --- TANCAMENT I GUARDAT ---
                 case 22:  sortir = true;  case22();  break;
