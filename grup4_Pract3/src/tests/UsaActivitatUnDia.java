@@ -1,132 +1,73 @@
 package tests;
 
+import activitats.ActivitatUnDia;
+import enumeracions.Collectius;
+import excepcions.*;
 import extras.Data;
-import activitats.ActivitatUnDia;   //Importo la clase que quiero testear.
 
 public class UsaActivitatUnDia {
+
     public static void main(String[] args) {
-        System.out.println("\n\n---TEST ActivitatUnDia---");   
-        testConstructor();
-        testGetters();     
-        testCopia();
-        testEstaActiva();
-        testTipusActivitat();
-        testToString();
-        testToCSV();
-    }
 
-    private static void testConstructor(){
-        System.out.println("\n---TEST  CONSTRUCTOR---");
-        ActivitatUnDia act1 = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00),12, 35, 
-                                                25, 
-                                                11, 
-                                                "Amposta");
-        System.out.println(act1);
-    }
+        try {
+            // 1. Col·lectius
+            Collectius[] collectius = {
+                Collectius.ESTUDIANT,
+                Collectius.PDI
+            };
 
-    private static void testGetters(){
-        System.out.println("\n\n---TEST GETTERS---");
-        ActivitatUnDia act = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
-                                                25, 
-                                                11, 
-                                                "Amposta");
-        System.out.println("Hora: " + act.getHora());
-        System.out.println("Minuto: " + act.getMinuto());
-        System.out.println("Preu: " + act.getPreu());
-        System.out.println("Places: " + act.getPlaces());
-        System.out.println("Ciutat: " + act.getCiutat());
-        System.out.println("Data activitat: " + act.getData());
-    }
+            // 2. Dates d'inscripció
+            Data dataIniInsc = new Data(1, 3, 2025);
+            Data dataFiInsc  = new Data(10, 3, 2025);
 
-    private static void testCopia(){
-        System.out.println("\n\n---TEST COPIA---");
-        ActivitatUnDia original = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
-                                                25, 
-                                                11, 
-                                                "Amposta");
+            // 3. Data i hora de l'activitat
+            Data dataActivitat = new Data(15, 3, 2025, 10, 30);
 
-        ActivitatUnDia copia = original.copia();
+            // 4. Crear ActivitatUnDia
+            ActivitatUnDia act = new ActivitatUnDia(
+                "Visita laboratori",
+                collectius,
+                dataIniInsc,
+                dataFiInsc,
+                dataActivitat,
+                2,          // hores durada
+                15,         // minuts durada
+                20,         // places
+                12.5,       // preu
+                "Tarragona" // ciutat
+            );
 
-        System.out.println("\nOriginal: " + original);
-        System.out.println("\nCopia: " + copia);
-    }
+            // 5. Provar toString()
+            System.out.println("---- toString() ----");
+            System.out.println(act);
 
-    private static void testEstaActiva(){
-        System.out.println("\n\n---TEST ESTA ACTIVA---");
-        ActivitatUnDia dia = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00),12,35, 
-                                                25, 
-                                                11, 
-                                                "Amposta");
-        
-        //Dia de otro año.                                       
-        Data test1 = new Data(20,9,2023);
-        System.out.println("\n¿Activa el " + test1 + "?" + dia.estaActiva(test1));
+            // 6. Provar getters
+            System.out.println("\n---- Getters ----");
+            System.out.println("Ciutat: " + act.getCiutat());
+            System.out.println("Hora inici: " + act.getHora() + ":" + act.getMinuto());
+            System.out.println("Durada: " + act.getHoraDurada() + ":" + act.getMinutoDurada());
+            System.out.println("Places màximes: " + act.getPlacesMaximes());
+            System.out.println("Preu: " + act.getPreu());
 
-        //Mismo dia, pero hora previa al comienzo de la actividad.
-        Data test2 = new Data(5, 12, 2025,9,00);
-        System.out.println("\n¿Activa el " + test2 + "?" + dia.estaActiva(test2));
+            // 7. Provar estaActiva / avuiHiHaClase
+            Data avui = new Data(15, 3, 2025);
+            System.out.println("\n---- Activitat avui? ----");
+            System.out.println("estaActiva: " + act.estaActiva(avui));
+            System.out.println("avuiHiHaClase: " + act.avuiHiHaClase(avui));
 
-        //Mismo dia, en hora de actividad.
-        Data test3 = new Data(5, 12, 2025,12,00);
-        System.out.println("\n¿Activa el " + test3 + "?" + dia.estaActiva(test3));
+            // 8. Provar copia()
+            System.out.println("\n---- Copia ----");
+            ActivitatUnDia copia = act.copia();
+            System.out.println(copia);
 
-        //Dia siguiente a la actividad.
-        Data test4 = new Data(6, 12, 2025,9,00);
-        System.out.println("\n¿Activa el " + test4 + "?" + dia.estaActiva(test4));
-    }
+            // 9. Provar toCSV()
+            System.out.println("\n---- toCSV() ----");
+            System.out.println(act.toCSV());
 
-    private static void testTipusActivitat(){
-        System.out.println("\n\n---TEST TIPUS ACTIVITAT---");
-        ActivitatUnDia act = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
-                                                25, 
-                                                11, 
-                                                "Amposta");
-        System.out.println("\nTipus: " + act.tipusActivitat());
-    }
-
-    private static void testToString() {
-        System.out.println("\n\n---TEST toString()---");
-        ActivitatUnDia act = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
-                                                25, 
-                                                11, 
-                                                "Amposta");
-        System.out.println(act.toString());
-    }
-
-    private static void testToCSV(){
-        System.out.println("\n\n---TEST toCSV()---");
-        ActivitatUnDia act = new ActivitatUnDia("Excursión al Delta", 
-                                                new String[]{"PDI", "Estudiant"}, 
-                                                new Data(1,11,2025,23,59), 
-                                                new Data(30,11,2025,23,59), 
-                                                new Data(5, 12, 2025, 10, 00), 
-                                                25, 
-                                                11, 
-                                                "Amposta");
-        System.out.println(act.toCSV());
+        } catch (ValorInexistent e) {
+            System.out.println("Error de valor: " + e.getMessage());
+        } catch (CollectiuDesconegut e) {
+            System.out.println("Error de col·lectiu: " + e.getMessage());
+        }
     }
 }
