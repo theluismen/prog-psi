@@ -11,6 +11,8 @@ import extras.*;
 
 
 public class ActivitatUnDia extends Activitat{
+
+    /* Atributos de la Clase */
     private final Data dataActivitatIhora; 
     private int horaDurada;
     private int minutosDurada;              
@@ -18,7 +20,7 @@ public class ActivitatUnDia extends Activitat{
     private double preu;               
     private final String ciutat;            
 
-
+    /* Constructor */
     /**
      * Constructor de ActivitatUnDia.
      * @param nom Nombre de la actividad.
@@ -74,8 +76,7 @@ public class ActivitatUnDia extends Activitat{
     }
 
 
-    //Getters...
-    
+    /* Getters y Setters */
     /**
      * Getter de fecha de la actividad.
      * @return fecha de tipo Data.
@@ -151,8 +152,7 @@ public class ActivitatUnDia extends Activitat{
     }
 
 
-    //Métodos de la clase padre.
-
+    /* Métodos */
     /**
      * Método que determina si la actividad está activa en la fecha dada.
      * 
@@ -163,7 +163,6 @@ public class ActivitatUnDia extends Activitat{
     public boolean estaActiva(Data hoy) {
         return this.dataActivitatIhora.esIgual(hoy);
     }
-
 
     /**
      * Método que determina si la actividad tiene clase en la fecha dada.
@@ -208,7 +207,10 @@ public class ActivitatUnDia extends Activitat{
         return copia;
     }
 
-    //Método para pasar toda la clase por string.
+    /**
+     * Método que transforma la información de la clase en una String.
+     * @return String con la informaciónd e la clase.
+     */
     @Override
     public String toString(){
         return"--- ACTIVITAT D'UN DIA ---\n" + 
@@ -223,6 +225,10 @@ public class ActivitatUnDia extends Activitat{
             "\tPreu: " + preu + " euros";
     }
 
+    /**
+     * Método que convierte el objeto de la clase a una líneade CSV.
+     * @return Stirng con formato .CSV.
+     */
     @Override
     public String toCSV(){
         String aux = "Activitat d'un dia;" + super.nom + ";";

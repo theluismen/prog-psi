@@ -19,10 +19,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class LlistaActivitats {        //falta crear llista
+    
+    /* Atributos de la Clase */
     private Activitat llista[];
     private int nElems;
 
-    
+
+    /* Constructor */
     /**
      * Constructor con el parametro para el tamaño de la lista
      * @param n tamaño total de la lista
@@ -33,6 +36,7 @@ public class LlistaActivitats {        //falta crear llista
     }
 
 
+    /* Getters y Setters */
     /**
      * Metode que retorna el nombre d'elements actuals a la llista
      * @return el total d'elements a la llista
@@ -40,7 +44,6 @@ public class LlistaActivitats {        //falta crear llista
     public int getNumElements(){
         return this.nElems;
     }
-
 
     /**
      * Metodo que devuelve la actividad en la posicion n
@@ -55,7 +58,8 @@ public class LlistaActivitats {        //falta crear llista
         return this.llista[n].copia();  
     }
 
-    
+
+    /* Métodos */
     /**
      * Metodo para añadir una actividad a la lista ordenado alfabeticamente por su nombre
      * si ya existe una actividad con el mismo nombre (ignora las mayusculas), lanzara un error
@@ -80,7 +84,7 @@ public class LlistaActivitats {        //falta crear llista
         this.nElems++;
     }
 
-    
+
     /**
      * Método que busca una actividad por el id de esta.
      * @param id Nombre de la actividad
@@ -107,7 +111,6 @@ public class LlistaActivitats {        //falta crear llista
         return act.copia();
     }
 
-
     /**
      * Metodo que comprueba si una actividad ya existe en la lista
      * @param nomAct
@@ -127,12 +130,12 @@ public class LlistaActivitats {        //falta crear llista
         return trobat;
     }
 
-
     /**
      * Método que elimina una actividad de al lista por su nombre.
      * @param act   Nombre de la actividad a eliminar.
+     * @throws ActivitatDesconeguda
      */
-    public void eliminar(String act){
+    public void eliminar(String act)throws ActivitatDesconeguda{
         int borrar = -1;
         boolean encontrado = false;
 
@@ -142,18 +145,19 @@ public class LlistaActivitats {        //falta crear llista
                 encontrado = true;
             }
         }
-        if(encontrado){
-            //Mover todos los ellementos a la izquierda
-            for(int i = borrar; i < nElems -1; i++){
-                this.llista[i]= this.llista[i + 1];
-            }
-            //Eliminar el valor de la última posición (duplicado).
-            this.llista[nElems -1] = null;
-            nElems--;
-            reduir();
-        }
-    }
 
+        if(!encontrado){
+            throw new ActivitatDesconeguda(act);
+        }
+        //Mover todos los ellementos a la izquierda
+        for(int i = borrar; i < nElems -1; i++){
+            this.llista[i]= this.llista[i + 1];
+        }
+        //Eliminar el valor de la última posición (duplicado).
+        this.llista[nElems -1] = null;
+        nElems--;
+        reduir();
+    }
 
     /**
      * Metodo que devuelve una nueva lista de actividades con solo las actividades de un tipo
@@ -189,7 +193,6 @@ public class LlistaActivitats {        //falta crear llista
         return nova;
     }
 
-
     /**
      * Metodo que devuelve una nueva lista con unicamente las actividades que tienen clase hoy
      * @param data
@@ -210,7 +213,6 @@ public class LlistaActivitats {        //falta crear llista
         return act;
     }
 
-    
     /**
      * Método que lee las actividades de un fichero.csv y lo guarda en una llista.
      * @param nomFichero    Nombre del fichero a leer.
@@ -241,7 +243,7 @@ public class LlistaActivitats {        //falta crear llista
                 for(int i = 0; i < strCollectiusSplit.length; i++){                                 //Colocar cada colectivo en array de tipo enum.
                     collectius[i] = Collectius.valueOf(strCollectiusSplit[i].trim().toUpperCase());
                 }
-                
+
                 //Fecha de inicio del período de inscripción.
                 int iniciInscripcioDia = scanner.nextInt();         
                 int iniciInscripcioMes = scanner.nextInt();         
@@ -333,7 +335,6 @@ public class LlistaActivitats {        //falta crear llista
         archivo.close();
     }
 
-
     /**
      * Metodo para guardar la lista en un fichero en formato CSV
      * @param fitxer nombre del fichero en el que se guardan los datos
@@ -359,8 +360,10 @@ public class LlistaActivitats {        //falta crear llista
         }
     }
 
-
-//toString
+    /**
+     * Método que convierte el objeto en una string.
+     * @return String del objeto.
+     */
     @Override
     public String toString(){
         String aux = "";
@@ -368,13 +371,11 @@ public class LlistaActivitats {        //falta crear llista
         for (int i = 0; i < nElems; i++){
             aux += this.llista[i]+"\n\n";
         }
-
         return aux;
     }
 
 
-
-//Metodos privados de la clase
+    /* Métodos privados de la clase*/
     /**
      * Metodo que amplia el tamaño del array de la lista
      */
@@ -386,7 +387,6 @@ public class LlistaActivitats {        //falta crear llista
         }
         this.llista = aux;
     }
-    
 
     /**
      * Método que reduce en uno el tamaño físico del array.
@@ -399,6 +399,4 @@ public class LlistaActivitats {        //falta crear llista
         }
         this.llista = aux;
     }
-    
-
 }
