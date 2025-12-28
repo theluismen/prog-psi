@@ -1,47 +1,45 @@
 package tests;
 
-import enumeraciones.CampusURV;
-import enumeraciones.DepartamentURV;
 import usuaris.UsuariPDI;
+import enumeracions.*;
 
 public class UsaUsuariPDI {
+
     public static void main(String[] args) {
-        System.out.println("\n---TEST UsuariPDI---");
-        testConstructor();
-        testSetters();
-        testTipusUsuari();
-        testCopia();
-    }
 
-    private static void testConstructor(){
-        System.out.println("\n\n---TEST CONSTRUCTOR---\n");
-        UsuariPDI pdi = new UsuariPDI("david", "david.G", "PDI", DepartamentURV.DEIM, CampusURV.SESCELADES);
-        System.out.println(pdi);
-    }
+        // 1. Crear un Usuari PDI
+        UsuariPDI pdi = new UsuariPDI(
+            "ainara",
+            "ainara@urv.cat",
+            Collectius.PDI,
+            DepartamentURV.DEIM,
+            CampusURV.SESCELADES
+        );
 
-    private static void testSetters(){
-        System.out.println("\n\n---TEST SETTERS---");
-        UsuariPDI pdi = new UsuariPDI("jhonson", "jhonsonsb", "PDI", DepartamentURV.DEQ, CampusURV.CATALUNYA);
-        System.out.println("\nAntes: ");
+        // 2. Provar toString()
+        System.out.println("---- toString() ----");
         System.out.println(pdi);
 
-        pdi.setDepartament(DepartamentURV.DEIM);
-        pdi.setCampus(CampusURV.SESCELADES);
-        System.out.println("\nDespués: ");
-        System.out.println(pdi); 
-    }
+        // 3. Provar getters
+        System.out.println("\n---- Getters ----");
+        System.out.println("Departament: " + pdi.getdepartament());
+        System.out.println("Campus: " + pdi.getCampus());
 
-    private static void testTipusUsuari(){
-        System.out.println("\n\n---TEST TIPUS USUARI---");
-        UsuariPDI pdi = new UsuariPDI("lucia", "luciaaerna", "PDI", DepartamentURV.DEQ, CampusURV.SESCELADES);
+        // 4. Provar dadesExtra()
+        System.out.println("\n---- dadesExtra() ----");
+        System.out.println(pdi.dadesExtra());
+
+        // 5. Provar tipusUsuari()
+        System.out.println("\n---- tipusUsuari() ----");
         System.out.println(pdi.tipusUsuari());
-    }
 
-    private static void testCopia(){
-        System.out.println("\n\n---TEST COPIA---");
-        UsuariPDI original = new UsuariPDI("jhonson", "jhonsonsb", "PDI", DepartamentURV.DEQ, CampusURV.CATALUNYA);
-        UsuariPDI copia = original.copia();
-        System.out.println("\nOriginal: \n" + original);
-        System.out.println("\nCopia: \n" + copia);
+        // 6. Provar copia()
+        System.out.println("\n---- copia() ----");
+        UsuariPDI copia = pdi.copia();
+        System.out.println(copia);
+
+        // 7. Provar toCSV()
+        System.out.println("\n---- toCSV() ----");
+        System.out.println(pdi.toCSV());
     }
 }
