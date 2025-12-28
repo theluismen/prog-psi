@@ -34,6 +34,7 @@ public class LlistaInscripcions implements Serializable {
     /**
      * Retorna el número d'elements actuals a la llista.
      * Necessari per recórrer la llista quan es retorna com a objecte.
+     * @return enter amb el nombre d'elements.
      */
     public int getNumElements() {
         return nElems;
@@ -42,8 +43,9 @@ public class LlistaInscripcions implements Serializable {
     /**
      * Retorna la inscripció de la posició n.
      * Necessari per accedir als elements quan es retorna la llista com a objecte.
-     * @param n Índex de l'element
-     * @return Còpia de la inscripció
+     * @param n Índex de l'element.
+     * @return Còpia de la inscripció.
+     * @throws IndexOutOfBoundsException si l'índex no és vàlid.
      */
     public Inscripcio getInscripcioIesima(int n) {
         if (n < 0 || n >= nElems) {
@@ -53,7 +55,8 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Afegeix una inscripció al final de la llista
+     * Afegeix una inscripció al final de la llista.
+     * @param ins Objecte Inscripcio a afegir.
      * @throws InscripcioDuplicada Si l'usuari ja està inscrit a aquesta activitat.
      */
     public void afegirInscripcio(Inscripcio ins) throws InscripcioDuplicada {
@@ -106,8 +109,10 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Cerca la posició d'una inscripció a l'array
-     * @return índex de la inscripció o -1 si no la troba
+     * Cerca la posició d'una inscripció a l'array.
+     * @param idUsuari Identificador de l'usuari.
+     * @param idActivitat Identificador de l'activitat.
+     * @return índex de la inscripció o -1 si no la troba.
      */
     private int cercaPosicio(String idUsuari, String idActivitat) {
         for (int i = 0; i < nElems; i++) {
@@ -121,8 +126,10 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Comprova si existeix una inscripció
-     * @return true si existeix, false si no
+     * Comprova si existeix una inscripció.
+     * @param idUsuari Identificador de l'usuari.
+     * @param idActivitat Identificador de l'activitat.
+     * @return true si existeix, false si no.
      */
     public boolean existeix(String idUsuari, String idActivitat) {
         // Uso el mètode cercaPosicio per saber si hi és
@@ -130,7 +137,10 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Retorna l'objecte Inscripcio per poder consultar-lo o modificar-lo (ex: posar nota)
+     * Retorna l'objecte Inscripcio per poder consultar-lo o modificar-lo (ex: posar nota).
+     * @param idUsuari Identificador de l'usuari.
+     * @param idActivitat Identificador de l'activitat.
+     * @return L'objecte Inscripcio trobat o null si no existeix.
      */
     public Inscripcio getInscripcio(String idUsuari, String idActivitat) {
         int pos = cercaPosicio(idUsuari, idActivitat);
@@ -141,8 +151,10 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Compta quantes persones hi ha inscrites a una activitat concreta
-     * Útil per saber si l'activitat està plena
+     * Compta quantes persones hi ha inscrites a una activitat concreta.
+     * Útil per saber si l'activitat està plena.
+     * @param idActivitat Identificador de l'activitat.
+     * @return Nombre total d'inscripcions per a l'activitat.
      */
     public int comptarInscripcionsActivitat(String idActivitat) {
         int comptador = 0;
@@ -154,11 +166,12 @@ public class LlistaInscripcions implements Serializable {
         return comptador; // Al final retorno el total que he comptat
     }
 
-    // --- MÈTODES QUE ARA RETORNEN LlistaInscripcions (MODIFICATS) ---
+    // --- MÈTODES QUE ARA RETORNEN LlistaInscripcions  ---
 
     /**
-     * Retorna una llista amb totes les inscripcions d'un usuari
-     * @return LlistaInscripcions amb els elements trobats
+     * Retorna una llista amb totes les inscripcions d'un usuari.
+     * @param idUsuari Identificador de l'usuari.
+     * @return LlistaInscripcions amb els elements trobats.
      */
     public LlistaInscripcions getInscripcionsUsuari(String idUsuari) {
         LlistaInscripcions resultat = new LlistaInscripcions();
@@ -204,7 +217,7 @@ public class LlistaInscripcions implements Serializable {
      * @return true si està plena (o hi ha llista d'espera), false si queda lloc.
      */
     public boolean activitatEstaPlena(String idActivitat, int placesMaximes) {
-        // Si placesMaximes és molt gran (ex: Integer.MAX_VALUE per Online), mai estarà plena
+
         if (placesMaximes == Integer.MAX_VALUE) return false;
 
         return comptarInscripcionsActivitat(idActivitat) >= placesMaximes;
@@ -243,6 +256,9 @@ public class LlistaInscripcions implements Serializable {
     /**
      * Retorna LlistaInscripcions NOMÉS amb les inscripcions que estan EN ESPERA.
      * (Les que han arribat després d'omplir les places).
+     * @param idActivitat Identificador de l'activitat.
+     * @param placesMaximes Nombre màxim de places.
+     * @return LlistaInscripcions amb els usuaris en espera.
      */
     public LlistaInscripcions getLlistaEspera(String idActivitat, int placesMaximes) {
         // 1. Obtenim tots els inscrits ordenats per arribada (ara és un objecte LlistaInscripcions)
@@ -267,6 +283,9 @@ public class LlistaInscripcions implements Serializable {
 
     /**
      * Retorna LlistaInscripcions NOMÉS amb les inscripcions admeses (dins del límit).
+     * @param idActivitat Identificador de l'activitat.
+     * @param placesMaximes Nombre màxim de places.
+     * @return LlistaInscripcions amb els usuaris admesos.
      */
     public LlistaInscripcions getAdmesos(String idActivitat, int placesMaximes) {
         LlistaInscripcions tots = getInscripcionsActivitat(idActivitat);
@@ -288,7 +307,8 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Guarda la llista serialitzada (l'objecte sencer) al fitxer
+     * Guarda la llista serialitzada (l'objecte sencer) al fitxer.
+     * @param rutaFitxer Ruta on es guardarà el fitxer .dat.
      */
     public void guardarLlista(String rutaFitxer) {
         try {
@@ -301,8 +321,10 @@ public class LlistaInscripcions implements Serializable {
     }
 
     /**
-     * Carrega la llista des del fitxer i la retorna
-     * És static perquè crea una nova instància de la llista
+     * Carrega la llista des del fitxer i la retorna.
+     * És static perquè crea una nova instància de la llista.
+     * @param rutaFitxer Ruta del fitxer .dat a carregar.
+     * @return La LlistaInscripcions llegida o una buida si no existeix.
      */
     public static LlistaInscripcions carregarFitxer(String rutaFitxer) {
         LlistaInscripcions llistaLlegida = new LlistaInscripcions();
@@ -320,9 +342,13 @@ public class LlistaInscripcions implements Serializable {
         return llistaLlegida;
     }
 
+    /**
+     * Retorna una representació en text de totes les inscripcions de la llista.
+     * @return String amb les dades de les inscripcions, una per línia.
+     */
     @Override
     public String toString() {
-        // Creo un String o un StringBuilder per anar muntant el text
+        // Creo un StringBuilder per anar muntant el text
         // Recorro la llista i vaig afegint el toString() de cada inscripció seguit d'un salt de línia
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < nElems; i++) {
