@@ -1,4 +1,7 @@
-//Aesha Naz
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * Descripció: classe excepció Col·lectiu Desconegut
+ */
 package excepcions;
 
 public class CollectiuDesconegut extends Exception {

@@ -1,4 +1,7 @@
-//Aesha Naz
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * Descripció: classe excepció Format Invalid dels fitxers
+ */
 package excepcions;
 
 public class FormatInvalid extends Exception {

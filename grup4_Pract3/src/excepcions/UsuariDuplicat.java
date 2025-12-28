@@ -1,4 +1,8 @@
-//Aesha Naz
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * Descripció: exepció que indica que s'ha intentat afegir un usuari amb un 
+ * àlies que ja existeix a la llista
+ */
 package excepcions;
 
 public class UsuariDuplicat extends Exception {
