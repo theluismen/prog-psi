@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LlistaActivitats {        //falta crear llista
@@ -216,22 +217,25 @@ public class LlistaActivitats {        //falta crear llista
     /**
      * Método que lee las actividades de un fichero.csv y lo guarda en una llista.
      * @param nomFichero    Nombre del fichero a leer.
-     * @throws IOException
      */
-    public void carregarFitxer(String nomFichero) throws IOException{
+    public void carregarFitxer(String nomFichero){
+        
         BufferedReader archivo = null;
         String linea;   //Variable almacena cada linea leida del fichero
         int nLinea = 1; //Contador de line apara indicar el error
-        //Abro el archivo y lo leo.
-        archivo = new BufferedReader(new FileReader(nomFichero));
-        linea = archivo.readLine();
 
-        while(linea != null){
+        try{
+            //Abro el archivo y lo leo.
+            archivo = new BufferedReader(new FileReader(nomFichero));
+            linea = archivo.readLine();
+
+            while (linea != null) {
             Scanner scanner = new Scanner(linea);   //Trabajamos la linea de manera individual.
             scanner.useDelimiter(";");              //Separo la linea en cada elemento del objeto.
 
             try{
                 Activitat nuevaAct = null;
+
                 //Posiciones comunes para todas las actividades.
                 String tipoAct = scanner.next();    //Leo el tipo de actividad.
                 String nom = scanner.next();        //Nombre actividad.
@@ -240,8 +244,14 @@ public class LlistaActivitats {        //falta crear llista
                 String collectiusStr = scanner.next();                                              //Lectura de string.
                 String[] strCollectiusSplit = collectiusStr.split(",");                             //Separación de colectivos por comas.
                 Collectius[] collectius = new Collectius[strCollectiusSplit.length];                //Creamos instancia del enum.
+
                 for(int i = 0; i < strCollectiusSplit.length; i++){                                 //Colocar cada colectivo en array de tipo enum.
-                    collectius[i] = Collectius.valueOf(strCollectiusSplit[i].trim().toUpperCase());
+
+                    try{
+                        collectius[i] = Collectius.valueOf(strCollectiusSplit[i].trim().toUpperCase());
+                    }catch(IllegalArgumentException e){
+                        throw new CollectiuDesconegut(strCollectiusSplit[i]);
+                    }
                 }
 
                 //Fecha de inicio del período de inscripción.
@@ -256,9 +266,11 @@ public class LlistaActivitats {        //falta crear llista
                 int fiInscripcioAny = scanner.nextInt();    
                 Data fiInscripcio = new Data(fiInscripcioDia, fiInscripcioMes, fiInscripcioAny);            
 
+                //Tipo actividad.
                 if (tipoAct.equalsIgnoreCase("Activitat periodica")) {
-                    String diaSetmanaStr = scanner.next().toUpperCase();
-                    DiaSetmana diaSetmana = DiaSetmana.valueOf(diaSetmanaStr);
+
+                    DiaSetmana diaSetmana = DiaSetmana.valueOf(scanner.next().toUpperCase());
+
                     double duracio = scanner.nextDouble();
 
                     int diaAct = scanner.nextInt();
@@ -276,10 +288,10 @@ public class LlistaActivitats {        //falta crear llista
 
                     //Creo activitat.
                     nuevaAct = new ActivitatPeriodica(nom, collectius, iniciInscripcio, fiInscripcio,
-                                                            diaSetmana, duracio, diaYHoraInicio, setmanes, 
-                                                            places, preu, centre, ciutat);
-                        
+                                                        diaSetmana, duracio, diaYHoraInicio, setmanes, 
+                                                        places, preu, centre, ciutat);
                 }else if(tipoAct.equalsIgnoreCase("Activitat d'un dia")){
+
                     int diaAct = scanner.nextInt();
                     int mesAct = scanner.nextInt();
                     int anyAct = scanner.nextInt();
@@ -297,7 +309,7 @@ public class LlistaActivitats {        //falta crear llista
                     nuevaAct = new ActivitatUnDia(nom, collectius, iniciInscripcio, fiInscripcio, diaYHoraInicio, 
                                                         horaDurada, minutosDurada, places, preu, ciutat);
                         
-                }else if(tipoAct.equalsIgnoreCase("Online")){   //preguntar de unificar nomeclatura
+                }else if(tipoAct.equalsIgnoreCase("Activitat Online")){   
                     int diaAct = scanner.nextInt();
                     int mesAct = scanner.nextInt();
                     int anyAct = scanner.nextInt();
@@ -310,29 +322,43 @@ public class LlistaActivitats {        //falta crear llista
                     nuevaAct = new ActivitatOnline(nom, collectius, iniciInscripcio, fiInscripcio, 
                                                         diaInicio, periodoVisualizacion, enlace);   
                     
+                }else {
+                    throw new IllegalArgumentException("Tipus d'activitat deconegut");
                 }
+
                 if(nuevaAct != null){
-                    //Añadir a la lsita el objeto.
-                    this.afegir(nuevaAct);
+                    this.afegir(nuevaAct);  //Añadir a la lsita el objeto.
                 }
-            }catch(ValorInexistent e){
-                System.out.println("Línia " + nLinea + ": Valor inexistent → " + e.getMessage());
-            }catch(CollectiuDesconegut e){
-                System.out.println("Línia " + nLinea + ": Col·lectiu desconegut → " + e.getMessage());
-            }catch(ActivitatDuplicada e){
-                System.out.println("Línia " + nLinea + ": Activitat duplicada → " + e.getMessage());
-            }catch(IllegalArgumentException e){
-                System.out.println("Línia " + nLinea + ": Error en DiaSetmana o format incorrecte → " + e.getMessage());
-            }catch(Exception e){
-                System.out.println("Línia " + nLinea + ": Error inesperat → " + e.getMessage());
-            }finally{
+            } catch (InputMismatchException e) {
+                System.out.println("Línia " + nLinea + ": Error de format numèric");
+            } catch (ValorInexistent e) {
+                System.out.println("Línia " + nLinea + ": Valor inexistent");
+            } catch (CollectiuDesconegut e) {
+                System.out.println("Línia " + nLinea + ": Col·lectiu desconegut");
+            } catch (ActivitatDuplicada e) {
+                System.out.println("Línia " + nLinea + ": Activitat duplicada");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Línia " + nLinea + ": Error de format");
+            } finally {
                 scanner.close();
             }
-              
+
             linea = archivo.readLine();
             nLinea++;
+            }
+        }catch (FileNotFoundException e) {
+            System.out.println("No s'ha trobat el fitxer: " + nomFichero);
+        } catch (IOException e) {
+            System.out.println("Error llegint el fitxer");
+        } finally {
+            try {
+                if (archivo != null) {
+                    archivo.close();
+                }
+            } catch (IOException e) {
+                System.out.println("Error tancant el fitxer");
+            }
         }
-        archivo.close();
     }
 
     /**
