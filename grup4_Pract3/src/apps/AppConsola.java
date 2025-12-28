@@ -288,7 +288,7 @@ public class AppConsola {
 
     private static void case4(){
         LlistaActivitats claseAvui = llistaActivitats.claseAvui(dataActual);
-        String aux = "" ;
+        String aux;
         System.out.println("\n-- A continuació es mostrarà el detall d'informació de cada activitat, seguit de les places ocupades y de la gent en espera,"+
                                 "amb clase en la data: "+dataActual+" --");
         
@@ -1403,5 +1403,4 @@ public class AppConsola {
 
         return data;
     }
-
 }
