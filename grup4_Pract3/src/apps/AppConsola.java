@@ -853,11 +853,10 @@ public class AppConsola {
             System.out.print("A quin col·lectiu va dirigida? (ESTUDIANT, PDI, PTGAS): ");
             String colStr = teclat.nextLine().toUpperCase();
             Collectius col = Collectius.valueOf(colStr);
-            Collectius[] cols = { col };
-
+            
 
             // 6. Creació i Inserció
-            ActivitatOnline novaAct = new ActivitatOnline(nom, cols, dIniInsc, dFiInsc, dIniAct, dies, enllac);
+            ActivitatOnline novaAct = new ActivitatOnline(nom, col, dIniInsc, dFiInsc, dIniAct, dies, enllac);
 
             llistaActivitats.afegir(novaAct);
             System.out.println("Activitat Online \"" + nom + "\" afegida correctament!");
