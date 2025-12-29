@@ -104,7 +104,7 @@ public class AppConsola {
                 //  Afegir nova activitat online
                 case 15:  case15();  break;
             // --- VALORACIONS I ESTADÍSTIQUES ---
-                // TODO: Valorar una activitat
+                // Valorar una activitat
                 case 16:  case16();  break;
                 // Resum de valoracions d'activitats acabades
                 case 17:  case17();  break;
@@ -115,7 +115,7 @@ public class AppConsola {
                 // Usuari més actiu d'un col·lectiu
                 case 20:  case20();  break;
             // --- MANTENIMENT ---
-                // TODO: Donar de baixa activitats amb poca participació
+                // Donar de baixa activitats amb poca participació
                 case 21:  case21();  break;
             // --- SORTIDA ---
                 // --- TANCAMENT I GUARDAT ---
@@ -150,21 +150,21 @@ public class AppConsola {
         System.out.println("2. Mostrar les llistes");
         System.out.println("3. Consultar les activitats en període d'inscripció");
         System.out.println("4. Consultar les activitats amb clase avui");
-        System.out.println("5. ");
+        System.out.println("5. Activitats actives AVUI (dins període)");
         System.out.println("6. Consultar les activitats amb places disponibles");
-        System.out.println("7. ");
+        System.out.println("7. Detall d'una activitat pel seu nom");
         System.out.println("8. Buscar la informació d'un usuari");
         System.out.println("9. Consultar les activitats on està apuntat un usuari ");
         System.out.println("10. Inscriure"); 
-        System.out.println("11. ");
-        System.out.println("12. ");
+        System.out.println("11. Mostrar usuaris apuntats a una activitat i llista d'espera");
+        System.out.println("12. Eliminar un usuari d'una activitat");
         System.out.println("13. Afegir activitat d'un dia");
         System.out.println("14. Afegir activitat periodica");
-        System.out.println("15. ");
-        System.out.println("16. ");
+        System.out.println("15. Afegir nova activitat online");
+        System.out.println("16. Valorar una activitat");
         System.out.println("17. Consultar valoracions d'activitats acabades ");
         System.out.println("18. Consultar valoracions fetes per un usuari"); 
-        System.out.println("19. ");
+        System.out.println("19. Mitjana valoracions per col·lectiu");
         System.out.println("20. Consultar l'usuari més actiu");
         System.out.println("21. Donar de baixa alguna activitat"); 
         System.out.println("22. Sortir");
