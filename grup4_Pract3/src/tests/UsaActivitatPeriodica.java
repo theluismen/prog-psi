@@ -3,7 +3,7 @@
 package tests;
 import activitats.*;
 import extras.*;
-import enumeraciones.*;
+import enumeracions.*;
 
 public class UsaActivitatPeriodica {
 

@@ -7,7 +7,7 @@ package tests;
 import java.io.IOException;
 
 import activitats.*;
-import enumeraciones.*;
+import enumeracions.*;
 import extras.*;
 import llistes.*;
 
