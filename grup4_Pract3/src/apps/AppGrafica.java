@@ -76,6 +76,21 @@ public class AppGrafica extends JFrame{
 
         // TODO: AÑADIR AQUI TODOS LOS BOTONES Y COMBOBOX NECESARIOS EN FORMULARIO
         
+        // CHECK BOX DELS TIPUS D'ACTIVITATS
+        JCheckBox checkOnline = new JCheckBox("Activitat Online");
+        JCheckBox checkPeriodica = new JCheckBox("Activitat Periòdica");
+        JCheckBox checkUnDia = new JCheckBox("Activitat Un Dia");
+
+        //per defecte tots estan seleccionats
+        checkOnline.setSelected(true);
+        checkPeriodica.setSelected(true);
+        checkUnDia.setSelected(true);
+
+        //Ho afegim al formulari
+        formulario.add(new JLabel("Tipus d'Activitat"));
+        formulario.add(checkOnline);
+        formulario.add(checkPeriodica);
+        formulario.add(checkUnDia);
 
         // DESPLEGABLE
         JLabel lblMes = new JLabel("Mes (2025):");
