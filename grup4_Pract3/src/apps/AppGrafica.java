@@ -12,6 +12,9 @@ package apps;
 import java.awt.*;
 import java.util.Scanner;
 import javax.swing.*;
+
+import enumeracions.Mes;
+import gui.Actualitzador;
 import llistes.LlistaActivitats;
 import llistes.LlistaInscripcions;
 import llistes.LlistaUsuaris;
@@ -73,6 +76,18 @@ public class AppGrafica extends JFrame{
 
         // TODO: AÑADIR AQUI TODOS LOS BOTONES Y COMBOBOX NECESARIOS EN FORMULARIO
         
+
+        // DESPLEGABLE
+        JLabel lblMes = new JLabel("Mes (2025):");
+        formulario.add(lblMes);
+
+        JComboBox<Mes> comboMesos = new JComboBox<>(Mes.values());
+        comboMesos.setPreferredSize(new Dimension(120, 25));
+        formulario.add(comboMesos);
+
+        // BOTÓ "ACTUALITZAR"
+        JButton btnBuscar = new JButton("Actualitzar Calendari");
+        formulario.add(btnBuscar);
        
         /* JPanel tablaDeCalendario */
         tablaDeCalendario = new JPanel();
@@ -80,8 +95,15 @@ public class AppGrafica extends JFrame{
         tablaDeCalendario.setLayout(new GridLayout(6,7));
         add(tablaDeCalendario, BorderLayout.CENTER);
 
+
         // TODO: AÑADIR AQUI TODO LONECESARIO PARA TABLLACALENDARIO
 
+        //CONNEXIÓ DEL MANEJADOR 
+        /* Instanciem el nou manejador passant-li els components que ha de controlar */
+        ManejadorActualitzar manejador = new Actualitzador(comboMesos, tablaDeCalendario);
+        
+        // Connectem el botó amb el manejador
+        btnBuscar.addActionListener(manejador);
 
         /* JPanel cuadroDeTexto */
         cuadroDeTexto = new JPanel();
