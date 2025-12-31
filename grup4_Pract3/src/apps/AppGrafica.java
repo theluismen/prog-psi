@@ -9,15 +9,11 @@
  */
 package apps;
 
+import enumeracions.*;
+import gui.*;
 import java.awt.*;
-import java.util.Scanner;
 import javax.swing.*;
-
-import enumeracions.Mes;
-import gui.Actualitzador;
-import llistes.LlistaActivitats;
-import llistes.LlistaInscripcions;
-import llistes.LlistaUsuaris;
+import llistes.*;
 
 public class AppGrafica extends JFrame{
 
@@ -28,9 +24,9 @@ public class AppGrafica extends JFrame{
     private LlistaInscripcions llistaInscripcions;
 
     //Paneles de la GUI
-    private JPanel formulario;
-    private JPanel tablaDeCalendario;
-    private JPanel cuadroDeTexto;
+    private final JPanel formulario;
+    private final JPanel tablaDeCalendario;
+    private final JPanel cuadroDeTexto;
 
 
     /* Constructor */
@@ -75,8 +71,7 @@ public class AppGrafica extends JFrame{
         add(formulario,BorderLayout.NORTH);
 
         // TODO: AÑADIR AQUI TODOS LOS BOTONES Y COMBOBOX NECESARIOS EN FORMULARIO
-        
-        // CHECK BOX DELS TIPUS D'ACTIVITATS
+        //CHECKBOXES TIPUS ACTIVITAT
         JCheckBox checkOnline = new JCheckBox("Activitat Online");
         JCheckBox checkPeriodica = new JCheckBox("Activitat Periòdica");
         JCheckBox checkUnDia = new JCheckBox("Activitat Un Dia");
@@ -96,26 +91,26 @@ public class AppGrafica extends JFrame{
         JLabel lblMes = new JLabel("Mes (2025):");
         formulario.add(lblMes);
 
-        JComboBox<Mes> comboMesos = new JComboBox<>(Mes.values());
+        JComboBox<Mesos> comboMesos = new JComboBox<>(Mesos.values());
         comboMesos.setPreferredSize(new Dimension(120, 25));
         formulario.add(comboMesos);
 
         // BOTÓ "ACTUALITZAR"
         JButton btnBuscar = new JButton("Actualitzar Calendari");
         formulario.add(btnBuscar);
-       
+
+            
         /* JPanel tablaDeCalendario */
         tablaDeCalendario = new JPanel();
         tablaDeCalendario.setBackground(Color.PINK);                //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
         tablaDeCalendario.setLayout(new GridLayout(6,7));
         add(tablaDeCalendario, BorderLayout.CENTER);
 
-
         // TODO: AÑADIR AQUI TODO LONECESARIO PARA TABLLACALENDARIO
 
-        //CONNEXIÓ DEL MANEJADOR 
+
         /* Instanciem el nou manejador passant-li els components que ha de controlar */
-        ManejadorActualitzar manejador = new Actualitzador(comboMesos, tablaDeCalendario);
+        Actualitzador manejador = new Actualitzador(comboMesos, tablaDeCalendario, checkOnline, checkPeriodica, checkUnDia, llistaActivitats);
         
         // Connectem el botó amb el manejador
         btnBuscar.addActionListener(manejador);
