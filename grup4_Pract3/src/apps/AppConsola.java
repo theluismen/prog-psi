@@ -187,7 +187,7 @@ public class AppConsola {
 
 
     private static void case1(){
-        System.out.println("\nData actual del systema: " + dataActual);
+        System.out.println("\nData actual del systema: " + dataActual.getDia() + "/" + dataActual.getMes() + "/" + dataActual.getAny());
 
         System.out.println("\nVols canviar la data actual? (S/N): ");
         String respuesta = teclat.nextLine();
@@ -196,7 +196,7 @@ public class AppConsola {
             System.out.println("\n\tIntrodueix la nova data: ");
             dataActual = demanarData();
             
-            System.out.println("\n\tLa nova data actual del systema és: " + dataActual);
+            System.out.println("\n\tLa nova data actual del systema és: " + dataActual.getDia() + "/" + dataActual.getMes() + "/" + dataActual.getAny());
 
         }else if(respuesta.equalsIgnoreCase("N")){
             System.out.println("La data no s'ha modificat.");
