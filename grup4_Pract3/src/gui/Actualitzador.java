@@ -1,46 +1,67 @@
+/**
+ * Autor(@s): Aesha Naz Mahmood, Ikram Hallouz
+ * Descripció: classe que gestiona l'esdeveniment del botó "Actualitzar" en la interfície
+ * del calendari. Calcula els dies del mes seleccionat i dibuixa la graella del calendari,
+ * mostrant les activitats filtrades segons el tipus (online, periòdica, d'un dia).
+ */
 package gui;
 
+import activitats.Activitat;
+import activitats.ActivitatOnline;
+import activitats.ActivitatPeriodica;
+import activitats.ActivitatUnDia;
 import enumeracions.Mesos;
+import extras.Data;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-
-// TODO: AESHA -- Importar aquí LlistaActivitats i Data quan implementis els filtres
-// import llistes.LlistaActivitats;
-// import extras.Data;
+import llistes.LlistaActivitats;
 
 /**
- * Classe que gestiona l'esdeveniment del botó "Actualitzar".
+ * Classe que gestiona l'esdeveniment del botó "Actualitzar"
  * Calcula els dies del mes seleccionat i dibuixa la graella del calendari.
  */
 public class Actualitzador implements ActionListener {
 
-    // Calcular dies
-    private JComboBox<Mesos> comboMesos;
-    private JPanel tablaDeCalendario;
+    /** Atributs de la classe */
+    private final JComboBox<Mesos> comboMesos;
+    private final JPanel tablaDeCalendario;
 
-    // TODO: AESHA -- Aquí hauràs d'afegir els atributs per als filtres i la llista
-    // private JCheckBox chkUnDia, chkPeriodica, chkOnline;
-    // private LlistaActivitats llistaActivitats;
+    private final JCheckBox checkOnline;
+    private final JCheckBox checkPeriodica;
+    private final JCheckBox checkUnDia;
+
+    private final LlistaActivitats llistaActivitats;
+    
 
     /**
      * Constructor.
      * Rep els components de la finestra que necessitem manipular.
      */
-    public Actualitzador(JComboBox<Mesos> comboMesos, JPanel tablaDeCalendario /*, TODO: AESHA -- Afegir CheckBoxes i Llista aquí */) {
+    public Actualitzador(JComboBox<Mesos> comboMesos, JPanel tablaDeCalendario, JCheckBox checkOnline, 
+        JCheckBox checkPeriodica, JCheckBox checkUnDia, LlistaActivitats llistaActivitats) {
         this.comboMesos = comboMesos;
         this.tablaDeCalendario = tablaDeCalendario;
+        this.checkOnline = checkOnline;
+        this.checkPeriodica = checkPeriodica;
+        this.checkUnDia = checkUnDia;
+        this.llistaActivitats = llistaActivitats;
         
-        // TODO: AESHA -- Inicialitzar els teus atributs aquí
-        // this.chkUnDia = chkUnDia; ...
-        // this.llistaActivitats = llistaActivitats;
     }
 
+    /**
+     * Mètode que s'executa quan es fa clic al botó "Actualitzar"
+     * Calcula els dies del mes seleccionat, aplica el filtratge per tipus d'activitat
+     * i actualitza la graella del calendari amb els dies i activitats corresponents.
+     *
+     * @param e L'esdeveniment que ha disparat l'acció
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // Netejar la taula actual (esborrar el mes anterior)
@@ -62,6 +83,10 @@ public class Actualitzador implements ActionListener {
         // Si és Diumenge (1) deixem 6 buits. Si és Dilluns (2) en deixem 0.
         int casellesBuidesInici = (primerDiaSetmana == Calendar.SUNDAY) ? 6 : (primerDiaSetmana - 2);
 
+        boolean mostrarOnline = checkOnline.isSelected();
+        boolean mostrarPeriodica = checkPeriodica.isSelected();
+        boolean mostrarUnDia = checkUnDia.isSelected();
+
         // Bucle per crear les 42 caselles (6 files x 7 dies)
         int totalCaselles = 42;
         int diaActual = 1;
@@ -80,15 +105,32 @@ public class Actualitzador implements ActionListener {
                 botoDia.setBackground(Color.WHITE); // Blanc per defecte
 
                 /* * =================================================================
-                 * TODO: AESHA -- AQUI VA LA TEVA LÒGICA DE FILTRATGE
+                 *  LÒGICA DE FILTRATGE
                  * =================================================================
-                 * 1. Crear objecte Data: Data d = new Data(diaActual, mesSeleccionat.getNumeroMes(), any);
-                 * 2. Recórrer llistaActivitats.
-                 * 3. Comprovar si cada activitat és del tipus marcat als CheckBoxes.
-                 * 4. Si és del tipus marcat i hi ha classe avui (act.avuiHiHaClase(d)):
-                 * botoDia.setBackground(Color.GREEN); // Pintar verd
-                 * break; // Ja hem trobat una, no cal mirar més
                  */
+
+                
+                for (int j = 0; j < llistaActivitats.getNumElements(); j++) {
+                    try {
+                        Activitat act = llistaActivitats.getActivitatReal(j);
+
+                        boolean tipusCorrecte =
+                        (act instanceof ActivitatOnline && mostrarOnline) ||
+                        (act instanceof ActivitatPeriodica && mostrarPeriodica) ||
+                        (act instanceof ActivitatUnDia && mostrarUnDia);
+
+                        if (tipusCorrecte) {
+                            Data dataDia = new Data(diaActual, mesSeleccionat.getNumeroMes(), any);
+
+                            if (act.avuiHiHaClase(dataDia)) {
+                                botoDia.setBackground(Color.GREEN);
+                            }
+                        }
+
+                    } catch (Exception ex) {
+                    // no hauria de passar
+                    }
+                }
 
                 diaActual++;
             }
