@@ -1,3 +1,12 @@
+/**
+ * Autor: Aesha Naz Mahmood Bibi
+ * 
+ * Descripció: classe controlador del panell Formulari de la interfície gràfica
+ * S’encarrega de gestionar els esdeveniments del formulari, especialment
+ * el filtratge de les activitats segons el tipus
+ * (Online, Periòdica i Un Dia) mitjançant CheckBoxes
+ * 
+ */
 package gui;
 
 import activitats.*;
@@ -13,7 +22,7 @@ public class ControladorFormulari implements ActionListener {
     private final JCheckBox checkPeriodica;
     private final JCheckBox checkUnDia;
 
-    private LlistaActivitats llistaActivitats;
+    private final LlistaActivitats llistaActivitats;
     
     /** Constructor */
     public ControladorFormulari (JCheckBox checkOnline, JCheckBox checkPeriodica, 
@@ -22,6 +31,7 @@ public class ControladorFormulari implements ActionListener {
             this.checkOnline = checkOnline;
             this.checkPeriodica = checkPeriodica;
             this.checkUnDia = checkUnDia;
+            this.llistaActivitats = llistaActivitats;
         }
 
     @Override
