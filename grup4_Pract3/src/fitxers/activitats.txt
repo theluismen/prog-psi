@@ -1,2 +1,3 @@
-Online;Curs de Java Avan�at;PDI,PTGAS;1/1/2025;20/1/2025;10/1/2025;30;https://campus.urv.cat/curs-java
+Activitat Online;Curs de Java Avanzat;PDI,PTGAS;1;1;2025;20;1;2025;10;1;2025;30;https://campus.urv.cat/curs-java
+Activitat d'un dia;ceramica;PTGAS,ESTUDIANT;12;09;2025;22;09;2025;30;09;2025;15;30;3;30;38;40;Tarragona
 Activitat periodica;ioga;PDI,PTGAS;1;1;2025;20;1;2025;DILLUNS;1.5;10;1;2025;10;0;8;20;50.0;Centre Blau;Barcelona
