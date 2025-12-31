@@ -24,7 +24,14 @@ public class ControladorFormulari implements ActionListener {
 
     private final LlistaActivitats llistaActivitats;
     
-    /** Constructor */
+    /**
+     * Constructor de la classe ControladorFormulari.
+     *
+     * @param checkOnline JCheckBox per filtrar activitats Online
+     * @param checkPeriodica JCheckBox per filtrar activitats Periòdiques
+     * @param checkUnDia JCheckBox per filtrar activitats d'Un Dia
+     * @param llistaActivitats Llista d'activitats sobre la qual aplicar el filtratge
+     */
     public ControladorFormulari (JCheckBox checkOnline, JCheckBox checkPeriodica, 
         JCheckBox checkUnDia, LlistaActivitats llistaActivitats) {
             
@@ -34,6 +41,13 @@ public class ControladorFormulari implements ActionListener {
             this.llistaActivitats = llistaActivitats;
         }
 
+    /**
+     * Mètode que s'executa quan es produeix un esdeveniment (ActionEvent) en el formulari.
+     * Comprova l'estat dels CheckBoxes i mostra per consola les activitats filtrades
+     * segons el tipus seleccionat.
+     *
+     * @param e L'esdeveniment que ha disparat l'acció
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -63,5 +77,26 @@ public class ControladorFormulari implements ActionListener {
                 //No hauria de passar
             }
         }
+    }
+
+    /**
+     * Retorna una representació en cadena de l'objecte ControladorFormulari.
+     *
+     * @return String resum de l'objecte, incloent els estats dels CheckBoxes
+     */
+    @Override
+    public String toString() {
+        return "ControladorFormulari [Online=" + checkOnline.isSelected() +
+               ", Periodica=" + checkPeriodica.isSelected() +
+               ", UnDia=" + checkUnDia.isSelected() + "]";
+    }
+
+     /**
+     * Retorna una còpia de l'objecte ControladorFormulari.
+     *
+     * @return nova instància de ControladorFormulari amb els mateixos atributs
+     */
+    public ControladorFormulari copia() {
+        return new ControladorFormulari(checkOnline, checkPeriodica, checkUnDia, llistaActivitats);
     }
 }
