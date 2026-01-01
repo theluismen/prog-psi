@@ -270,7 +270,7 @@ public class Data {
      */
     @Override
     public String toString() {
-        return("\tDATA => dia "+dia+" mes "+mes+" any "+any+" hora "+hora+":"+minuts);
+        return(" dia "+dia+" mes "+mes+" any "+any+" hora "+hora+":"+minuts);
     }
 
 

@@ -136,9 +136,13 @@ public class ActivitatOnline extends Activitat {
      */
     @Override
     public String toString() {
-        return super.toString() +
-               "Tipus: Online" + "\n" +
-               "Data Inici Activitat: " + this.dataInici + "\n" +
+        return "--- ACTIVITAT ONLINE ---\n" +
+                super.toString() +
+               "Data Inici Activitat: dia " + this.dataInici.getDia() + 
+               " mes " + this.dataInici.getMes() + 
+               " any " + this.dataInici.getAny() + 
+               " hora " + String.format("%02d", this.dataInici.getHora()) + 
+               ":" + String.format("%02d", this.dataInici.getMinuts()) + "\n" +
                "Període: " + this.periodeVisualitzacio + " dies" + "\n" +
                "Enllaç: " + this.enllac + "\n";
     }

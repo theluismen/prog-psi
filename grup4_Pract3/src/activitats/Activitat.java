@@ -151,9 +151,16 @@ public abstract class Activitat {
             info += collectiu[i].name()+", ";
         }
 
-        info += "\nPeríode inscripció: " + dataIniciInscripcio +
-                " fins " + dataFiInscripcio + "\n";
-
+        info += "\nPeríode inscripció: dia " + dataIniciInscripcio.getDia() + 
+                                    " mes " + dataIniciInscripcio.getMes() + 
+                                    " any " + dataIniciInscripcio.getAny() + 
+                                    " hora " + String.format("%02d", dataIniciInscripcio.getHora()) + 
+                                    ":" + String.format("%02d", dataIniciInscripcio.getMinuts()) + 
+                                    " fins dia " + dataFiInscripcio.getDia() + 
+                                    " mes " + dataFiInscripcio.getMes() + 
+                                    " any " + dataFiInscripcio.getAny() + 
+                                    " hora " + String.format("%02d", dataFiInscripcio.getMes()) + 
+                                    ":" + String.format("%02d", dataFiInscripcio.getMinuts()) + "\n";
         return info;
     }
 }

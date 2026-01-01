@@ -113,7 +113,7 @@ public class AppGrafica extends JFrame{
         infoActivitats.setLayout(new BorderLayout());
         cuadroDeTexto = new JTextArea();
         infoActivitats.setBackground(Color.WHITE);
-        infoActivitats.setPreferredSize(new Dimension(25, 0));
+        infoActivitats.setPreferredSize(new Dimension(550, 0));
         JScrollPane scroll = new JScrollPane(cuadroDeTexto);
         infoActivitats.add(scroll, BorderLayout.EAST);
         infoActivitats.add(cuadroDeTexto, BorderLayout.CENTER);
@@ -123,8 +123,8 @@ public class AppGrafica extends JFrame{
         //Esta hecho dentro de la clase BotoDia, que se usa en la clase Actualitzador
         //También usa el metodo "afegirText" desde dentro de la clase del boton
 
-        //pack();  //COMANDO PARA QUE UNA VEZ QUE ESTEN TODOS LOS BOXES Y BOTONES SE AJUSTE AUTOMATICAMENTE EL TAMAÑO DEL JPANEL
-        setSize(900, 600);
+       
+        setSize(1200, 800);
     }
 
     public void afegirText(String s){

@@ -215,14 +215,12 @@ public class ActivitatUnDia extends Activitat{
     public String toString(){
         return"--- ACTIVITAT D'UN DIA ---\n" + 
             super.toString()+
-            "\tData d'inici de període de l'inscripció: " + dataIniciInscripcio.getDia() + "/" + dataIniciInscripcio.getMes() + "/" + dataIniciInscripcio.getAny() + "\n" +
-            "\tData de fi de període de l'inscripció: " + dataFiInscripcio.getDia() + "/" + dataFiInscripcio.getMes() + "/" + dataFiInscripcio.getAny() + "\n" +
-            "\tData: " + dataActivitatIhora.getDia() + "/" + dataActivitatIhora.getMes() + "/" + dataActivitatIhora.getAny() + 
-            " a les " + String.format("%02d", dataActivitatIhora.getHora()) + ":" + String.format("%02d", dataActivitatIhora.getMinuts()) + "\n" + 
-            "\tDurada: " + String.format("%02d", horaDurada) +  ":" + String.format("%02d", minutosDurada) + "\n" +
-            "\tCiutat: " + ciutat + "\n" +
-            "\tPlaces disponibles: " + places + "\n" +
-            "\tPreu: " + preu + " euros";
+            "Data: dia " + dataActivitatIhora.getDia() + " mes " + dataActivitatIhora.getMes() + " any " + dataActivitatIhora.getAny() + 
+            " hora " + String.format("%02d", dataActivitatIhora.getHora()) + ":" + String.format("%02d", dataActivitatIhora.getMinuts()) + "\n" + 
+            "Durada: " + String.format("%02d", horaDurada) +  ":" + String.format("%02d", minutosDurada) + "\n" +
+            "Ciutat: " + ciutat + "\n" +
+            "Places disponibles: " + places + "\n" +
+            "Preu: " + preu + " euros";
     }
 
     /**
