@@ -233,7 +233,11 @@ public class ActivitatUnDia extends Activitat{
 
         if (super.collectiu != null) {
             for (int i = 0; i < super.collectiu.length; i++){
-                aux += super.collectiu[i].name();
+                if(i != (super.collectiu.length - 1)){
+                    aux += super.collectiu[i].name() + ",";
+                } else{
+                    aux += super.collectiu[i].name() + ";";
+                }
             } 
         } else {
             aux += ";"; // si no hi ha collectius
@@ -257,5 +261,6 @@ public class ActivitatUnDia extends Activitat{
                this.ciutat;
                
         return aux;
+        
     }
 }
