@@ -289,8 +289,8 @@ public class AppConsola {
     private static void case4(){
         LlistaActivitats claseAvui = llistaActivitats.claseAvui(dataActual);
         String aux;
-        System.out.println("\n-- A continuació es mostrarà el detall d'informació de cada activitat, seguit de les places ocupades y de la gent en espera,"+
-                                "amb clase en la data: "+dataActual+" --");
+        System.out.println("\n-- Detall d'informació de cada activitat, places ocupades y gent en espera,"+
+                                " amb clase en: "+dataActual+" --");
         
         for (int i = 0; i < claseAvui.getNumElements(); i++){
             try{
@@ -1344,7 +1344,7 @@ public class AppConsola {
 
 
     //metodo para pedir los colectivos
-        private static Collectius[] demanarColectius(){
+    private static Collectius[] demanarColectius(){
         boolean res = false;
         Collectius col = null;
         String[] cols;

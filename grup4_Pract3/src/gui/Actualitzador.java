@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import llistes.LlistaActivitats;
+import apps.*;
 
 /**
  * Classe que gestiona l'esdeveniment del botó "Actualitzar"
@@ -32,6 +33,7 @@ public class Actualitzador implements ActionListener {
     /** Atributs de la classe */
     private final JComboBox<Mes> comboMesos;
     private final JPanel tablaDeCalendario;
+    private final AppGrafica ventana;
 
     private final JCheckBox checkOnline;
     private final JCheckBox checkPeriodica;
@@ -45,13 +47,14 @@ public class Actualitzador implements ActionListener {
      * Rep els components de la finestra que necessitem manipular.
      */
     public Actualitzador(JComboBox<Mes> comboMesos, JPanel tablaDeCalendario, JCheckBox checkOnline, 
-        JCheckBox checkPeriodica, JCheckBox checkUnDia, LlistaActivitats llistaActivitats) {
+        JCheckBox checkPeriodica, JCheckBox checkUnDia, LlistaActivitats llistaActivitats, AppGrafica ventana) {
         this.comboMesos = comboMesos;
         this.tablaDeCalendario = tablaDeCalendario;
         this.checkOnline = checkOnline;
         this.checkPeriodica = checkPeriodica;
         this.checkUnDia = checkUnDia;
         this.llistaActivitats = llistaActivitats;
+        this.ventana = ventana;
         
     }
 
@@ -93,6 +96,7 @@ public class Actualitzador implements ActionListener {
 
         for (int i = 0; i < totalCaselles; i++) {
             JButton botoDia = new JButton();
+            Boolean casB = false;
 
             // CAS A: Dies buits abans de començar el mes
             if (i < casellesBuidesInici) {
@@ -133,6 +137,7 @@ public class Actualitzador implements ActionListener {
                 }
 
                 diaActual++;
+                casB = true;
             }
             // CAS C: Dies buits després d'acabar el mes
             else {
@@ -142,6 +147,18 @@ public class Actualitzador implements ActionListener {
 
             // Afegim el botó a la graella visual
             tablaDeCalendario.add(botoDia);
+            
+            //Assignem l'acció del boto només als díes que pertanyen al mes seleccionat
+            if(casB){
+                try{
+                    BotoDia accio = new BotoDia(this.ventana, new Data(diaActual-1, mesSeleccionat.getNumeroMes(), any), llistaActivitats, mostrarOnline, mostrarPeriodica, mostrarUnDia);
+                    botoDia.addActionListener(accio);
+                }catch(Exception e2){
+                    //mai hauria de donar excepcio
+                    System.out.println("Error desconegut a Actualitzador");
+                }
+            }
+            
         }
 
         // Refresquem la pantalla perquè es vegin els canvis

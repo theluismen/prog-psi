@@ -205,7 +205,9 @@ public class LlistaActivitats {        //falta crear llista
 
         try{
             for (int i = 0; i < this.nElems; i++){
-                act.afegir(this.llista[i]);
+                if (this.llista[i].avuiHiHaClase(data)){
+                    act.afegir(this.llista[i]);
+                }
             }
         }catch(ActivitatDuplicada e){
             //no puede dar nunca este error porque la lista de la que esta copiando la informacion ya lo ha comprobado

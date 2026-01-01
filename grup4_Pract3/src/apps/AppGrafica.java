@@ -24,7 +24,10 @@ public class AppGrafica extends JFrame{
     //Paneles de la GUI
     private final JPanel formulario;
     private final JPanel tablaDeCalendario;
-    private final JPanel cuadroDeTexto;
+    private final JPanel infoActivitats;
+
+    //Cuadro de texto
+    private final JTextArea cuadroDeTexto;
 
 
     /* Constructor */
@@ -92,28 +95,41 @@ public class AppGrafica extends JFrame{
         /* JPanel tablaDeCalendario */
         tablaDeCalendario = new JPanel();
         tablaDeCalendario.setBackground(Color.PINK);                //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
-        tablaDeCalendario.setLayout(new GridLayout(6,7));
+        tablaDeCalendario.setLayout(new GridLayout(6, 7));
         add(tablaDeCalendario, BorderLayout.CENTER);
 
-        // TODO: AÑADIR AQUI TODO LONECESARIO PARA TABLLACALENDARIO
+        // AÑADIR AQUI TODO LONECESARIO PARA TABLLACALENDARIO
+        // esta hecho dentro de la clase Actualitzador
 
 
         /* Instanciem el nou manejador passant-li els components que ha de controlar */
-        Actualitzador manejador = new Actualitzador(comboMesos, tablaDeCalendario, checkOnline, checkPeriodica, checkUnDia, llistaActivitats);
+        Actualitzador manejador = new Actualitzador(comboMesos, tablaDeCalendario, checkOnline, checkPeriodica, checkUnDia, llistaActivitats, this);
         
         // Connectem el botó amb el manejador
         btnBuscar.addActionListener(manejador);
 
         /* JPanel cuadroDeTexto */
-        cuadroDeTexto = new JPanel();
-        cuadroDeTexto.setBackground(Color.GREEN);                   //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
-        cuadroDeTexto.setPreferredSize(new Dimension(25,0));
-        add(cuadroDeTexto, BorderLayout.EAST);
+        infoActivitats = new JPanel();
+        infoActivitats.setLayout(new BorderLayout());
+        cuadroDeTexto = new JTextArea();
+        infoActivitats.setBackground(Color.WHITE);
+        infoActivitats.setPreferredSize(new Dimension(25, 0));
+        JScrollPane scroll = new JScrollPane(cuadroDeTexto);
+        infoActivitats.add(scroll, BorderLayout.EAST);
+        infoActivitats.add(cuadroDeTexto, BorderLayout.CENTER);
+        add(infoActivitats, BorderLayout.EAST);
 
-        // TODO: AÑADIR AQUI TODO LO NECESARIO PARA CUADRO DE TEXTO
+        //AÑADIR AQUI TODO LO NECESARIO PARA CUADRO DE TEXTO
+        //Esta hecho dentro de la clase BotoDia, que se usa en la clase Actualitzador
+        //También usa el metodo "afegirText" desde dentro de la clase del boton
 
-        // pack();  COMANDO PARA QUE UNA VEZ QUE ESTEN TODOS LOS BOXES Y BOTONES SE AJUSTE AUTOMATICAMENTE EL TAMAÑO DEL JPANEL
+        //pack();  //COMANDO PARA QUE UNA VEZ QUE ESTEN TODOS LOS BOXES Y BOTONES SE AJUSTE AUTOMATICAMENTE EL TAMAÑO DEL JPANEL
         setSize(900, 600);
+    }
+
+    public void afegirText(String s){
+        this.cuadroDeTexto.setText("");     //vaciar el cuadro de texto de los otros dias que se hayan revisado anteriormente
+        this.cuadroDeTexto.append(s + "\n");
     }
 
     /* Main */
