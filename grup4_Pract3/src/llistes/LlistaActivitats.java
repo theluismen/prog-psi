@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class LlistaActivitats {        //falta crear llista
@@ -232,6 +233,8 @@ public class LlistaActivitats {        //falta crear llista
             while (linea != null) {
             Scanner scanner = new Scanner(linea);   //Trabajamos la linea de manera individual.
             scanner.useDelimiter(";");              //Separo la linea en cada elemento del objeto.
+            scanner.useLocale(Locale.US);
+
 
             try{
                 Activitat nuevaAct = null;
