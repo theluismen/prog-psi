@@ -307,7 +307,7 @@ public class LlistaActivitats {        //falta crear llista
                     int horaDurada = scanner.nextInt();
                     int minutosDurada = scanner.nextInt();
                     int places = scanner.nextInt();
-                    int preu = scanner.nextInt();
+                    double preu = scanner.nextDouble();
                     String ciutat = scanner.next();
 
                     //Creo activitat.
