@@ -325,7 +325,7 @@ public class ActivitatPeriodica extends Activitat {
     public String toString(){
         //aprovechando el toString del padre
         String aux = "\n---ACTIVITAT PERIODICA---\n"+
-                    super.toString()+
+                    super.toString()+ 
                     "Centre: "+this.centre+
                     "\nCiutat: "+this.ciutat+
                     "\nPreu: "+this.preu+
@@ -365,7 +365,7 @@ public class ActivitatPeriodica extends Activitat {
 
         if (super.collectiu != null) {
             for (int i = 0; i < super.collectiu.length; i++){
-                if(i != super.collectiu.length - 1){
+                if(i != (super.collectiu.length - 1)){
                     aux += super.collectiu[i].name() + ",";
                 }else{
                     aux += super.collectiu[i].name() + ";";
