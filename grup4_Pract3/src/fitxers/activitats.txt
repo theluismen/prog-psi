@@ -1,4 +1,4 @@
 Activitat d'un dia;ceramica;PTGAS,ESTUDIANT;12;9;2025;22;9;2025;30;9;2025;15;30;3;30;38;40.0;Tarragona
-Online;com ser un inflluencer;PDI;30;9;2025;12;10;2025;20;10;2025;30;https://ComInfluenciar.cat
-Online;Curs de Java Avanzat;PDI,PTGAS;1;1;2025;20;1;2025;10;9;2025;7;https://campus.urv.cat/curs-java
+Activitat Online;com ser un inflluencer;PDI;30;9;2025;12;10;2025;20;10;2025;30;https://ComInfluenciar.cat
+Activitat Online;Curs de Java Avanzat;PDI,PTGAS;1;1;2025;20;1;2025;10;9;2025;7;https://campus.urv.cat/curs-java
 Activitat periodica;ioga;PDI,PTGAS;1;1;2025;20;1;2025;DILLUNS;1.5;10;1;2025;10;0;8;20;50.0;Centre Blau;Barcelona
