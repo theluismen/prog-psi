@@ -172,13 +172,13 @@ public class LlistaActivitats {        //falta crear llista
         for (int i = 0; i < this.nElems; i++){
             boolean coincideix = false;
 
-            if (tipus.equalsIgnoreCase("periodica") && this.llista[i] instanceof ActivitatPeriodica) {
+            if (tipus.equalsIgnoreCase("activitat periodica") && this.llista[i] instanceof ActivitatPeriodica) {
                 coincideix = true;
             } else if (tipus.equalsIgnoreCase("online") && this.llista[i] instanceof ActivitatOnline) {
                 coincideix = true;
-            } else if (tipus.equalsIgnoreCase("un dia") && this.llista[i] instanceof ActivitatUnDia) {
+            } else if (tipus.equalsIgnoreCase("Activitat d'un dia") && this.llista[i] instanceof ActivitatUnDia) {
                 coincideix = true;
-            } else{
+            } else if (!tipus.equalsIgnoreCase("Activitat d'un dia") && !tipus.equalsIgnoreCase("online") && !tipus.equalsIgnoreCase("activitat periodica")){
                 throw new ActivitatDesconeguda(tipus);
             }
 

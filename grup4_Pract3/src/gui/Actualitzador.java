@@ -10,7 +10,7 @@ import activitats.Activitat;
 import activitats.ActivitatOnline;
 import activitats.ActivitatPeriodica;
 import activitats.ActivitatUnDia;
-import enumeracions.Mesos;
+import enumeracions.Mes;
 import extras.Data;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -30,7 +30,7 @@ import llistes.LlistaActivitats;
 public class Actualitzador implements ActionListener {
 
     /** Atributs de la classe */
-    private final JComboBox<Mesos> comboMesos;
+    private final JComboBox<Mes> comboMesos;
     private final JPanel tablaDeCalendario;
 
     private final JCheckBox checkOnline;
@@ -44,7 +44,7 @@ public class Actualitzador implements ActionListener {
      * Constructor.
      * Rep els components de la finestra que necessitem manipular.
      */
-    public Actualitzador(JComboBox<Mesos> comboMesos, JPanel tablaDeCalendario, JCheckBox checkOnline, 
+    public Actualitzador(JComboBox<Mes> comboMesos, JPanel tablaDeCalendario, JCheckBox checkOnline, 
         JCheckBox checkPeriodica, JCheckBox checkUnDia, LlistaActivitats llistaActivitats) {
         this.comboMesos = comboMesos;
         this.tablaDeCalendario = tablaDeCalendario;
@@ -68,7 +68,7 @@ public class Actualitzador implements ActionListener {
         tablaDeCalendario.removeAll();
 
         // Obtenim el mes que ha triat l'usuari
-        Mesos mesSeleccionat = (Mesos) comboMesos.getSelectedItem();
+        Mes mesSeleccionat = (Mes) comboMesos.getSelectedItem();
         int any = 2025; // Any
 
         // Càlculs de calendari (Matemàtiques de dates)

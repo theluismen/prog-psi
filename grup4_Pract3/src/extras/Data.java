@@ -1,5 +1,6 @@
 package extras;
 
+import enumeracions.DiaSetmana;
 import excepcions.ValorInexistent;
 
 /**
@@ -16,6 +17,12 @@ public class Data {
     private int any;
     private int hora;
     private int minuts;
+
+
+    //Esta fecha corresponde a un lunes dia 1, asi se pueden clacular en que dia de la semana cae cada fecha
+    private static int diaGuia = 1;
+    private static int mesGuia = 9;
+    private static int anyGuia = 2025;
 
 
 	/**
@@ -441,5 +448,37 @@ public class Data {
         }
 
         return nova;
+    }
+
+
+    /**
+     * Metodo que permite saber en que dia de la semana cae una fecha usando de referencia el lunes 1 de setiembre de 2025
+     * Para fechas inferiores a la de referencia, el metodo devolvera null
+     * @return dia de la semana correspondiente
+     */
+    public DiaSetmana diaSetmana(){
+        try{
+            Data guia = new Data(diaGuia, mesGuia, anyGuia);
+            int op = guia.numDiesAData(this);
+            DiaSetmana nom;
+
+            op = op % 7;
+            switch (op){
+                case 0: nom = DiaSetmana.DILLUNS; break;
+                case 1: nom = DiaSetmana.DIMARTS; break;
+                case 2: nom = DiaSetmana.DIMECRES; break;
+                case 3: nom = DiaSetmana.DIJOUS; break;
+                case 4: nom = DiaSetmana.DIVENDRES; break;
+                case 5: nom = DiaSetmana.DISSABTE; break;
+                case 6: nom = DiaSetmana.DIUMENGE; break;
+                default: nom = null;
+            }
+
+            return nom;
+
+        }catch(ValorInexistent e){
+            System.out.println("ERROR IESPERAT A DIASETMANA");
+            return null;
+        }
     }
 }

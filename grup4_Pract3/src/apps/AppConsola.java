@@ -29,7 +29,7 @@ public class AppConsola {
     // 1. RUTES DELS FITXERS
     private static final String FITXER_INSCRIPCIONS = "grup4_Pract3/src/fitxers/inscripcions.dat";
     private static final String FITXER_USUARIS = "grup4_Pract3/src/fitxers/usuaris.txt";
-    private static final String FITXER_ACTIVITATS = "grup4_Pract3/src/fitxers/activitat.txt";
+    private static final String FITXER_ACTIVITATS = "grup4_Pract3/src/fitxers/activitats.txt";
 
 
     // 2. VARIABLES GLOBALS (LLISTES)
@@ -140,7 +140,7 @@ public class AppConsola {
         llistaActivitats = new LlistaActivitats(100);
         llistaActivitats.carregarFitxer(FITXER_ACTIVITATS);
        
-        System.out.println("Sistema inicialitzat correctament.");
+        System.out.println("Sistema inicialitzat");
     }
 
 

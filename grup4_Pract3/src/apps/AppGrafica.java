@@ -20,8 +20,6 @@ public class AppGrafica extends JFrame{
     /* Atributos de la Clase */
     //Llistes carregades des dels fitxers
     private LlistaActivitats llistaActivitats;
-    private LlistaUsuaris llistaUsuaris;
-    private LlistaInscripcions llistaInscripcions;
 
     //Paneles de la GUI
     private final JPanel formulario;
@@ -40,18 +38,9 @@ public class AppGrafica extends JFrame{
 
         //CARREGA FITXERS  
         try {
-            llistaInscripcions = LlistaInscripcions.carregarFitxer(
-                "grup4_Pract3/src/fitxers/inscripcions.dat"
-            );
-
-            llistaUsuaris = new LlistaUsuaris();
-            llistaUsuaris.carregarFitxer(
-                "grup4_Pract3/src/fitxers/usuaris.txt"
-            );
-
             llistaActivitats = new LlistaActivitats(100);
             llistaActivitats.carregarFitxer(
-                "grup4_Pract3/src/fitxers/activitat.txt"
+                "grup4_Pract3/src/fitxers/activitats.txt"
             );
 
         } catch (Exception e) {
@@ -91,7 +80,7 @@ public class AppGrafica extends JFrame{
         JLabel lblMes = new JLabel("Mes (2025):");
         formulario.add(lblMes);
 
-        JComboBox<Mesos> comboMesos = new JComboBox<>(Mesos.values());
+        JComboBox<Mes> comboMesos = new JComboBox<>(Mes.values());
         comboMesos.setPreferredSize(new Dimension(120, 25));
         formulario.add(comboMesos);
 

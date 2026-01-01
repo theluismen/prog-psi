@@ -115,7 +115,7 @@ public class ActivitatOnline extends Activitat {
      */
     @Override
     public boolean estaActiva(Data avui) {
-        Data dataFi = this.dataInici.dataPlusDies(this.periodeVisualitzacio);
+        Data dataFi = this.dataInici.dataPlusDies(this.periodeVisualitzacio-1);
         return this.dataInici.esDataInferiorOigual(avui) && 
                avui.esDataInferiorOigual(dataFi);
     }
