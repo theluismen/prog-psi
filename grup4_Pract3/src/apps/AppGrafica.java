@@ -112,11 +112,14 @@ public class AppGrafica extends JFrame{
         infoActivitats = new JPanel();
         infoActivitats.setLayout(new BorderLayout());
         cuadroDeTexto = new JTextArea();
+
         infoActivitats.setBackground(Color.WHITE);
+
         infoActivitats.setPreferredSize(new Dimension(550, 0));
         JScrollPane scroll = new JScrollPane(cuadroDeTexto);
         infoActivitats.add(scroll, BorderLayout.EAST);
         infoActivitats.add(cuadroDeTexto, BorderLayout.CENTER);
+
         add(infoActivitats, BorderLayout.EAST);
 
         //AÑADIR AQUI TODO LO NECESARIO PARA CUADRO DE TEXTO
@@ -124,7 +127,7 @@ public class AppGrafica extends JFrame{
         //También usa el metodo "afegirText" desde dentro de la clase del boton
 
        
-        setSize(1200, 800);
+        setSize(1400, 800);
     }
 
     public void afegirText(String s){
