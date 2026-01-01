@@ -1,6 +1,6 @@
-anna;anna.soler@urv.cat;PTGAS;BELLISENS
-joan2;joan.perez@estudiants.urv.cat;ESTUDIANT;GEI;2022
-laia;laia.marti@estudiants.urv.cat;ESTUDIANT;GESST;2023
-marta;marta.sole@urv.cat;PDI;DEIM;SESCELADES
-pau;pau.sala@urv.cat;PTGAS;TERRES_EBRE
-pere;pere.rovira@urv.cat;PDI;DQFI;CATALUNYA
+anna;anna.soler@urv.cat@urv.cat;PTGAS;BELLISENS
+joan2;joan.perez@estudiants.urv.cat@estudiants.urv.cat;ESTUDIANT;GEI;2022
+laia;laia.marti@estudiants.urv.cat@estudiants.urv.cat;ESTUDIANT;GESST;2023
+marta;marta.sole@urv.cat@urv.cat;PDI;DEIM;SESCELADES
+pau;pau.sala@urv.cat@urv.cat;PTGAS;TERRES_EBRE
+pere;pere.rovira@urv.cat@urv.cat;PDI;DQFI;CATALUNYA

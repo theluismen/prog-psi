@@ -44,6 +44,14 @@ public abstract class Activitat {
     }
 
     /**
+     * Metodo para cambiar el nombre de una actividad
+     * @param nom
+     */
+    public void setNom(String nom){
+        this.nom = nom;
+    }
+
+    /**
      * Mètode que retorna la llista de col·lectius als que pot pertanyer l'usuari
      * 
      * @return tipus de col·lectius

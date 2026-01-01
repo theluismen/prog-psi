@@ -711,6 +711,9 @@ public class AppConsola {
                 res = true;
             }catch(ActivitatDuplicada e){
                 System.out.println(e + "\nEscull un nom diferent");
+                System.out.println("\nNom de l'activitat?");  
+                nom = teclat.nextLine();
+                act.setNom(nom);
             }
         }
     }
@@ -799,9 +802,11 @@ public class AppConsola {
                 llistaActivitats.afegir(act);
                 res = true;
 
-
             }catch(ActivitatDuplicada e){
                 System.out.println(e + "\nEscull un nom diferent");
+                System.out.println("\nNom de l'activitat?");  //nom
+                nom = teclat.nextLine();
+                act.setNom(nom);
             }
         }
     }
@@ -1315,7 +1320,6 @@ public class AppConsola {
                 System.out.println("La data no existeix, proba amb una altra\n");
             }
         }
-
 
         return aux;
     }

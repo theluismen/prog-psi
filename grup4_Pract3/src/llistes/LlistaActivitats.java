@@ -122,7 +122,7 @@ public class LlistaActivitats {        //falta crear llista
         boolean trobat = false;
         int i = 0;
 
-        while (!trobat && (i < nElems)){
+        while (!trobat && (i < this.nElems)){
             if (this.llista[i].getNom().equalsIgnoreCase(nomAct)){
                 trobat = true;
             }
@@ -307,7 +307,7 @@ public class LlistaActivitats {        //falta crear llista
                     int horaDurada = scanner.nextInt();
                     int minutosDurada = scanner.nextInt();
                     int places = scanner.nextInt();
-                    int preu = scanner.nextInt();
+                    double preu = scanner.nextDouble();
                     String ciutat = scanner.next();
 
                     //Creo activitat.
