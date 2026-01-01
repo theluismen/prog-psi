@@ -412,7 +412,7 @@ public class ActivitatPeriodica extends Activitat {
         int totalDiesDurada = this.setmanes * 7;
         Data diaComparar = this.dataHoraIni.dataPlusDies(totalDiesDurada);
        
-        while (totalDiesDurada > 0){
+        while (totalDiesDurada >= 0){
             if (hoy.esIgual(diaComparar))
             {
                 res = true;

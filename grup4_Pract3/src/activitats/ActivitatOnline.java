@@ -163,7 +163,7 @@ public class ActivitatOnline extends Activitat {
             }
         }
         // Accedim directament a super.collectiu (singular) perquè ara és un sol Enum
-        return "Online;" + 
+        return "Activitat online;" + 
                super.nom + ";" + 
                cols + ";" + 
                super.dataIniciInscripcio.getDia() + ";" + super.dataIniciInscripcio.getMes() + ";" + super.dataIniciInscripcio.getAny() + ";" +
