@@ -112,6 +112,7 @@ public class AppGrafica extends JFrame{
         infoActivitats = new JPanel();
         infoActivitats.setLayout(new BorderLayout());
         cuadroDeTexto = new JTextArea();
+        cuadroDeTexto.setEditable(false);
 
         infoActivitats.setBackground(Color.WHITE);
 

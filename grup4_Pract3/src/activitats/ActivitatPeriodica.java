@@ -324,7 +324,7 @@ public class ActivitatPeriodica extends Activitat {
     @Override
     public String toString(){
         //aprovechando el toString del padre
-        String aux = "\n---ACTIVITAT PERIODICA---\n"+
+        String aux = "---ACTIVITAT PERIODICA---\n"+
                     super.toString()+ 
                     "Centre: "+this.centre+
                     "\nCiutat: "+this.ciutat+
