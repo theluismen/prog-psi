@@ -58,7 +58,7 @@ public class AppGrafica extends JFrame{
 
         /* JPanel formulario */
         formulario = new JPanel();
-        formulario.setBackground(Color.LIGHT_GRAY);                 //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
+        formulario.setBackground(new Color(226, 220, 210));                 //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
         formulario.setLayout(new FlowLayout(FlowLayout.LEFT));
         add(formulario,BorderLayout.NORTH);
 
@@ -94,7 +94,7 @@ public class AppGrafica extends JFrame{
             
         /* JPanel tablaDeCalendario */
         tablaDeCalendario = new JPanel();
-        tablaDeCalendario.setBackground(Color.PINK);                //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
+        tablaDeCalendario.setBackground(new Color(234, 228, 218));                //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
         tablaDeCalendario.setLayout(new GridLayout(6, 7));
         add(tablaDeCalendario, BorderLayout.CENTER);
 
@@ -111,14 +111,16 @@ public class AppGrafica extends JFrame{
         /* JPanel cuadroDeTexto */
         infoActivitats = new JPanel();
         infoActivitats.setLayout(new BorderLayout());
+        
         cuadroDeTexto = new JTextArea();
         cuadroDeTexto.setEditable(false);
         cuadroDeTexto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        infoActivitats.setBackground(Color.WHITE);
+        infoActivitats.setBackground(new Color(232, 224, 212));
 
         infoActivitats.setPreferredSize(new Dimension(550, 0));
         JScrollPane scroll = new JScrollPane(cuadroDeTexto);
+        
         infoActivitats.add(scroll, BorderLayout.EAST);
         infoActivitats.add(cuadroDeTexto, BorderLayout.CENTER);
 

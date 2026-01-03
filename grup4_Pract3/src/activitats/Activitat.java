@@ -156,7 +156,11 @@ public abstract class Activitat {
         String info = "Nom: " + nom + "\nCol·lectiu: ";
                   
         for (int i = 0; i < this.collectiu.length; i++){
-            info += collectiu[i].name()+", ";
+            if(i != this.collectiu.length -1){
+               info += collectiu[i].name()+", "; 
+            }else{
+                info += collectiu[i].name();
+            }
         }
 
         info += "\nPeríode inscripció: dia " + dataIniciInscripcio.getDia() + 
