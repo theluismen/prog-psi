@@ -7,14 +7,13 @@
 
 package llistes;
 
+import enumeracions.*;
 import excepcions.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import enumeracions.*;
 import usuaris.*;
 
 public class LlistaUsuaris {
@@ -156,8 +155,7 @@ public class LlistaUsuaris {
      */
     public void carregarFitxer(String nomFitxer) throws IOException, FormatInvalid, CollectiuDesconegut, UsuariDuplicat  {
 
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(nomFitxer));
+        try (BufferedReader br = new BufferedReader(new FileReader(nomFitxer))){
             String linia;
         
             while  ((linia = br.readLine()) != null) {
@@ -165,7 +163,6 @@ public class LlistaUsuaris {
                 String[] dades = linia.split(";");
 
                 if (dades.length < 3) {
-                    br.close();
                     throw new FormatInvalid("Falten camps obligatoris a la línia: " + linia);
                 }
 
@@ -176,7 +173,6 @@ public class LlistaUsuaris {
                 try {
                     col = Collectius.valueOf(dades[2].toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    br.close();
                     throw new CollectiuDesconegut(dades[2]);
                 }
 
@@ -185,7 +181,6 @@ public class LlistaUsuaris {
                 switch (col) {
                     case ESTUDIANT:
                         if (dades.length != 5){
-                            br.close();
                             throw new FormatInvalid("Format uncorrecte per Estudiant: " + linia);
                         }
 
@@ -198,7 +193,6 @@ public class LlistaUsuaris {
                     case PDI:
 
                         if (dades.length != 5){
-                            br.close();
                             throw new FormatInvalid("Format uncorrecte per PDI: " + linia);
                         }
 
@@ -211,7 +205,6 @@ public class LlistaUsuaris {
                     case PTGAS:
 
                         if (dades.length != 4){
-                            br.close();
                             throw new FormatInvalid("Format uncorrecte per PTGAS: " + linia);
                         }
 
@@ -221,15 +214,14 @@ public class LlistaUsuaris {
                         break;
                         
                     default:
-                        br.close();
                         throw new CollectiuDesconegut("Col·lectiu desconegut: " + col);
                 }
                 afegir(u);
             }
 
-        }catch(IOException e){
+        } catch (IOException e){
             System.out.println("Error a l'obrir el fitxer");
-        }
+        } 
         
     }
  
@@ -238,9 +230,7 @@ public class LlistaUsuaris {
      */
     private void ampliar() {
         Usuari[] nou = new Usuari[usuaris.length *2];
-        for(int i =0; i < compt; i++) {
-            nou[i] = usuaris[i];
-        }
+        System.arraycopy(usuaris, 0, nou, 0, compt);
         usuaris = nou;
     }
 
