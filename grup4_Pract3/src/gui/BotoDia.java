@@ -1,3 +1,10 @@
+/**
+ * Autor(@s): Alexandra Núñez González
+ *       
+ * Descripción: archivo usado para generar la accion al clickar en el boton de cada dia del calendario
+ * Clickar una vez hará que se borre lo que ya esta escrito y aparezcan las nuevas actividades
+ */
+
 package gui;
 
 import java.awt.event.*;

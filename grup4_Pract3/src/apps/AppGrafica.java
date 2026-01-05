@@ -115,12 +115,10 @@ public class AppGrafica extends JFrame{
 
         infoActivitats.setPreferredSize(new Dimension(550, 0));
         JScrollPane scroll = new JScrollPane(cuadroDeTexto);
-        
-        infoActivitats.add(scroll, BorderLayout.EAST);
-        infoActivitats.add(cuadroDeTexto, BorderLayout.CENTER);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        infoActivitats.add(scroll, BorderLayout.CENTER);
 
         add(infoActivitats, BorderLayout.EAST);
-
         
         setSize(1400, 800);
     }
