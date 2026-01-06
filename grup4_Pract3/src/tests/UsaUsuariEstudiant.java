@@ -86,9 +86,9 @@ public class UsaUsuariEstudiant {
 
 
         // ----------------------------------------------------------------
-        // PROVA 4: Còpia de seguretat (Deep Copy)
+        // PROVA 4: Còpia de seguretat
         // ----------------------------------------------------------------
-        System.out.println("\n4. PROVA: Còpia independent (Deep Copy)");
+        System.out.println("\n4. PROVA: Còpia independent");
         try {
             // 1. Fem la còpia
             UsuariEstudiant copia = estudiant.copia();
