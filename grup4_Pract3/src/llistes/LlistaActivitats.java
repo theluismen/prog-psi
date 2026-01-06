@@ -344,6 +344,9 @@ public class LlistaActivitats {        //falta crear llista
                 System.out.println("Línia " + nLinea + ": Activitat duplicada");
             } catch (IllegalArgumentException e) {
                 System.out.println("Línia " + nLinea + ": Error de format");
+            }catch (EnllacIncorrecte e) {
+                // AQUÍ CAPTUREM LA NOVA EXCEPCIÓ
+                System.out.println("Línia " + nLinea + ": " + e.getMessage());
             } finally {
                 scanner.close();
             }
