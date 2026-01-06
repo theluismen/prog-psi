@@ -9,26 +9,29 @@ public class UsaActivitatPeriodica {
 
     public static void main(String[] args) {
             // --- Datos base reutilizables ---
-        Data dataIni = new Data(10, 1, 2025, 10, 0);
-        Data dataIniIns = new Data(1, 1, 2025);
-        Data dataFiIns = new Data(20, 1, 2025);
+        try{
+            Data dataIni = new Data(10, 1, 2025, 10, 0);
+            Data dataIniIns = new Data(1, 1, 2025);
+            Data dataFiIns = new Data(20, 1, 2025);
 
-        //testConstructor(dataIniIns, dataFiIns, dataIni);
+            testConstructor(dataIniIns, dataFiIns, dataIni);
 
-        ActivitatPeriodica activitat = new ActivitatPeriodica("ioga", new String[]{"PDI", "PTGAS"}, dataIniIns, dataFiIns,
-                                    DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
-                                    "Centre Blau", "Barcelona");
-        testHorariYDataFinal(activitat);
-        testAvuiHiHaClasse(activitat);
-        testEstaActiva(activitat);
-        testTipusActivitat(activitat);
-        //testToCSV(activitat);
+            ActivitatPeriodica activitat = new ActivitatPeriodica("ioga", new Collectius[]{Collectius.PDI, Collectius.PTGAS}, dataIniIns, dataFiIns,
+                                        DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
+                                        "Centre Blau", "Barcelona");
+            testHorariYDataFinal(activitat);
+            testAvuiHiHaClasse(activitat);
+            testEstaActiva(activitat);
+            testToCSV(activitat);
+        }catch (Exception e){
+            System.out.println("error desconegut");
+        }
 
     }
 
-    private static void testConstructor(Data dataIniIns, Data dataFiIns, Data dataIni) {
+    private static void testConstructor(Data dataIniIns, Data dataFiIns, Data dataIni) throws Exception{
         System.out.println("Prueba del constructor");
-        ActivitatPeriodica ap = new ActivitatPeriodica("Ioga", new String[]{"PDI"}, dataIniIns, dataFiIns,
+        ActivitatPeriodica ap = new ActivitatPeriodica("Ioga", new Collectius[]{Collectius.PDI}, dataIniIns, dataFiIns,
                                 DiaSetmana.DILLUNS, 1.5, dataIni, 8, 20, 50.0,
                                 "Centre Blau", "Barcelona");
 
@@ -59,7 +62,7 @@ public class UsaActivitatPeriodica {
         System.out.println(act.avuiHiHaClase(diaSinClase));
     }
 
-    private static void testEstaActiva(ActivitatPeriodica act) {
+    private static void testEstaActiva(ActivitatPeriodica act) throws Exception{
         System.out.println("\n\nTest para probar si una actividad esta en periodo de activad un dia indicado");
         System.out.println("\nCaso que si esta activa");
         Data dentroPeriodo = new Data(20, 1, 2025);
@@ -72,11 +75,6 @@ public class UsaActivitatPeriodica {
         System.out.println("\nCaso que esta despues del periodo");
         Data despuesPeriodo = new Data(10, 3, 2025);
         System.out.println(act.estaActiva(despuesPeriodo));
-    }
-
-    private static void testTipusActivitat(ActivitatPeriodica act) {
-        System.out.println("\n\nTest para probar tipusActivitat");
-        System.out.println(act.tipusActivitat());
     }
 
     private static void testToCSV(ActivitatPeriodica act){

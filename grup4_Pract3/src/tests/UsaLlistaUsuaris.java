@@ -2,12 +2,12 @@
  * Autor: Aesha Naz Mahmood Bibi
  * Descripció: classe Usa Llista Usuaris de test per probar la classe
  */
-package tests;
+package test;
 
-import enumeraciones.*;
-import llistes.LlistaUsuaris;
+import enumeracions.*;
 import excepcions.*;
 import java.io.IOException;
+import llistes.LlistaUsuaris;
 
 public class UsaLlistaUsuaris {
 
@@ -19,14 +19,14 @@ public class UsaLlistaUsuaris {
         try {
             // Carrega des de fitxer
             System.out.println("\nLlegint fitxer usuaris.txt ...");
-            llista.carregaFitxer("usuaris.txt");
+            llista.carregarFitxer("usuaris.txt");
 
             // Mostrar quantitat d'usuaris
             System.out.println("\nTotal d'usuaris carregats: " + llista.getNumUsuaris());
 
             // Mostrar col·lectiu Estudiant
             System.out.println("\n--- Usuaris del col·lectiu Estudiant ---");
-            llista.mostrarUCollectiu(Collectiu.ESTUDIANT);
+            llista.mostrarUCollectiu(Collectius.ESTUDIANT);
 
             // Cerca d'un usuari
             System.out.println("\n--- Cercant usuari `marta` ---");

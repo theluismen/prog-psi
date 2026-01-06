@@ -324,8 +324,8 @@ public class ActivitatPeriodica extends Activitat {
     @Override
     public String toString(){
         //aprovechando el toString del padre
-        String aux = "\n---ACTIVITAT PERIODICA---\n"+
-                    super.toString()+
+        String aux = "---ACTIVITAT PERIODICA---\n"+
+                    super.toString()+ 
                     "Centre: "+this.centre+
                     "\nCiutat: "+this.ciutat+
                     "\nPreu: "+this.preu+
@@ -365,7 +365,12 @@ public class ActivitatPeriodica extends Activitat {
 
         if (super.collectiu != null) {
             for (int i = 0; i < super.collectiu.length; i++){
-                aux += super.collectiu[i].name();
+                if(i != (super.collectiu.length - 1)){
+                    aux += super.collectiu[i].name() + ",";
+                }else{
+                    aux += super.collectiu[i].name() + ";";
+                }
+                
             }
         }else {
             aux += ";"; // si no hi ha collectius
@@ -407,7 +412,7 @@ public class ActivitatPeriodica extends Activitat {
         int totalDiesDurada = this.setmanes * 7;
         Data diaComparar = this.dataHoraIni.dataPlusDies(totalDiesDurada);
        
-        while (totalDiesDurada > 0){
+        while (totalDiesDurada >= 0){
             if (hoy.esIgual(diaComparar))
             {
                 res = true;

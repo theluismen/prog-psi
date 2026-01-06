@@ -127,7 +127,7 @@ public class Actualitzador implements ActionListener {
                             Data dataDia = new Data(diaActual, mesSeleccionat.getNumeroMes(), any);
 
                             if (act.avuiHiHaClase(dataDia)) {
-                                botoDia.setBackground(Color.GREEN);
+                                botoDia.setBackground(new Color(200, 226, 149));
                             }
                         }
 

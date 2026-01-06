@@ -58,11 +58,10 @@ public class AppGrafica extends JFrame{
 
         /* JPanel formulario */
         formulario = new JPanel();
-        formulario.setBackground(Color.LIGHT_GRAY);                 //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
+        formulario.setBackground(new Color(226, 220, 210));       
         formulario.setLayout(new FlowLayout(FlowLayout.LEFT));
         add(formulario,BorderLayout.NORTH);
 
-        // TODO: AÑADIR AQUI TODOS LOS BOTONES Y COMBOBOX NECESARIOS EN FORMULARIO
         //CHECKBOXES TIPUS ACTIVITAT
         JCheckBox checkOnline = new JCheckBox("Activitat Online");
         JCheckBox checkPeriodica = new JCheckBox("Activitat Periòdica");
@@ -94,13 +93,9 @@ public class AppGrafica extends JFrame{
             
         /* JPanel tablaDeCalendario */
         tablaDeCalendario = new JPanel();
-        tablaDeCalendario.setBackground(Color.PINK);                //COLOR RANDOM PARA DISTINGUIR LOS JPANELS TEMPORAL
+        tablaDeCalendario.setBackground(new Color(234, 228, 218));      
         tablaDeCalendario.setLayout(new GridLayout(6, 7));
         add(tablaDeCalendario, BorderLayout.CENTER);
-
-        // AÑADIR AQUI TODO LONECESARIO PARA TABLLACALENDARIO
-        // esta hecho dentro de la clase Actualitzador
-
 
         /* Instanciem el nou manejador passant-li els components que ha de controlar */
         Actualitzador manejador = new Actualitzador(comboMesos, tablaDeCalendario, checkOnline, checkPeriodica, checkUnDia, llistaActivitats, this);
@@ -111,22 +106,20 @@ public class AppGrafica extends JFrame{
         /* JPanel cuadroDeTexto */
         infoActivitats = new JPanel();
         infoActivitats.setLayout(new BorderLayout());
+        
         cuadroDeTexto = new JTextArea();
+        cuadroDeTexto.setEditable(false);
+        cuadroDeTexto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        infoActivitats.setBackground(Color.WHITE);
+        infoActivitats.setBackground(new Color(232, 224, 212));
 
         infoActivitats.setPreferredSize(new Dimension(550, 0));
         JScrollPane scroll = new JScrollPane(cuadroDeTexto);
-        infoActivitats.add(scroll, BorderLayout.EAST);
-        infoActivitats.add(cuadroDeTexto, BorderLayout.CENTER);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        infoActivitats.add(scroll, BorderLayout.CENTER);
 
         add(infoActivitats, BorderLayout.EAST);
-
-        //AÑADIR AQUI TODO LO NECESARIO PARA CUADRO DE TEXTO
-        //Esta hecho dentro de la clase BotoDia, que se usa en la clase Actualitzador
-        //También usa el metodo "afegirText" desde dentro de la clase del boton
-
-       
+        
         setSize(1400, 800);
     }
 

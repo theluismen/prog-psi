@@ -44,6 +44,14 @@ public abstract class Activitat {
     }
 
     /**
+     * Metodo para cambiar el nombre de una actividad
+     * @param nom
+     */
+    public void setNom(String nom){
+        this.nom = nom;
+    }
+
+    /**
      * Mètode que retorna la llista de col·lectius als que pot pertanyer l'usuari
      * 
      * @return tipus de col·lectius
@@ -148,7 +156,11 @@ public abstract class Activitat {
         String info = "Nom: " + nom + "\nCol·lectiu: ";
                   
         for (int i = 0; i < this.collectiu.length; i++){
-            info += collectiu[i].name()+", ";
+            if(i != this.collectiu.length -1){
+               info += collectiu[i].name()+", "; 
+            }else{
+                info += collectiu[i].name();
+            }
         }
 
         info += "\nPeríode inscripció: dia " + dataIniciInscripcio.getDia() + 
