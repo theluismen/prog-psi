@@ -104,7 +104,7 @@ public class AppConsola {
                 //  Afegir nova activitat online
                 case 15:  case15();  break;
             // --- VALORACIONS I ESTADÍSTIQUES ---
-                // TODO: Valorar una activitat
+                // Afegir valoració a una inscripció
                 case 16:  case16();  break;
                 // Resum de valoracions d'activitats acabades
                 case 17:  case17();  break;
