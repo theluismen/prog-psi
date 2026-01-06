@@ -6,6 +6,7 @@
 package activitats;
 
 import enumeracions.Collectius;
+import excepcions.EnllacIncorrecte;
 import extras.Data;
 
 public class ActivitatOnline extends Activitat {
@@ -26,11 +27,13 @@ public class ActivitatOnline extends Activitat {
      */
     public ActivitatOnline(String nom, Collectius[] collectiu, Data dataIniInscripcio, 
                            Data dataFiInscripcio, Data dataInici, 
-                           int periodeVisualitzacio, String enllac) { 
+                           int periodeVisualitzacio, String enllac) throws EnllacIncorrecte { 
         
-        // Cridem al constructor del pare passant el col·lectiu en singular
         super(nom, collectiu, dataIniInscripcio, dataFiInscripcio);
         
+        // Validem l'enllaç abans d'assignar-lo
+        validarEnllac(enllac); 
+
         this.dataInici = dataInici;
         this.periodeVisualitzacio = periodeVisualitzacio;
         this.enllac = enllac;
@@ -93,6 +96,17 @@ public class ActivitatOnline extends Activitat {
      */
     public void setEnllac(String enllac) { 
         this.enllac = enllac; 
+    }
+
+
+    // --- Mètode privat auxiliar per validar l'enllaç ---
+    private void validarEnllac(String enllac) throws EnllacIncorrecte {
+        if (enllac == null || enllac.isEmpty()) {
+            throw new EnllacIncorrecte("L'enllaç no pot estar buit.");
+        }
+        if (enllac.contains(" ")) {
+            throw new EnllacIncorrecte("L'enllaç no pot contenir espais.");
+        }
     }
 
 
@@ -179,14 +193,13 @@ public class ActivitatOnline extends Activitat {
      */
     @Override
     public ActivitatOnline copia() {
-        return new ActivitatOnline(
-            super.nom,
-            super.collectiu, // Passem l'Enum directament
-            super.dataIniciInscripcio.copia(),
-            super.dataFiInscripcio.copia(),
-            this.dataInici.copia(),
-            this.periodeVisualitzacio,
-            this.enllac
-        );
+        try {
+            return new ActivitatOnline(super.nom, super.collectiu, 
+                super.dataIniciInscripcio.copia(), super.dataFiInscripcio.copia(), 
+                this.dataInici.copia(), this.periodeVisualitzacio, this.enllac);
+        } catch (EnllacIncorrecte e) {
+            // Això no hauria de passar mai en una còpia d'un objecte ja vàlid
+            return null;
+        }
     }
 }
