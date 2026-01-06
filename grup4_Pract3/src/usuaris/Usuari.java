@@ -51,6 +51,10 @@ public abstract class Usuari {
      */
     public String getEmailComplet() {
         //Segons el tipus de col·lectiu: URV o PDI i PTGAS
+        if (email.contains("@")) {
+            return email; // ja esta complet
+        }
+        
         if (collectiu == Collectius.ESTUDIANT) {
             return email + "@estudiants.urv.cat";
         } else {
@@ -107,6 +111,5 @@ public abstract class Usuari {
         return "Àlies: " + alies + 
                 "\nCorreu: " + getEmailComplet() + 
                 "\nCol·lectiu: " + collectiu.name();
-    }
-    
+    }   
 }

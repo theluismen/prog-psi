@@ -167,7 +167,14 @@ public class LlistaUsuaris {
                 }
 
                 String alies = dades[0];
-                String email = dades[1];
+                String emailComplet = dades[1];
+                String email;
+
+                if (emailComplet.contains("@")) {
+                    email = emailComplet.substring(0, emailComplet.indexOf('@'));
+                } else {
+                    email = emailComplet;
+                }
 
                 Collectius col;
                 try {
