@@ -79,9 +79,9 @@ public abstract class Activitat {
     }
 
     /**
-    * Mètode que retona la data de fi  de l'activitat
+    * Mètode que retona la data de fi de l'activitat
     * 
-    * @return un objecte {@code Data} que representa la data final d'inscripció
+    * @return un objecte {@code Data} que representa la data final
     */
     public abstract Data getDataFinal();
 

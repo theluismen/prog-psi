@@ -399,7 +399,6 @@ public class ActivitatPeriodica extends Activitat {
     }
 
 
-//metodos propios
     /**
      * Metodo que comprueba si hay clase en la fecha indicada
      *
@@ -424,7 +423,6 @@ public class ActivitatPeriodica extends Activitat {
     }
 
 
-//metodos del padre
     /**
      * Metodo que comprueba si una actividad esta activa en la fecha indicada
      *

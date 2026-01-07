@@ -2,7 +2,7 @@
  * Autor: Aesha Naz Mahmood Bibi
  * Descripció: classe Usa Llista Usuaris de test per probar la classe
  */
-package test;
+package tests;
 
 import enumeracions.*;
 import excepcions.*;
