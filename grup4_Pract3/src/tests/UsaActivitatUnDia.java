@@ -44,7 +44,7 @@ public class UsaActivitatUnDia {
             // 6. Provar getters
             System.out.println("\n---- Getters ----");
             System.out.println("Ciutat: " + act.getCiutat());
-            System.out.println("Hora inici: " + act.getHora() + ":" + act.getMinuto());
+            System.out.println("Hora inici: " + act.getDataInici().getHora() + ":" + act.getDataInici().getMinuts());
             System.out.println("Durada: " + act.getHoraDurada() + ":" + act.getMinutoDurada());
             System.out.println("Places màximes: " + act.getPlacesMaximes());
             System.out.println("Preu: " + act.getPreu());
