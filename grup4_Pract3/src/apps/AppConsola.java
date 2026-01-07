@@ -48,7 +48,7 @@ public class AppConsola {
         boolean sortir = false;
         int opcio;
         try{
-            dataActual = new Data(30, 9, 2025); // Data inicial per defecte
+            dataActual = new Data(1, 9, 2025); // Data inicial per defecte
         }catch(ValorInexistent e){  //es obligatori tractar l'excepció, però com que es un valor per defecte no donarà error
             System.out.println("La data no existeix");
         }
