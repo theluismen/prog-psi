@@ -12,7 +12,7 @@ import excepcions.InscripcioNoTrobada;
 public class UsaLlistaInscripcions {
     public static void main(String[] args) {
         System.out.println("-------------------------------------------------");
-        System.out.println(" INICI TEST LLISTA INSCRIPCIONS (AMB OBJECTES LLISTA)");
+        System.out.println(" INICI TEST LLISTA INSCRIPCIONS ");
         System.out.println("-------------------------------------------------");
 
         // 1. CREACIÓ
@@ -20,7 +20,7 @@ public class UsaLlistaInscripcions {
         System.out.println("Llista creada correctament.");
 
         // 2. AFEGIR (Happy Path)
-        System.out.println("\n>>> 2. Afegint inscripcions bàsiques...");
+        System.out.println("\n2. Afegint inscripcions bàsiques...");
         try {
             llista.afegirInscripcio(new Inscripcio("mar.garcia", "Java"));
             llista.afegirInscripcio(new Inscripcio("pere.pi", "Python"));
@@ -31,7 +31,7 @@ public class UsaLlistaInscripcions {
         }
 
         // 3. PROVAR DUPLICATS (Excepció)
-        System.out.println("\n>>> 3. Provant d'afegir duplicat...");
+        System.out.println("\n3. Provant d'afegir duplicat...");
         try {
             llista.afegirInscripcio(new Inscripcio("mar.garcia", "Java"));
             System.out.println("ERROR: Ha deixat afegir un duplicat!");
@@ -40,7 +40,7 @@ public class UsaLlistaInscripcions {
         }
 
         // 4. CONSULTES
-        System.out.println("\n>>> 4. Consultes:");
+        System.out.println("\n4. Consultes:");
         System.out.println("Quants inscrits a 'Python'? (Esperat: 2) -> " + llista.comptarInscripcionsActivitat("Python"));
         
         System.out.println("Inscripcions de 'mar.garcia':");
@@ -54,7 +54,7 @@ public class UsaLlistaInscripcions {
         }
 
         // 5. ELIMINAR
-        System.out.println("\n>>> 5. Eliminant inscripció...");
+        System.out.println("\n5. Eliminant inscripció...");
         try {
             llista.eliminarInscripcio("pere.pi", "Python");
             System.out.println("Eliminat correctament.");
@@ -68,7 +68,7 @@ public class UsaLlistaInscripcions {
         }
 
         // 6. ELIMINAR NO EXISTENT
-        System.out.println("\n>>> 6. Eliminant inscripció fantasma...");
+        System.out.println("\n6. Eliminant inscripció fantasma...");
         try {
             llista.eliminarInscripcio("ningu", "res");
             System.out.println("ERROR: Hauria d'haver fallat.");
@@ -78,7 +78,7 @@ public class UsaLlistaInscripcions {
 
         // 7. TEST LLISTA D'ESPERA (NOU)
         System.out.println("\n-------------------------------------------------");
-        System.out.println(" >>> 7. TEST LLISTA D'ESPERA I AFORAMENT");
+        System.out.println(" 7. TEST LLISTA D'ESPERA I AFORAMENT");
         System.out.println("-------------------------------------------------");
         
         // Simulem una activitat anomenada "Taller" amb capacitat per a NOMÉS 2 persones
