@@ -1,5 +1,5 @@
 /**
- * Autor(@s): Alexandra Núñez y Ainara Sofia Cabreras
+ * Autor(@s): Alexandra Núñez y Ainara Sofía Cabrera Robles
  * Descripción: el uso principal de esta clase es tratar las actividades guardadas en un
  * txt y añadir las que se quieran (dentro de lo posible)
  */
