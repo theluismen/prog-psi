@@ -1,3 +1,7 @@
+/**
+ * Autor: Ikram Hallouz
+ * Descripción: Clase que representa la excepció d'una valoració incorrecta.
+ */
 package excepcions;
 
 public class ValoracioIncorrecta extends Exception {
