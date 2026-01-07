@@ -1,5 +1,7 @@
-//faltara probar las excepciones una vez añadidas
-
+/**
+ * Autor(@s): Alexandra Núñez González
+ * Descripción: Test per a la classe ActivitatPeriodica.
+ */
 package tests;
 import activitats.*;
 import extras.*;
