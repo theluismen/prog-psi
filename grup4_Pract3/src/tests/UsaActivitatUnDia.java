@@ -1,3 +1,7 @@
+/**
+ * Autor(@s): Ainara Sofía Cabrera Robles
+ * Descripción: Test per a la classe ActivitatUnDia.
+ */
 package tests;
 
 import activitats.ActivitatUnDia;

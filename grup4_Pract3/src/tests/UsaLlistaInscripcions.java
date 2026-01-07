@@ -1,3 +1,7 @@
+/**
+ * Autor: Ikram Hallouz
+ * Descripción: Clase que representa la classe de test per a la Inscripció.
+ */
 package tests;
 
 import inscripcions.Inscripcio;

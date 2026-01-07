@@ -1,3 +1,7 @@
+/**
+ * Autor(@s): Ainara Sofía Cabrera Robles
+ * Descripción: Test per a la classe UsuariPDI.
+ */
 package tests;
 
 import usuaris.UsuariPDI;

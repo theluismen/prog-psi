@@ -1,3 +1,7 @@
+/**
+ * Autor(@s): Alexandra Núñez González
+ * Descripción: Test per a la classe UsuariPTGAS.
+ */
 package tests;
 
 import enumeracions.CampusURV;

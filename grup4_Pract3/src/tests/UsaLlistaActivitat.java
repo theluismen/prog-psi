@@ -1,3 +1,7 @@
+/**
+ * Autor(@s): Alexandra Núñez González i Ainara Sofía Cabrera Robles
+ * Descripción: Test per a la classe LlistaActivitat.
+ */
 package tests;
 
 import llistes.LlistaActivitats;
